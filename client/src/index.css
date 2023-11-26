@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", "san-serif";
+}
+
+.pink {
+    color: pink;
+}
+
+.MuiFab-root,
+.MuiToolbar-regular {
+    background-color: #d06b6b !important;
+}
+
+.MuiBottomNavigation-root {
+    background-color: 
+    rgb(115 128 115) !important;
+}
+
+.welcome,
+.welcome1 {
+    font-size: 25px;
+    color: #d06b6b;
+    font-weight: bolder;
+    padding-bottom: 10px;
+}
+
+.welcome1 {
+    font-size: 20px !important;
+    padding-top: 10px;
+}
+
+.returnButton {
+    font-size: 20px;
+    color: #d06b6b;
+    cursor: pointer;
+}
+
+h4{
+    margin: 20px;
+}

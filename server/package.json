@@ -1,0 +1,30 @@
+{
+  "name": "business_cards_app",
+  "version": "3.0.0",
+  "description": "Business cards app with MERN",
+  "main": "server.js",
+  "scripts": {
+    "start": "export || cross-env NODE_ENV=production&& node .",
+    "test": "node test.js",
+    "dev": "export || cross-env NODE_ENV=development&& nodemon ."
+  },
+  "author": "David Yakin",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "chalk": "^4.1.1",
+    "config": "^3.3.8",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "express": "^4.18.2",
+    "joi": "^17.9.2",
+    "jsonwebtoken": "^9.0.1",
+    "lodash": "^4.17.21",
+    "mongoose": "^6.7.2",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

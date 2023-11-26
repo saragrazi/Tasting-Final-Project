@@ -1,0 +1,134 @@
+{
+  "users": [
+    {
+      "name": { "first": "regular", "last": "user" },
+      "isBusiness": false,
+      "phone": "050-0000000",
+      "email": "regular@gmail.com",
+      "password": "Aa1234!",
+      "address": {
+        "country": "israel",
+        "city": "tel-aviv",
+        "street": "magnive",
+        "houseNumber": "5"
+      },
+      "profileImage": { "url": "http://www.localhost:8181/profileimages/default_user.png", "alt": "" }
+    },
+    {
+      "name": { "first": "creator", "last": "user" },
+      "isBusiness": true,
+      "phone": "050-0000000",
+      "email": "business@gmail.com",
+      "password": "Aa1234!",
+      "address": {
+        "country": "israel",
+        "city": "tel-aviv",
+        "street": "magnive",
+        "houseNumber": "5"
+      },
+      "profileImage": { "url": "http://www.localhost:8181/profileimages/default_user.png", "alt": "" }
+    },
+    {
+      "name": { "first": "admin", "last": "user" },
+      "isBusiness": true,
+      "isAdmin": true,
+      "phone": "050-0000000",
+      "email": "admin@gmail.com",
+      "password": "Pp304682685!",
+      "address": {
+        "country": "israel",
+        "city": "tel-aviv",
+        "street": "magnive",
+        "houseNumber": "5"
+      },
+      "profileImage": { "url": "http://www.localhost:8181/profileimages/default_user.png", "alt": "" }
+    }
+  ],
+  "cards": [
+    {
+      "title": "Grilled Steak",
+      "subtitle": "Delicious beef steak grilled to perfection",
+      "cookingSteps": "Season the steak\nGrill to desired doneness\nRest before serving",
+      "ingredients": ["Beef steak", "Seasoning"],
+      "category": "meat-meal",
+      "email": "user@example.com",
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2016/01/22/02/13/meat-1155132_640.jpg",
+        "alt": "Grilled Steak"
+      }
+    },
+    {
+      "title": "Creamy Alfredo Pasta",
+      "subtitle": "Rich and creamy pasta with Alfredo sauce",
+      "cookingSteps": "Cook pasta\nPrepare Alfredo sauce\nCombine and serve",
+      "ingredients": ["Pasta", "Alfredo sauce"],
+      "category": "milky-meal",
+      "email": "user@example.com",
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2016/04/15/09/10/pasta-1330541_1280.jpg",
+        "alt": "Creamy Alfredo Pasta"
+      }
+    },
+    {
+      "title": "Baked Salmon",
+      "subtitle": "Healthy baked salmon with lemon and herbs",
+      "cookingSteps": "Season the salmon\nBake until cooked through\nGarnish with lemon",
+      "ingredients": ["Salmon", "Lemon", "Herbs"],
+      "category": "fish",
+      "email": "user@example.com",
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2015/04/08/13/13/food-712665_640.jpg",
+        "alt": "Baked Salmon"
+      }
+    },
+    {
+      "title": "Greek Salad",
+      "subtitle": "Fresh and flavorful Greek salad",
+      "cookingSteps": "Chop vegetables\nCombine with feta and olives\nDress with olive oil",
+      "ingredients": ["Cucumbers", "Tomatoes", "Feta", "Olives", "Olive oil"],
+      "category": "salads",
+      "email": "user@example.com",
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2017/05/21/22/49/farmers-salad-2332580_640.jpg",
+        "alt": "Greek Salad"
+      }
+    },
+    {
+      "title": "Vanilla Ice Cream",
+      "subtitle": "Homemade creamy vanilla ice cream",
+      "cookingSteps": "Mix ice cream base\nChurn in ice cream maker\nFreeze until firm",
+      "ingredients": ["Milk", "Sugar", "Vanilla"],
+      "category": "desserts",
+      "email": "user@example.com",
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2016/12/26/16/09/bowl-1932375_640.jpg",
+        "alt": "Vanilla Ice Cream"
+      }
+    },
+    {
+      "title": "Classic Chocolate Chip Cookies",
+      "subtitle": "Homemade cookies with gooey chocolate chips",
+      "cookingSteps": "Mix cookie dough\nDrop onto baking sheets\nBake until golden brown",
+      "ingredients": ["Flour", "Sugar", "Chocolate chips"],
+      "category": "cakes-and-cookies",
+      "email": "user@example.com",
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2016/03/18/02/16/cookies-1264263_640.jpg",
+        "alt": "Classic Chocolate Chip Cookies"
+      }
+    },
+    {
+      "title": "Apple Pie",
+      "subtitle": "Traditional apple pie with a flaky crust",
+      "cookingSteps": "Prepare apple filling\nAssemble pie and bake\nServe with vanilla ice cream",
+      "ingredients": ["Apples", "Pie crust", "Sugar"],
+      "category": "pies",
+      "email": "user@example.com",
+      "image": {
+        "url": "https://cdn.pixabay.com/photo/2020/08/11/13/58/apple-pie-5479993_1280.jpg",
+        "alt": "Apple Pie"
+      }
+    }
+  ]
+  
+}
