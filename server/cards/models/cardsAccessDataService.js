@@ -3,6 +3,17 @@ const { handleBadRequest } = require("../../utils/handleErrors");
 
 const DB = process.env.DB || "MONGODB";
 
+const getCardByTitle = async (title) => {
+  try {
+
+    const existingCard = await Card.findOne({ title });
+
+    return existingCard;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const getCards = async () => {
   if (DB === "MONGODB") {
     try {
@@ -110,11 +121,13 @@ const deleteCard = async (cardId, user) => {
 
       if (!card)
         throw new Error("A card with this ID cannot be found in the database");
-
-      if (!user.isAdmin && user._id !== card.user_id)
-        throw new Error(
-          "Authorization Error: Only the user who created the business card or admin can delete this card"
-        );
+   
+        
+        if (!(user.isAdmin || String(user._id) === String(card.user_id))) {
+          throw new Error("Authorization Error: Only the user who created the business card or admin can delete this card");
+        }
+        
+        
 
       card = await Card.findByIdAndDelete(cardId);
 
@@ -134,3 +147,4 @@ exports.createCard = createCard;
 exports.updateCard = updateCard;
 exports.likeCard = likeCard;
 exports.deleteCard = deleteCard;
+exports.getCardByTitle = getCardByTitle;

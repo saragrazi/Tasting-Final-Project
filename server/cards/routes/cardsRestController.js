@@ -39,6 +39,7 @@ const {
   updateCard,
   likeCard,
   deleteCard,
+  getCardByTitle,
 } = require("../models/cardsAccessDataService");
 const validateCard = require("../validations/cardValidationService");
 const normalizeEditCard = require("../helpers/normalizeEditCard");
@@ -79,6 +80,13 @@ router.post("/", auth, upload.single('image'), async (req, res) => {
     let card = JSON.parse(req.body.form);
     let file = req.file;
     const user = req.user;
+  
+    const existingCard = await getCardByTitle(card.title);
+    if (existingCard) {
+      return handleError(res, 409, "Card with this title already exists");
+    }
+
+
     card.image = {
       url:  `http://www.localhost:8181/images/${user._id}-${file.originalname}`,
       alt: "",

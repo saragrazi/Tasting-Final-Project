@@ -124,8 +124,8 @@ const useCards = () => {
 
     } catch (error) {
       requestStatus(false, error, null, null);
-    }
-    if (card) navigate(ROUTES.CARDS);
+      navigate(ROUTES.CARDS);    }
+    // if (card) navigate(ROUTES.CARDS);
   };
 
   return {

@@ -25,7 +25,7 @@ const CardDetailsPage = () => {
         }}
       >
         <Box mt={2} display={"flex"} alignItems={"center"} flexDirection={{ xs: "column", sm: "column" }}>
-          <Typography color={"#226021"} sx={{ textShadow: "1px 1px 1px black" }} mb={2} variant={'h3'}> {card?.title}</Typography>
+          <Typography color={"#d06b6b"} sx={{ textShadow: "1px 1px 1px black" }} mb={2} variant={'h3'}> {card?.title}</Typography>
           <Box position={"relative"} display={"flex"} width={{ xs: "100%", sm: "50%" }} alignItems={"center"} justifyContent={"center"}>
             <CardMedia sx={{ boxShadow: "1px 1px 15px 1px black", borderRadius: "8px", opacity: "1", minHeight: "250px", maxHeight: "600px" }} component="img" image={card?.image.url} alt={card?.image.alt} />
           </Box>

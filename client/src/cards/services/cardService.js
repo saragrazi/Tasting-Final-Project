@@ -1,6 +1,19 @@
 import axios from "axios";
 const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:8181";
 
+
+export const checkAndSaveCard = async (card) => {
+  try {
+    const { data } = await axios.post(`${apiUrl}/cards/check-and-save`, card, {
+      headers: { 'Content-Type':'multipart/form-data'}
+    });
+    return data;
+  } catch (error) {
+    return Promise.reject(error.message);
+  }
+};
+
+
 export const getCards = async () => {
   try {
     const { data } = await axios.get(`${apiUrl}/cards`);

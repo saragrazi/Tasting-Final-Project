@@ -5,10 +5,11 @@ import CardsFeedback from '../components/CardsFeedback';
 import useCards from '../hooks/useCards';
 import { searchContext } from '../../providers/SearchProvider';
 import FilterComp from '../../filters/FilterComp';
-import { Box, Button, IconButton } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import DataTable from '../../table/components/CardsTable';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableRowsIcon from '@mui/icons-material/TableRows';
+import handleDeleteCard from '../hooks/useCards'
 
 const CardsPage = () => {
   const { searchQuery } = useContext(searchContext)
@@ -40,7 +41,10 @@ const CardsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onDeleteCard = () => { };
+  const onDeleteCard = (cardId) => {
+  
+    handleDeleteCard(cardId);
+  };
 
   return (
     <Container>

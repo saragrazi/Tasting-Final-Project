@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
-const Address = require("./Address");
-const Image = require("./Image");
+
 const { DEFAULT_VALIDATION, URL } = require("../../helpers/mongooseValidators");
 
 const cardSchema = new mongoose.Schema({
@@ -28,6 +27,7 @@ const cardSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
   },
 });
+cardSchema.index({ title: 1 }, { unique: true });
 
 const Card = mongoose.model("card", cardSchema);
 

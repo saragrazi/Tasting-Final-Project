@@ -71,7 +71,6 @@ const CardForm = ({
             <MenuItem value={"milky-meal"}>Milky-Meal</MenuItem>
             <MenuItem value={"fish"}>Fish</MenuItem>
             <MenuItem value={"salads"}>Salads</MenuItem>
-            <MenuItem value={"salad"}>Salad</MenuItem>
             <MenuItem value={"desserts"}>Desserts</MenuItem>
             <MenuItem value={"cakes-and-cookies"}>Cakes-And-Cookies</MenuItem>
             <MenuItem value={"pies"}>Pies</MenuItem>

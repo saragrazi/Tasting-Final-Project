@@ -49,7 +49,7 @@
       "title": "Grilled Steak",
       "subtitle": "Delicious beef steak grilled to perfection",
       "cookingSteps": "Season the steak\nGrill to desired doneness\nRest before serving",
-      "ingredients": ["Beef steak", "Seasoning"],
+      "ingredients": "Beef steak\nSeasoning",
       "category": "meat-meal",
       "email": "user@example.com",
       "image": {
@@ -61,7 +61,7 @@
       "title": "Creamy Alfredo Pasta",
       "subtitle": "Rich and creamy pasta with Alfredo sauce",
       "cookingSteps": "Cook pasta\nPrepare Alfredo sauce\nCombine and serve",
-      "ingredients": ["Pasta", "Alfredo sauce"],
+      "ingredients": "Pasta\nAlfredo sauce",
       "category": "milky-meal",
       "email": "user@example.com",
       "image": {
@@ -73,7 +73,7 @@
       "title": "Baked Salmon",
       "subtitle": "Healthy baked salmon with lemon and herbs",
       "cookingSteps": "Season the salmon\nBake until cooked through\nGarnish with lemon",
-      "ingredients": ["Salmon", "Lemon", "Herbs"],
+      "ingredients": "Salmon\nLemon\nHerbs",
       "category": "fish",
       "email": "user@example.com",
       "image": {
@@ -85,7 +85,7 @@
       "title": "Greek Salad",
       "subtitle": "Fresh and flavorful Greek salad",
       "cookingSteps": "Chop vegetables\nCombine with feta and olives\nDress with olive oil",
-      "ingredients": ["Cucumbers", "Tomatoes", "Feta", "Olives", "Olive oil"],
+      "ingredients": "Cucumbers\nTomatoes\nFeta\nOlives\nOlive oil",
       "category": "salads",
       "email": "user@example.com",
       "image": {
@@ -97,7 +97,7 @@
       "title": "Vanilla Ice Cream",
       "subtitle": "Homemade creamy vanilla ice cream",
       "cookingSteps": "Mix ice cream base\nChurn in ice cream maker\nFreeze until firm",
-      "ingredients": ["Milk", "Sugar", "Vanilla"],
+      "ingredients": "Milk\nSugar\nVanilla",
       "category": "desserts",
       "email": "user@example.com",
       "image": {
@@ -109,7 +109,7 @@
       "title": "Classic Chocolate Chip Cookies",
       "subtitle": "Homemade cookies with gooey chocolate chips",
       "cookingSteps": "Mix cookie dough\nDrop onto baking sheets\nBake until golden brown",
-      "ingredients": ["Flour", "Sugar", "Chocolate chips"],
+      "ingredients": "Flour\nSugar\nChocolate chips",
       "category": "cakes-and-cookies",
       "email": "user@example.com",
       "image": {
@@ -121,7 +121,7 @@
       "title": "Apple Pie",
       "subtitle": "Traditional apple pie with a flaky crust",
       "cookingSteps": "Prepare apple filling\nAssemble pie and bake\nServe with vanilla ice cream",
-      "ingredients": ["Apples", "Pie crust", "Sugar"],
+      "ingredients": "Apples\nPie crust\nSugar",
       "category": "pies",
       "email": "user@example.com",
       "image": {
@@ -130,5 +130,6 @@
       }
     }
   ]
+  
   
 }
