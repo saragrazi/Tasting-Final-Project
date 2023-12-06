@@ -21,9 +21,9 @@
 
 .welcome,
 .welcome1 {
-    font-size: 25px;
+    font-size: 22px !important;
     color: #d06b6b;
-    font-weight: bolder;
+    font-weight: bolder !important;
     padding-bottom: 10px;
 }
 

@@ -48,7 +48,7 @@ const CardsPage = () => {
 
   return (
     <Container>
-      <PageHeader title="Recipes" subtitle='' textAlign={"center"} />
+      <PageHeader title="Recipes" textAlign={"center"} />
       <Box display={"flex"} flexDirection={{ xs: "column", sm: "row" }} >
         <FilterComp handleOnChange={handleOnChange} sortBy={sortBy} cards={cards} />
         {viewType === 'cards' ?

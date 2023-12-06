@@ -14,12 +14,10 @@ const AboutPage = () => {
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} alignItems="center">
-          <Typography>
-            <p className="welcome">
+          <Typography className="welcome">
               Hello and welcome to Tasting, your go-to place for all things
               delicious! At Tasting, we're all about making your cooking
               experience fun and easy.
-            </p>
           </Typography>
           <b>Discover Amazing Recipes</b>{" "}
           <Typography>
