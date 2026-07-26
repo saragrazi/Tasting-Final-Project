@@ -8,7 +8,7 @@ const CardsFeedback = ({ pending, error, cards, onDelete, setCards }) => {
   if (pending) return <Spinner />;
   if (error) return <Error errorMessage={error} />;
   if (cards && !cards.length)
-    return <h4>Oops.. there are not cards at all!</h4>;
+    return <h4>אופס... אין כאן כרטיסים להציג.</h4>;
   if (cards && !!cards.length)
     return <Cards setCards={setCards} cards={cards} onDelete={onDelete} />;
   return null;

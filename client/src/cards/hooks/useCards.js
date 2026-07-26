@@ -11,6 +11,7 @@ import {
   editCard,
   deleteCard,
   likeCard,
+  addReview,
 } from "../services/cardService";
 import useAxios from "../../hooks/useAxios";
 
@@ -115,6 +116,17 @@ const useCards = () => {
     }
   };
 
+  const handleAddReview = async (cardId, review) => {
+    try {
+      setPending(true);
+      const card = await addReview(cardId, review);
+      requestStatus(false, null, null, card);
+      setSnack('success', 'Your review was added!');
+    } catch (error) {
+      requestStatus(false, error, null, null);
+    }
+  };
+
   const handleDeleteCard = async cardId => {
     try {
       setPending(true);
@@ -144,6 +156,7 @@ const useCards = () => {
     handleUpdateCard,
     handleDeleteCard,
     handleLikeCard,
+    handleAddReview,
     handleGetFavCards,
     setCardId,
   };

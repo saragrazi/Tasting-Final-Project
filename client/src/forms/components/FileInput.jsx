@@ -30,6 +30,8 @@ const FileInput = ({
         onChange={onChange}
         fullWidth
         autoComplete="off"
+        dir="rtl"
+        inputProps={{ style: { textAlign: "right" } }}
       />
     </Grid>
   );

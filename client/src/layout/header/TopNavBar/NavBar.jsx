@@ -11,14 +11,14 @@ export const NavBar = () => {
   return (
     <MenuProvider>
       <AppBar position="sticky">
-        <Toolbar sx={{ justifyContent: "space-between" }}>
-          <LeftNavBar />
-
-          <Box sx={{ display: { xs: "inline-flex", md: "none" } }}>
-            <SearchBar />
-          </Box>
-
+        <Toolbar
+          sx={{
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <RightNavBar />
+          <LeftNavBar />
         </Toolbar>
       </AppBar>
     </MenuProvider>

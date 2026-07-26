@@ -7,22 +7,22 @@ const FilterComp = ({handleOnChange, sortBy}) => {
 
     return (
         <FormControl fullWidth>
-            <InputLabel sx={{display:"flex", alignItems:"center"}} color={"success"} variant="filled"><CategoryIcon />Choose Category to filter </InputLabel>
+            <InputLabel sx={{display:"flex", alignItems:"center"}} color={"success"} variant="filled"><CategoryIcon />בחר קטגוריה לסינון</InputLabel>
             <Select
                 value={sortBy}
                 defaultValue={""}
-                label="Category"
+                label="קטגוריה"
                 variant="filled"
                 onChange={handleOnChange}
             >
-                <MenuItem value={""}>All Recipes</MenuItem>
-                <MenuItem value={"meat-meal"}>Meat-Meal</MenuItem>
-                <MenuItem value={"milky-meal"}>Milky-Meal</MenuItem>
-                <MenuItem value={"fish"}>Fish</MenuItem>
-                <MenuItem value={"salads"}>Salads</MenuItem>
-                <MenuItem value={"desserts"}>Desserts</MenuItem>
-                <MenuItem value={"cakes-and-cookies"}>Cakes-And-Cookies</MenuItem>
-                <MenuItem value={"pies"}>Pies</MenuItem>
+                <MenuItem value={""}>כל המתכונים</MenuItem>
+                <MenuItem value={"meat-meal"}>ארוחות בשר</MenuItem>
+                <MenuItem value={"milky-meal"}>ארוחות חלביות</MenuItem>
+                <MenuItem value={"fish"}>דגים</MenuItem>
+                <MenuItem value={"salads"}>סלטים</MenuItem>
+                <MenuItem value={"desserts"}>קינוחים</MenuItem>
+                <MenuItem value={"cakes-and-cookies"}>עוגות ועוגיות</MenuItem>
+                <MenuItem value={"pies"}>פשטידות</MenuItem>
                 
             </Select>
         </FormControl>

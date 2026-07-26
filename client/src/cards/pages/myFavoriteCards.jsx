@@ -53,12 +53,12 @@ const MyFavoriteCards = () => {
   }, []);
 
   return (
-    <Container sx={{ position: "relative", minHeight: "90vh" }}>
+    <Container sx={{ position: "relative", minHeight: "90vh", direction: "rtl" }}>
       <PageHeader
-        title="My Favorite Recipes"
+        title="המתכונים המועדפים שלי"
         textAlign={"center"}
       />
-      <Box display={"flex"} flexDirection={{ xs: "column", sm: "row" }} >
+      <Box display={"flex"} flexDirection={{ xs: "column", sm: "row" }} gap={2} mb={3} alignItems="center">
         <FilterComp handleOnChange={handleOnChange} sortBy={sortBy} cards={cards} />
         {viewType === 'cards' ?
           (<IconButton
@@ -72,14 +72,15 @@ const MyFavoriteCards = () => {
         <CardsTable cards={filtered} />
       )}
       {viewType === 'cards' && (
-
-        <CardsFeedback
-          pending={pending}
-          error={error}
-          cards={filtered}
-          onDelete={() => { }}
-          showDelete={false}
-        />
+        <Box mt={3}>
+          <CardsFeedback
+            pending={pending}
+            error={error}
+            cards={filtered}
+            onDelete={() => { }}
+            showDelete={false}
+          />
+        </Box>
       )}
 
     </Container>

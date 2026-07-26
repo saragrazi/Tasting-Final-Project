@@ -48,9 +48,9 @@ const CardsPage = () => {
   };
 
   return (
-    <Container>
-      <PageHeader title="Recipes" textAlign={"center"} />
-      <Box display={"flex"} flexDirection={{ xs: "column", sm: "row" }} >
+    <Container sx={{ direction: "rtl" }}>
+      <PageHeader title="מתכונים" textAlign={"center"} />
+      <Box display={"flex"} flexDirection={{ xs: "column", sm: "row" }} gap={2} mb={3} alignItems="center">
         <FilterComp handleOnChange={handleOnChange} sortBy={sortBy} cards={cards} />
         {viewType === 'cards' ?
           (<IconButton
@@ -64,14 +64,16 @@ const CardsPage = () => {
         <DataTable cards={filtered} />
       )}
       {viewType === 'cards' && (
-        <CardsFeedback
-          pending={pending}
-          error={error}
-          cards={filtered}
-          onDelete={onDeleteCard}
-          setCards={setCards}
-          searchQuery={searchQuery}
-        />
+        <Box mt={3}>
+          <CardsFeedback
+            pending={pending}
+            error={error}
+            cards={filtered}
+            onDelete={onDeleteCard}
+            setCards={setCards}
+            searchQuery={searchQuery}
+          />
+        </Box>
       )}
     </Container>
   )

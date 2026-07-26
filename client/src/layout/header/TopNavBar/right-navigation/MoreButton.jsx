@@ -13,7 +13,7 @@ const MoreButton = ({ onClick }) => {
         onClick={() => setIsOpen(true)}
         size="large"
         color="inherit"
-        aria-label="menu"
+        aria-label="תפריט"
         sx={{ display: { xs: "inline-flex", md: "none" } }}
       >
         <MoreVertIcon />

@@ -1,5 +1,5 @@
 import axios from "axios";
-const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:8181";
+const apiUrl = process.env.REACT_APP_API_URL || "https://my-tasting.onrender.com";
 
 
 export const checkAndSaveCard = async (card) => {
@@ -62,6 +62,15 @@ export const editCard = async (card, cardId) => {
 export const likeCard = async (cardId) => {
   try {
     const { data } = await axios.patch(`${apiUrl}/cards/${cardId}`);
+    return data;
+  } catch (error) {
+    return Promise.reject(error.message);
+  }
+};
+
+export const addReview = async (cardId, review) => {
+  try {
+    const { data } = await axios.post(`${apiUrl}/cards/${cardId}/review`, review);
     return data;
   } catch (error) {
     return Promise.reject(error.message);

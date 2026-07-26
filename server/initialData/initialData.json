@@ -12,7 +12,7 @@
         "street": "magnive",
         "houseNumber": "5"
       },
-      "profileImage": { "url": "http://www.localhost:8181/profileimages/default_user.png", "alt": "" }
+      "profileImage": { "url": "https://my-tasting.onrender.com/profileimages/default_user.png", "alt": "" }
     },
     {
       "name": { "first": "creator", "last": "user" },
@@ -26,7 +26,7 @@
         "street": "magnive",
         "houseNumber": "5"
       },
-      "profileImage": { "url": "http://www.localhost:8181/profileimages/default_user.png", "alt": "" }
+      "profileImage": { "url": "https://my-tasting.onrender.com/profileimages/default_user.png", "alt": "" }
     },
     {
       "name": { "first": "admin", "last": "user" },
@@ -41,7 +41,7 @@
         "street": "magnive",
         "houseNumber": "5"
       },
-      "profileImage": { "url": "http://www.localhost:8181/profileimages/default_user.png", "alt": "" }
+      "profileImage": { "url": "https://my-tasting.onrender.comּ/profileimages/default_user.png", "alt": "" }
     }
   ],
   "cards": [

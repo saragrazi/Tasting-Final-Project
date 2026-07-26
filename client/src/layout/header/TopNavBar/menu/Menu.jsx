@@ -21,13 +21,14 @@ const MenuComponent = ({ isOpen, anchorEl, onClose }) => {
       open={isOpen}
       onClose={onClose}
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       keepMounted
       transformOrigin={{ vertical: "top", horizontal: "right" }}
+      sx={{ direction: "rtl" }}
     >
       <Box>
         <MenuLink
-          text="about"
+          text="אודות"
           navigateTo={ROUTES.ABOUT}
           onClick={onClose}
           styles={{ color: "black" }}
@@ -35,13 +36,13 @@ const MenuComponent = ({ isOpen, anchorEl, onClose }) => {
         {!user && (
           <>
             <MenuLink
-              text="login"
+              text="התחברות"
               navigateTo={ROUTES.LOGIN}
               onClick={onClose}
               styles={{ display: { xs: "block", md: "none" }, color: "black" }}
             ></MenuLink>
             <MenuLink
-              text="signup"
+              text="הרשמה"
               navigateTo={ROUTES.SIGNUP}
               onClick={onClose}
               styles={{ display: { xs: "block", md: "none" }, color: "black" }}
@@ -51,18 +52,18 @@ const MenuComponent = ({ isOpen, anchorEl, onClose }) => {
         {user && (
           <>
             <MenuLink
-              text="profile"
+              text="פרופיל"
               navigateTo={ROUTES.USER_PROFILE}
               onClick={onClose}
               styles={{ color: "black" }}
             ></MenuLink>
             {/* <MenuLink
-              text="signup"
+              text="ערוך פרופיל"
               navigateTo={ROUTES.EDIT_PROFILE}
               onClick={onClose}
             ></MenuLink> */}
             <MenuLink
-              text="logout"
+              text="התנתק"
               navigateTo={ROUTES.CARDS}
               onClick={onLogout}
               styles={{ color: "black" }}

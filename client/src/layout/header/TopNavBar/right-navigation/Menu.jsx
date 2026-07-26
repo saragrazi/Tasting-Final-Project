@@ -27,26 +27,26 @@ const Menu = ({ isMenuOpen, anchorEl, onCloseMenu }) => {
           <MenuItem
             sx={{ display: { xs: "block", md: "none" } }}
             onClick={onCloseMenu}>
-            Login
+            התחברות
           </MenuItem>
 
           <Button color="inherit">
-            <Typography>About</Typography>
+            <Typography>אודות</Typography>
           </Button>
 
           <MenuItem
             sx={{ display: { xs: "block", md: "none" } }}
             onClick={onCloseMenu}>
-            SignUp
+            הרשמה
           </MenuItem>
         </Box>
       )}
 
       {user && (
         <Box>
-          <MenuItem>Logout</MenuItem>
-          <MenuItem onClick={onCloseMenu}>Profile</MenuItem>
-          <MenuItem onClick={onCloseMenu}>Edit account</MenuItem>
+          <MenuItem>התנתק</MenuItem>
+          <MenuItem onClick={onCloseMenu}>פרופיל</MenuItem>
+          <MenuItem onClick={onCloseMenu}>ערוך חשבון</MenuItem>
         </Box>
       )}
     </MuiMenu>

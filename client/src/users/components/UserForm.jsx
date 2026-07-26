@@ -22,13 +22,13 @@ const UserForm = ({
       onSubmit={onSubmit}
       onReset={onReset}
       onChange={onFormChange}
-      styles={{ maxWidth: "800px" }}
+      styles={{ maxWidth: "800px", direction: "rtl", textAlign: "right" }}
       title={title}
       to={ROUTES.CARDS}
     >
       <Input
         name="first"
-        label="first name"
+        label="שם פרטי"
         error={errors.first}
         onChange={onInputChange}
         data={data}
@@ -36,7 +36,7 @@ const UserForm = ({
       />
       <Input
         name="middle"
-        label="middle name"
+        label="שם אמצעי"
         error={errors.middle}
         onChange={onInputChange}
         data={data}
@@ -45,7 +45,7 @@ const UserForm = ({
       />
       <Input
         name="last"
-        label="last name"
+        label="שם משפחה"
         error={errors.last}
         onChange={onInputChange}
         data={data}
@@ -53,7 +53,7 @@ const UserForm = ({
       />
       <Input
         name="phone"
-        label="phone"
+        label="טלפון"
         type="phone"
         error={errors.phone}
         onChange={onInputChange}
@@ -62,7 +62,7 @@ const UserForm = ({
       />
       <Input
         name="email"
-        label="email"
+        label="אימייל"
         type="email"
         error={errors.email}
         onChange={onInputChange}
@@ -71,7 +71,7 @@ const UserForm = ({
       />
       <Input
         name="password"
-        label="password"
+        label="סיסמה"
         type="password"
         error={errors.password}
         onChange={onInputChange}
@@ -80,7 +80,7 @@ const UserForm = ({
       />
       <Input
         name="url"
-        label="image url"
+        label="כתובת תמונה"
         error={errors.url}
         onChange={onInputChange}
         data={data}
@@ -89,7 +89,7 @@ const UserForm = ({
       />
       <Input
         name="alt"
-        label="image alt"
+        label="טקסט תמונה"
         error={errors.alt}
         onChange={onInputChange}
         data={data}
@@ -98,7 +98,7 @@ const UserForm = ({
       />
       <Input
         name="state"
-        label="state"
+        label="מדינה"
         error={errors.state}
         onChange={onInputChange}
         data={data}
@@ -106,7 +106,7 @@ const UserForm = ({
         required={false}
       />
       <Input
-        label="country"
+        label="ארץ"
         name="country"
         error={errors.country}
         onChange={onInputChange}
@@ -115,7 +115,7 @@ const UserForm = ({
       />
       <Input
         name="city"
-        label="city"
+        label="עיר"
         error={errors.city}
         onChange={onInputChange}
         data={data}
@@ -123,7 +123,7 @@ const UserForm = ({
       />
       <Input
         name="street"
-        label="street"
+        label="רחוב"
         error={errors.street}
         onChange={onInputChange}
         data={data}
@@ -131,7 +131,7 @@ const UserForm = ({
       />
       <Input
         name="houseNumber"
-        label="house Number"
+        label="מספר בית"
         type="number"
         error={errors.houseNumber}
         onChange={onInputChange}
@@ -140,7 +140,7 @@ const UserForm = ({
       />
       <Input
         name="zip"
-        label="zip"
+        label="מיקוד"
         error={errors.zip}
         onChange={onInputChange}
         data={data}
@@ -154,7 +154,7 @@ const UserForm = ({
           }}
           name="isBusiness"
           control={<Checkbox value={data.isBusiness} color="primary" />}
-          label="Signup as business"
+          label="הרשמה כעסק"
         />
       </Grid>
     </Form>

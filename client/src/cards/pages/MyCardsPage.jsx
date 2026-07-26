@@ -47,12 +47,12 @@ const MyCardsPage = () => {
   }, [handleGetMyCards, navigate, user]);
 
   return (
-    <Container sx={{ position: "relative", minHeight: "90vh" }}>
+    <Container sx={{ position: "relative", minHeight: "90vh", direction: "rtl" }}>
       <PageHeader
-        title="My Recipes Page"
+        title="המתכונים שלי"
         textAlign={"center"}
       />
-      <Box display={"flex"} flexDirection={{ xs: "column", sm: "row" }} >
+      <Box display={"flex"} flexDirection={{ xs: "column", sm: "row" }} gap={2} mb={3} alignItems="center">
         <FilterComp handleOnChange={handleOnChange} sortBy={sortBy} cards={cards} />
         {viewType === 'cards' ?
           (<IconButton
@@ -65,8 +65,8 @@ const MyCardsPage = () => {
       <Fab
         onClick={() => navigate(ROUTES.CREATE_CARD)}
         color="primary"
-        aria-label="add card"
-        sx={{ position: "absolute", bottom: 75, right: 15 }}
+        aria-label="הוסף מתכון"
+        sx={{ position: "absolute", bottom: 75, left: 15 }}
       >
         <AddIcon />
       </Fab>
@@ -74,10 +74,10 @@ const MyCardsPage = () => {
         <CardsTable cards={filtered} />
       )}
       {viewType === 'cards' && (
-
-        <CardsFeedback
-          pending={pending}
-          error={error}
+        <Box mt={3}>
+          <CardsFeedback
+            pending={pending}
+            error={error}
           cards={filtered}
           onDelete={() => { }}
           setCards={setCards}

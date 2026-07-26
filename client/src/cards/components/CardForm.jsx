@@ -23,13 +23,12 @@ const CardForm = ({
       onReset={onReset}
       errors={errors}
       onChange={onFormChange}
-      styles={{ maxWidth: "400px", display: "flex", flexDirection: "column" }}
+      styles={{ maxWidth: "400px", display: "flex", flexDirection: "column", direction: "rtl", textAlign: "right" }}
       title={title}
-
     >
       <Input
         name="title"
-        label="title"
+        label="כותרת"
         error={errors.title}
         onChange={onInputChange}
         data={data}
@@ -38,14 +37,14 @@ const CardForm = ({
 
       <Input
         name="subtitle"
-        label="subtitle"
+        label="תת-כותרת"
         error={errors.subtitle}
         onChange={onInputChange}
         data={data}
       />
         <Input
           name="ingredients"
-          label="ingredients"
+          label="מרכיבים"
           error={errors.ingredients}
           onChange={onInputChange}
           data={data}
@@ -53,33 +52,33 @@ const CardForm = ({
         />
       <Input
         name="cookingSteps"
-        label="how to Cook it?"
+        label="איך מכינים אותו?"
         error={errors.cookingSteps}
         onChange={onInputChange}
         data={data}
         multiline={true}
       />
         <FormControl sx={{ marginLeft: "8px", marginTop: "15px" }} fullWidth>
-          <InputLabel sx={{ display: "flex" }}>Category</InputLabel>
+          <InputLabel sx={{ display: "flex" }}>קטגוריה</InputLabel>
           <Select
-            label="category"
+            label="קטגוריה"
             onChange={onInputChange}
             value={data?.category ? data?.category : ""}
             name="category"
           >
-            <MenuItem value={"meat-meal"}>Meat-Meal</MenuItem>
-            <MenuItem value={"milky-meal"}>Milky-Meal</MenuItem>
-            <MenuItem value={"fish"}>Fish</MenuItem>
-            <MenuItem value={"salads"}>Salads</MenuItem>
-            <MenuItem value={"desserts"}>Desserts</MenuItem>
-            <MenuItem value={"cakes-and-cookies"}>Cakes-And-Cookies</MenuItem>
-            <MenuItem value={"pies"}>Pies</MenuItem>
+            <MenuItem value={"meat-meal"}>ארוחות בשר</MenuItem>
+            <MenuItem value={"milky-meal"}>ארוחות חלביות</MenuItem>
+            <MenuItem value={"fish"}>דגים</MenuItem>
+            <MenuItem value={"salads"}>סלטים</MenuItem>
+            <MenuItem value={"desserts"}>קינוחים</MenuItem>
+            <MenuItem value={"cakes-and-cookies"}>עוגות ועוגיות</MenuItem>
+            <MenuItem value={"pies"}>פשטידות</MenuItem>
           </Select>
         </FormControl>
-      {title !== "edit Card" && (
+      {title !== "ערוך מתכון" && (
 
         <FormControl sx={{ marginLeft: "8px", marginTop: "5px", width: "100%" }}>
-          <FormLabel >Recipe Image Upload</FormLabel>
+          <FormLabel>העלאת תמונת מנה</FormLabel>
           <FileInput
             name="dishImage"
             label=""

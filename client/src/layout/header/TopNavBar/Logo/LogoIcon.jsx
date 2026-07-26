@@ -9,8 +9,8 @@ const LogoIcon = () => {
       size="large"
       edge="start"
       color="inherit"
-      aria-label="menu">
-      <Avatar alt="Business card icon" src="/assets/images/business-card.png" />
+      aria-label="תפריט">
+      <Avatar alt="אייקון כרטיס ביקור" src="/assets/images/business-card.png" />
     </IconButton>
   );
 };

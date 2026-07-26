@@ -19,6 +19,27 @@ const cardSchema = new mongoose.Schema({
     alt: String,
   },
   likes: [String],
+  reviews: [
+    {
+      user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+      },
+      comment: {
+        type: String,
+        trim: true,
+      },
+      rating: {
+        type: Number,
+        min: 1,
+        max: 5,
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,
@@ -27,6 +48,16 @@ const cardSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
   },
 });
+
+cardSchema.virtual("averageRating").get(function () {
+  if (!this.reviews || this.reviews.length === 0) return 0;
+  const ratings = this.reviews.map((review) => review.rating || 0);
+  const sum = ratings.reduce((acc, value) => acc + value, 0);
+  return sum / ratings.length;
+});
+cardSchema.set("toJSON", { virtuals: true });
+cardSchema.set("toObject", { virtuals: true });
+
 cardSchema.index({ title: 1 }, { unique: true });
 
 const Card = mongoose.model("card", cardSchema);

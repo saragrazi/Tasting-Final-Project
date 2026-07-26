@@ -29,16 +29,17 @@ const LoginPage = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        direction: "rtl",
       }}>
       <Form
         onSubmit={rest.onSubmit}
         onReset={rest.handleReset}
         onChange={rest.validateForm}
-        title="login"
-        styles={{ maxWidth: "450px" }}
+        title="התחברות"
+        styles={{ maxWidth: "450px", direction: "rtl", textAlign: "right" }}
         to={ROUTES.CARDS}>
         <Input
-          label="email"
+          label="אימייל"
           name="email"
           type="email"
           error={value.errors.email}
@@ -46,7 +47,7 @@ const LoginPage = () => {
           data={value.data}
         />
         <Input
-          label="password"
+          label="סיסמה"
           name="password"
           type="password"
           error={value.errors.password}

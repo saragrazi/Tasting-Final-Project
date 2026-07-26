@@ -9,18 +9,16 @@ import { useUser } from "../../../../users/providers/UserProvider";
 const LeftNavBar = () => {
   const { user } = useUser();
   return (
-    <Box>
+    <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1, flexDirection: "row-reverse" }}>
       <LogoIcon />
       <Logo />
 
-      <Box sx={{ display: { xs: "none", md: "inline-flex" } }}>
-        <NavItem label="About" to={ROUTES.ABOUT} />
+      <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1, flexDirection: "row-reverse" }}>
+        <NavItem label="אודות" to={ROUTES.ABOUT} />
         {user && user.isBusiness && (
-          <NavItem label="My Recipes" to={ROUTES.MY_CARDS} />
+          <NavItem label="המתכונים שלי" to={ROUTES.MY_CARDS} />
         )}
-      </Box>
-      <Box sx={{ display: { xs: "none", md: "inline-flex" } }}>
-        {user && <NavItem label="Fav Recipes" to={ROUTES.FAV_CARDS} />}
+        {user && <NavItem label="המתכונים המועדפים" to={ROUTES.FAV_CARDS} />}
       </Box>
     </Box>
   );

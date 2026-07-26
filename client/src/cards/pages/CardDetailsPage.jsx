@@ -1,17 +1,36 @@
-import { Box, CardMedia, Container, Divider, Typography } from '@mui/material';
-import React, { useEffect } from 'react'
+import { Box, CardMedia, Container, Divider, Typography, TextField, Button, Rating } from '@mui/material';
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import useCards from '../hooks/useCards';
+import { useUser } from '../../users/providers/UserProvider';
 
 const CardDetailsPage = () => {
   const { id } = useParams();
-  const { card, handleGetCard } = useCards();
-  
+  const { card, handleGetCard, handleAddReview } = useCards();
+  const { user } = useUser();
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+
   useEffect(() => {
     handleGetCard(id);
     // eslint-disable-next-line
   }, [id]);
+
+  const userHasReviewed = Boolean(
+    user &&
+      card?.reviews?.some(
+        (review) => String(review.user_id) === String(user._id)
+      )
+  );
+
+  const handleSubmitReview = async (event) => {
+    event.preventDefault();
+    if (!user) return;
+    await handleAddReview(id, { rating, comment });
+    setRating(0);
+    setComment("");
+  };
 
   return (
     <Container maxWidth="lg">
@@ -32,8 +51,26 @@ const CardDetailsPage = () => {
           <Box flexDirection={"column"} width={{ xs: "100%", sm: "50%" }} m={{ sx: 5, sm: 5 }} ml={{ xs: 0, sm: 5 }} display={"flex"} justifyContent={"flex-start"} alignItems={"flex-start"}>
             <Typography sx={{ textShadow: "1px 1px 1px black" }} mb={5} variant='h5'> {card?.subtitle}</Typography>
             <Typography alignItems={"flex-start"} justifyContent={"flex-start"}>{card?.description}</Typography>
+            <Box mb={2}>
+              <Typography variant="subtitle2" sx={{ color: "#d06b6b", fontWeight: 700, mb: 1 }}>
+                דירוג המתכון
+              </Typography>
+              <Box display="flex" alignItems="center" gap={1}>
+                <Rating
+                  name="card-rating"
+                  value={card?.averageRating || 0}
+                  precision={0.5}
+                  readOnly
+                />
+                <Typography variant="body2" sx={{ color: "#555" }}>
+                  {card?.reviews?.length > 0
+                    ? `דירגו על ידי ${card.reviews.length} משתמש${card.reviews.length > 1 ? "ים" : ""}`
+                    : "עדיין אין דירוגים"}
+                </Typography>
+              </Box>
+            </Box>
             <Divider sx={{ height: "20px" }} />
-           <h4>The ingredients:</h4>
+           <h4>המרכיבים:</h4>
             {card?.ingredients.split('\n').map((row, index) => {
               return (
                 
@@ -41,7 +78,7 @@ const CardDetailsPage = () => {
                 
               )
             })}
-           <h4>How to make?</h4>
+           <h4>אופן ההכנה:</h4>
             {card?.cookingSteps.split('\n').map((row, index) => {
               return (
                 
@@ -49,6 +86,68 @@ const CardDetailsPage = () => {
                 
               )
             })}
+            <Divider sx={{ height: "20px", mt: 4 }} />
+            <Box mt={3} width="100%">
+              <Typography variant="h5" mb={2}>כתבו ביקורת</Typography>
+              {user ? (
+                userHasReviewed ? (
+                  <Typography sx={{ color: "#d06b6b", fontWeight: 700 }}>
+                    כבר הגבת על המתכון הזה.
+                  </Typography>
+                ) : (
+                  <Box component="form" onSubmit={handleSubmitReview}>
+                    <Box display="flex" alignItems="center" mb={2}>
+                      <Rating
+                        name="review-rating"
+                        value={rating}
+                        onChange={(event, newValue) => {
+                          setRating(newValue);
+                        }}
+                      />
+                      <Typography ml={2}>{rating || "בחר דירוג"}</Typography>
+                    </Box>
+                    <TextField
+                      fullWidth
+                      multiline
+                      minRows={3}
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+                      placeholder="כתוב את הביקורת שלך..."
+                      sx={{ mb: 2 }}
+                    />
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      sx={{
+                        backgroundColor: "#d06b6b",
+                        color: "#fff",
+                        textTransform: "none",
+                        '&:hover': {
+                          backgroundColor: '#b5585a',
+                        },
+                      }}
+                    >
+                      שלח ביקורת
+                    </Button>
+                  </Box>
+                )
+              ) : (
+                <Typography>אנא התחבר כדי לכתוב ביקורת.</Typography>
+              )}
+            </Box>
+            {card?.reviews?.length > 0 && (
+              <Box mt={4} width="100%">
+                <Typography variant="h5" mb={2}>Reviews</Typography>
+                {card.reviews.map((review, index) => (
+                  <Box key={index} mb={2} p={2} sx={{ backgroundColor: "#f5f5f5", borderRadius: 2 }}>
+                    <Box display="flex" alignItems="center" mb={1}>
+                      <Rating value={review.rating || 0} readOnly size="small" />
+                    </Box>
+                    <Typography>{review.comment}</Typography>
+                  </Box>
+                ))}
+              </Box>
+            )}
           </Box>
         </Box>
       </Container>

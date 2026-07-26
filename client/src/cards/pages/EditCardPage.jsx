@@ -48,11 +48,12 @@ const EditCardPage = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        direction: "rtl",
       }}
     >
       <CardForm
         multiline={false}
-        title="edit Card"
+        title="ערוך מתכון"
         onSubmit={rest.onSubmit}
         onReset={rest.handleReset}
         errors={value.errors}

@@ -4,14 +4,12 @@ import imageType from "../../models/types/imageType";
 
 const CardHead = ({ image }) => {
   return (
-    <>
-      <CardMedia
-        component="img"
-        height="200"
-        alt={image?.alt}
-        image={image?.url}
-      ></CardMedia>
-    </>
+    <CardMedia
+      component="img"
+      alt={image?.alt}
+      image={image?.url}
+      sx={{ height: 220, width: "100%", objectFit: "cover", display: "block" }}
+    />
   );
 };
 

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:8181';
+const apiUrl = process.env.REACT_APP_API_URL || 'https://my-tasting.onrender.com';
 
 export const login = async user => {
     try {

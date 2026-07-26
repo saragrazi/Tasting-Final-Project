@@ -12,7 +12,7 @@ const Cards = ({ cards,setCards }) => {
   return (
     <Grid container spacing={2} pb={2}>
       {cards.map((card) => (
-        <Grid item key={card._id} xs={12} sm={6} md={4} lg={3}>
+        <Grid item key={card._id} xs={12} sm={6} md={4} lg={3} sx={{ display: 'flex', minHeight: 500 }}>
           <CardComponent
             onLike={onLike}
             onDelete={onDelete}
@@ -22,7 +22,7 @@ const Cards = ({ cards,setCards }) => {
             setCards={setCards}
           />
         </Grid>
-      ))}
+      ))}}
     </Grid>
   );
 };

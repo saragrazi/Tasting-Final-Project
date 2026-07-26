@@ -37,6 +37,7 @@ const {
   getCard,
   createCard,
   updateCard,
+  addReview,
   likeCard,
   deleteCard,
   getCardByTitle,
@@ -88,7 +89,7 @@ router.post("/", auth, upload.single('image'), async (req, res) => {
 
 
     card.image = {
-      url:  `http://www.localhost:8181/images/${user._id}-${file.originalname}`,
+      url:  `https://my-tasting.onrender.com/images/${user._id}-${file.originalname}`,
       alt: "",
     }
     
@@ -138,6 +139,28 @@ router.patch("/:id", auth, async (req, res) => {
     const userId = req.user._id;
 
     const card = await likeCard(cardId, userId);
+    return res.send(card);
+  } catch (error) {
+    return handleError(res, error.status || 500, error.message);
+  }
+});
+
+router.post("/:id/review", auth, async (req, res) => {
+  try {
+    const cardId = req.params.id;
+    const { rating, comment } = req.body;
+
+    if (!rating || rating < 1 || rating > 5) {
+      return handleError(res, 400, "Rating must be a number between 1 and 5");
+    }
+
+    const review = {
+      user_id: req.user._id,
+      comment: comment?.trim() || "",
+      rating,
+    };
+
+    const card = await addReview(cardId, review);
     return res.send(card);
   } catch (error) {
     return handleError(res, error.status || 500, error.message);

@@ -31,50 +31,47 @@ const CardActionBar = ({ cardId, userId, card, cards, setCards }) => {
   }, [card.likes, user?._id, setLocalLike]);
 
   return (
-    <>
-      <CardActions sx={{ pt: 0, justifyContent: "space-between" }}>
-        <Box>
-          {user && (user?._id === userId || user.isAdmin) && (
-            <IconButton
-              sx={{ "&:hover": { backgroundColor: "#d06b6b", color: "white" } }}
-              aria-label="delete"
-              onClick={() => {
-                onDelete(cardId);
-              }}
-            >
-              <DeleteIcon />
-            </IconButton>
-          )}
-          {user && user?._id === userId && (
-            <IconButton
-              sx={{ "&:hover": { backgroundColor: "#d06b6b", color: "white" } }}
-              aria-label="edit"
-              onClick={() => navigate(`${ROUTES.EDIT_CARD}/${cardId}`)}
-            >
-              <EditIcon />
-            </IconButton>
-          )}
-        
-        </Box>
-        <Box>
-          {user && (
-            <IconButton
-              sx={{
-                "&:hover": {
-                  backgroundColor:localLike? "white" : "#d06b6b",
-                  color: localLike ? "#d56c7c" : "white",
-                },
-                color: localLike ? "#d56c7c" : "inherit",
-              }}
-              aria-label="like"
-              onClick={() => onLike(cardId)}
-            >
-              <FavoriteIcon />
-            </IconButton>
-          )}
-        </Box>
-      </CardActions>
-    </>
+    <CardActions sx={{ pt: 0, justifyContent: "space-between", flexDirection: "row-reverse" }}>
+      <Box>
+        {user && (user?._id === userId || user.isAdmin) && (
+          <IconButton
+            sx={{ "&:hover": { backgroundColor: "#d06b6b", color: "white" } }}
+            aria-label="מחק"
+            onClick={() => {
+              onDelete(cardId);
+            }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        )}
+        {user && user?._id === userId && (
+          <IconButton
+            sx={{ "&:hover": { backgroundColor: "#d06b6b", color: "white" } }}
+            aria-label="ערוך"
+            onClick={() => navigate(`${ROUTES.EDIT_CARD}/${cardId}`)}
+          >
+            <EditIcon />
+          </IconButton>
+        )}
+      </Box>
+      <Box>
+        {user && (
+          <IconButton
+            sx={{
+              "&:hover": {
+                backgroundColor: localLike ? "white" : "#d06b6b",
+                color: localLike ? "#d56c7c" : "white",
+              },
+              color: localLike ? "#d56c7c" : "inherit",
+            }}
+            aria-label="אהבתי"
+            onClick={() => onLike(cardId)}
+          >
+            <FavoriteIcon />
+          </IconButton>
+        )}
+      </Box>
+    </CardActions>
   );
 };
 

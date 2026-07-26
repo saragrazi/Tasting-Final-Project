@@ -47,7 +47,7 @@ const SearchBar = () => {
           }}
           ref={refy}
           sx={{ backgroundColor: isDark ? "#333333" : "#e3f2fd" }}
-          placeholder="Search"
+          placeholder="חפש"
           size="small"
           value={SearchQuery}
           endAdornment={

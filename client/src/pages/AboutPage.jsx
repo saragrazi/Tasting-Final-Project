@@ -2,68 +2,60 @@ import React from "react";
 import Container from "@mui/material/Container";
 import PageHeader from "./../components/PageHeader";
 import Grid from "@mui/material/Grid";
-import { Typography } from "@mui/material";
+import { Typography, Box } from "@mui/material";
 
 const AboutPage = () => {
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="lg" sx={{ direction: "rtl", textAlign: "right" }}>
        <PageHeader
-        title="About Page"
-        subtitle="On this page you can find explanations about using the application"
+        title="אודות"
+        subtitle="כאן תוכל למצוא הסברים על השימוש באפליקציה"
       />
 
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8} alignItems="center">
-          <Typography className="welcome">
-              Hello and welcome to Tasting, your go-to place for all things
-              delicious! At Tasting, we're all about making your cooking
-              experience fun and easy.
+        <Grid item xs={12} md={8} alignItems="center" sx={{ direction: "rtl", textAlign: "right" }}>
+          <Typography className="welcome" align="right" paragraph>
+              שלום וברוכים הבאים ל-Tasting, המקום שלך לכל מה שקשור לאוכל טעים! ב-Tasting אנחנו
+              דואגים שהחוויה שלך במטבח תהיה מהנה וקלה.
           </Typography>
-          <b>Discover Amazing Recipes</b>{" "}
-          <Typography>
-            Explore a wide range of recipes that cater to every taste and skill
-            level. From hearty meals to sweet treats, Tasting is your
-            one-stop-shop for cooking inspiration.
+          <Box sx={{ mt: 2, mb: 1, fontWeight: "bold" }}>גלה מתכונים מדהימים</Box>
+          <Typography align="right" paragraph>
+            גלה מגוון גדול של מתכונים שמתאימים לכל טעם ולכל רמה. מארוחות מלאות ועד קינוחים מתוקים,
+            Tasting היא הכתובת שלך להשראה קולינרית.
           </Typography>
-          <b>Your Kitchen, Your Rules</b>{" "}
-          <Typography>
-            Become a part of the Tasting community by signing up. Once you're
-            in, you can share your favorite recipes, tweak them to your liking,
-            and even build your personal collection of must-try dishes.
+          <Box sx={{ mt: 2, mb: 1, fontWeight: "bold" }}>המטבח שלך, הכללים שלך</Box>
+          <Typography align="right" paragraph>
+            הצטרף לקהילת Tasting דרך הרשמה. אחרי ההתחברות תוכל לשתף את המתכונים האהובים עליך,
+            לערוך אותם לפי הטעם שלך, ולבנות אוסף אישי של מנות שחובה לנסות.
           </Typography>
-          <b>Add, Edit, Delete</b>
-          <Typography>
-            Feel like a chef by contributing your recipes to our collection.
-            Edit them anytime to match your evolving cooking style. Your
-            kitchen, your rules – let your creativity shine!
-          </Typography>{" "}
-          <b>Save Your Favorites</b>{" "}
-          <Typography>
-            Love a recipe? Save it to your Favorites! Easily revisit the dishes
-            you enjoyed the most without scrolling through the entire
-            collection.
+          <Box sx={{ mt: 2, mb: 1, fontWeight: "bold" }}>הוסף, ערוך, מחק</Box>
+          <Typography align="right" paragraph>
+            תרגיש כמו שף על ידי הוספת המתכונים שלך לאוסף שלנו. תוכל לערוך אותם בכל עת
+            כדי להתאים לסגנון הבישול המשתנה שלך. המטבח שלך, הכללים שלך – תן ליצירתיות שלך
+            לזרוח!
           </Typography>
-          <b>Choose Your View</b>{" "}
-          <Typography>
-            Tasting understands that everyone has their unique way of browsing.
-            Pick between an organized table or a cozy cards view to explore
-            recipes – it's all about what suits you.
-          </Typography>{" "}
-          <b>Simple and Beautiful Design</b>{" "}
-          <Typography>
-            Tasting isn't just practical; it's pretty too! Enjoy a clean and
-            user-friendly design that makes your cooking journey even more
-            enjoyable.
+          <Box sx={{ mt: 2, mb: 1, fontWeight: "bold" }}>שמור את המועדפים שלך</Box>
+          <Typography align="right" paragraph>
+            אהבת מתכון? שמור אותו במועדפים! כך תוכל לחזור בקלות למנות שהכי אהבת בלי
+            לגלול באוסף כולו.
           </Typography>
-          <b>Join Us on Tasting</b>{" "}
-          <Typography>
-            So, whether you're a cooking pro or just getting started, Tasting is
-            here to make your kitchen adventures exciting and flavorful. Join
-            us, and let's make every meal a tasty one!
+          <Box sx={{ mt: 2, mb: 1, fontWeight: "bold" }}>בחר את תצוגת המתכונים</Box>
+          <Typography align="right" paragraph>
+            Tasting מבין שלכל אחד יש דרך שונה לגלוש. בחר בין טבלת מתכונים מסודרת או תצוגת
+            כרטיסים נוחה כדי לגלות מתכונים – הכל תלוי במה שנוח לך.
           </Typography>
-          <p className="welcome1">
-            Good luck with your culinary adventures on Tasting!
-          </p>
+          <Box sx={{ mt: 2, mb: 1, fontWeight: "bold" }}>עיצוב פשוט ויפה</Box>
+          <Typography align="right" paragraph>
+            Tasting לא רק פרקטי, הוא גם יפה! תהנה מעיצוב נקי וידידותי שמעצים את חוויית הבישול שלך.
+          </Typography>
+          <Box sx={{ mt: 2, mb: 1, fontWeight: "bold" }}>הצטרף אלינו ל-Tasting</Box>
+          <Typography align="right" paragraph>
+            בין אם אתה שף מנוסה או רק מתחיל, Tasting כאן כדי להפוך את המסע הקולינרי שלך
+            למרגש וטעים. הצטרף אלינו ובוא נעשה כל ארוחה לחוויה.
+          </Typography>
+          <Typography className="welcome1" align="right">
+            בהצלחה בהרפתקאות הקולינריות שלך ב-Tasting!
+          </Typography>
         </Grid>
         <Grid
           item
@@ -73,7 +65,7 @@ const AboutPage = () => {
             justifyContent: "center",
           }}
         >
-          <img src="/assets/images/avatar2.png" alt="avatar" width="70%" />
+          <img src="/assets/images/avatar2.png" alt="אווטאר" width="70%" />
         </Grid>
       </Grid>
     </Container>

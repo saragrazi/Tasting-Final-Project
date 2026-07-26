@@ -20,7 +20,7 @@ const Form = ({
     <Box
       component="form"
       color={color}
-      sx={{ mt: 2, p: { xs: 1, sm: 2 }, ...styles }}
+      sx={{ mt: 2, p: { xs: 1, sm: 2 }, direction: "rtl", textAlign: "right", ...styles }}
       onSubmit={onSubmit}
       autoComplete="off"
       noValidate>
@@ -43,7 +43,7 @@ const Form = ({
         </Grid>
         <Grid item xs={12}>
           <FormButton
-            node="Submit"
+            node="שלח"
             onClick={onSubmit}
             disabled={!!onChange()}
             size="large"

@@ -29,16 +29,22 @@ const RightNavBar = () => {
 
   return (
     <>
-      <Box sx={{ display: { xs: "none", md: "inline-flex" } }}>
-        <SearchBar />
-
-        <IconButton sx={{ marginLeft: 1 }} onClick={toggleDarkMode}>
-          {isDark ? <LightModeIcon /> : <DarkModeIcon />}
-        </IconButton>
-
+      <Box
+        sx={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: 1,
+        }}
+      >
         {!user && <NotLogged />}
 
         {user && <Logged setAnchorEl={setAnchorEl} />}
+
+        <IconButton onClick={toggleDarkMode}>
+          {isDark ? <LightModeIcon /> : <DarkModeIcon />}
+        </IconButton>
+
+        <SearchBar />
       </Box>
 
       <MoreButton onClick={setAnchorEl} />

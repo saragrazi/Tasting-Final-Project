@@ -60,11 +60,11 @@ const UserProfilePage = () => {
 
   return (
     <>
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" sx={{ direction: "rtl", textAlign: "right" }}>
         <PageHeader
           textAlign={"center"}
-          title="User Profile"
-          subtitle="Here you can see your details"
+          title="פרופיל משתמש"
+          subtitle="כאן ניתן לראות את הפרטים שלך"
         />
 
         <Grid justifyContent={"center"} container spacing={0}>
@@ -75,23 +75,23 @@ const UserProfilePage = () => {
               alignItems={"center"}
               flexDirection={{ xs: "column-reverse", sm: "row" }}
             >
-              <Box p={1} mr={5}>
-                <Typography>First Name : {userData?.name.first}</Typography>
+              <Box p={1} mr={5} sx={{ textAlign: "right" }}>
+                <Typography>שם פרטי: {userData?.name.first}</Typography>
                 {userData?.name.middle && (
-                  <Typography>Middle Name : {userData?.name.middle}</Typography>
+                  <Typography>שם אמצעי: {userData?.name.middle}</Typography>
                 )}
-                <Typography>Last Name : {userData?.name.last}</Typography>
-                <Typography>Phone : {userData?.phone}</Typography>
-                <Typography>Email : {userData?.email}</Typography>
-                <Typography>Street : {userData?.address.street}</Typography>
-                <Typography>City : {userData?.address.city}</Typography>
-                <Typography>State : {userData?.address.state}</Typography>
-                <Typography>Country : {userData?.address.country}</Typography>
+                <Typography>שם משפחה: {userData?.name.last}</Typography>
+                <Typography>טלפון: {userData?.phone}</Typography>
+                <Typography>אימייל: {userData?.email}</Typography>
+                <Typography>רחוב: {userData?.address.street}</Typography>
+                <Typography>עיר: {userData?.address.city}</Typography>
+                <Typography>מדינה: {userData?.address.state}</Typography>
+                <Typography>ארץ: {userData?.address.country}</Typography>
                 <Typography>
-                  User Type : {userData?.isAdmin ? "Admin" : ""}{" "}
-                  {userData?.isBusiness ? "Business" : ""}{" "}
+                  סוג משתמש: {userData?.isAdmin ? "מנהל" : ""}{" "}
+                  {userData?.isBusiness ? "עסק" : ""}{" "}
                   {!userData?.isAdmin && !userData?.isBusiness
-                    ? "Regular User"
+                    ? "משתמש רגיל"
                     : ""}
                 </Typography>
               </Box>
@@ -109,13 +109,13 @@ const UserProfilePage = () => {
                 variant={open ? "contained" : "outlined"}
                 onClick={handleFormOpen}
               >
-                {open ? <CancelPresentationIcon /> : "Edit Details"}
+                {open ? <CancelPresentationIcon /> : "ערוך פרטים"}
               </Button>
             </Box>
           </Grid>
           {open && (
             <EditUserForm
-              title="Edit User"
+              title="ערוך משתמש"
               onSubmit={rest.onSubmit}
               onReset={rest.handleReset}
               onFormChange={rest.validateForm}
@@ -129,6 +129,7 @@ const UserProfilePage = () => {
       </Container>
     </>
   );
+}
 };
 
 export default UserProfilePage;

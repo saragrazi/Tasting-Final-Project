@@ -16,7 +16,7 @@ const Error = ({ errorMessage }) => {
           <img
             width="100%"
             src="/assets/images/broken-robot.png"
-            alt="broken robot"
+            alt="רובוט שבור"
           />
         </Grid>
       </Grid>

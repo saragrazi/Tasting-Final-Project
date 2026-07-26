@@ -24,20 +24,20 @@ const Footer = () => {
       >
         <BottomNavigationAction
           onClick={() => navigateTo(ROUTES.ABOUT)}
-          label="About"
+          label="אודות"
           icon={<InfoIcon />}
         />
         {user && (
           <BottomNavigationAction
             onClick={() => navigateTo(ROUTES.FAV_CARDS)}
-            label="Favorites"
+            label="מועדפים"
             icon={<FavoriteIcon />}
           />
         )}
         {user && user.isBusiness && (
           <BottomNavigationAction
             onClick={() => navigateTo(ROUTES.MY_CARDS)}
-            label="My Recipes"
+            label="המתכונים שלי"
             icon={<DescriptionIcon />}
           />
         )}

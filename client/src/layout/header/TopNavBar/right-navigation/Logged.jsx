@@ -8,12 +8,12 @@ const Logged = () => {
   const setIsOpen = useMenu();
 
   return (
-    <Tooltip title="Open settings">
+    <Tooltip title="פתח הגדרות">
       <IconButton
         sx={{ p: 0, display: "inline-flex", marginLeft: 2 }}
         onClick={() => setIsOpen(true)}
       >
-        <Avatar alt="Bird" src="/assets/images/avatar2.png" />
+        <Avatar alt="אוואטר משתמש" src="/assets/images/avatar2.png" />
       </IconButton>
     </Tooltip>
   );

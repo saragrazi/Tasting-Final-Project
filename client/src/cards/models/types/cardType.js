@@ -1,4 +1,4 @@
-import { shape, string, arrayOf } from "prop-types";
+import { shape, string, arrayOf, number } from "prop-types";
 
 
 const cardType = shape({
@@ -11,6 +11,7 @@ const cardType = shape({
   user_id: string.isRequired,
   createdAt: string.isRequired,
   likes: arrayOf(string).isRequired,
+  averageRating: number,
 });
 
 export default cardType;

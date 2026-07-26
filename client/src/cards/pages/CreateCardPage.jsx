@@ -27,10 +27,11 @@ const CreateCardPage = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        direction: "rtl",
       }}
     >
       <CardForm
-        title="Create Card"
+        title="צור מתכון"
         onSubmit={rest.onSubmit}
         onReset={rest.handleReset}
         errors={value.errors}

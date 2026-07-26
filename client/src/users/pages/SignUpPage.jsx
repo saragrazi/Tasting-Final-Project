@@ -31,10 +31,11 @@ const SignUpPage = () => {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
+        direction: "rtl",
       }}
     >
       <UserForm
-        title="register user"
+        title="הרשמת משתמש"
         onSubmit={rest.onSubmit}
         onReset={rest.handleReset}
         onFormChange={rest.validateForm}

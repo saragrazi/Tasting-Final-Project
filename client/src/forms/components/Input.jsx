@@ -32,6 +32,8 @@ const Input = ({
         fullWidth
         multiline={multiline}
         autoComplete="off"
+        dir="rtl"
+        inputProps={{ style: { textAlign: "right" } }}
       />
     </Grid>
   );
