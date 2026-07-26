@@ -81,7 +81,8 @@ const MyCardsPage = () => {
           cards={filtered}
           onDelete={() => { }}
           setCards={setCards}
-        />
+          />
+        </Box>
       )}
     </Container>
   );
