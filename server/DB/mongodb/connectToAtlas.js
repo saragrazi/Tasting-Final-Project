@@ -8,7 +8,7 @@ const password = config.get("DB_PASSWORD");
 mongoose.set('strictQuery', false);
 mongoose
   .connect(
-    `mongodb://localhost:27017/${userName}:${password}@david_Tasting`
+    process.env.MONGODB_URI || `mongodb://localhost:27017/${userName}:${password}@david_Tasting`
   )
   .then(() => console.log(chalk.magentaBright("connected to MongoDb Locally!")))
   .catch((error) =>
