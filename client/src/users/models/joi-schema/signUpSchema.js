@@ -1,40 +1,32 @@
 import Joi from "joi";
 
 const signupSchema = {
-  first: Joi.string().min(2).max(256).required(),
-  middle: Joi.string().min(2).max(256).allow(""),
-  last: Joi.string().min(2).max(256).required(),
+  first: Joi.string().label("שם פרטי").min(2).max(256).required(),
+  last: Joi.string().label("שם משפחה").min(2).max(256).required(),
   phone: Joi.string()
+    .label("טלפון")
     .ruleset.regex(/0[0-9]{1,2}-?\s?[0-9]{3}\s?[0-9]{4}/)
-    .rule({ message: 'user "phone" must be a valid phone number' })
+    .rule({ message: 'יש להזין מספר טלפון תקין' })
     .required(),
   email: Joi.string()
+    .label("אימייל")
     .ruleset.pattern(/^([a-zA-Z0-9_\-.]+)@([a-zA-Z0-9_\-.]+)\.([a-zA-Z]{2,5})$/)
-    .rule({ message: 'user "mail" must be a valid mail' })
+    .rule({ message: 'יש להזין כתובת אימייל תקינה' })
     .required(),
   password: Joi.string()
+    .label("סיסמה")
     .ruleset.regex(
       /((?=.*\d{1})(?=.*[A-Z]{1})(?=.*[a-z]{1})(?=.*[!@#$%^&*-]{1}).{7,20})/
     )
     .rule({
       message:
-        'user "password" must be at least nine characters long and contain an uppercase letter, a lowercase letter, a number and one of the following characters !@#$%^&*-',
+        'הסיסמה חייבת להכיל לפחות תשעה תווים, אות גדולה, אות קטנה, מספר ואחד מהתווים הבאים: !@#$%^&*-',
     })
     .required(),
-  url: Joi.string()
-    .ruleset.regex(
-      /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/
-    )
-    .rule({ message: "user image must be a valid url" })
-    .allow(""),
-  alt: Joi.string().min(2).max(256).allow(""),
-  state: Joi.string().allow(""),
-  country: Joi.string().min(2).max(256).required(),
-  city: Joi.string().min(2).max(256).required(),
-  street: Joi.string().min(2).max(256).required(),
-  houseNumber: Joi.number().required(),
-  zip: Joi.number(),
-  isBusiness: Joi.boolean().required(),
+  country: Joi.string().label("ארץ").min(2).max(256).required(),
+  city: Joi.string().label("עיר").min(2).max(256).required(),
+  street: Joi.string().label("רחוב").min(2).max(256).required(),
+  isBusiness: Joi.boolean().label("הרשמה כעסק").required(),
 };
 
 export default signupSchema;

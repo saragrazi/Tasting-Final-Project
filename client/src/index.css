@@ -2,7 +2,19 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Roboto", "san-serif";
+    font-family: "Rubik", "Arial", "san-serif";
+}
+
+html,
+body,
+#root {
+    direction: rtl;
+    text-align: right;
+    min-height: 100%;
+}
+
+body {
+    background-color: #fafafa;
 }
 
 .pink {

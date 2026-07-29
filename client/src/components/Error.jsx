@@ -9,7 +9,7 @@ const Error = ({ errorMessage }) => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={8}>
           <Typography variant="h5" color="initial">
-            Oops.. something went wrong: {errorMessage}
+            אופס.. משהו השתבש: {errorMessage}
           </Typography>
         </Grid>
         <Grid item xs={12} md={4} justifyContent="center">

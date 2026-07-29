@@ -7,6 +7,7 @@ const NotLogged = () => {
   return (
     <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
       <NavItem label="התחברות" to={ROUTES.LOGIN}></NavItem>
+      <NavItem label="הרשמה" to={ROUTES.SIGNUP}></NavItem>
     </Box>
   );
 };

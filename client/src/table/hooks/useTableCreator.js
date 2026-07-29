@@ -17,8 +17,8 @@ const useTableCreator = (cards) => {
     columns = [
       {
         field: 'likes',
-        headerName: '# likes',
-        width: 80,
+        headerName: 'לייקים',
+        width: 90,
         numeric: true,
         renderCell: (params) => {
           return (
@@ -26,22 +26,21 @@ const useTableCreator = (cards) => {
           )
         }
       },
-      { field: 'title', headerName: 'Recipe Name', width: 180 },
-      { field: 'subtitle', headerName: 'Subtitle', width: 200 },
-      { field: 'category', headerName: 'Category', width: 100 },
+      { field: 'title', headerName: 'שם המתכון', width: 220 },
+      { field: 'subtitle', headerName: 'תת-כותרת', width: 280 },
+      { field: 'category', headerName: 'קטגוריה', width: 140 },
       {
         field: 'image',
-        headerName: 'Image',
+        headerName: 'תמונה',
         width: 220,
-        height:500,
         renderCell: (params) => {
-          return <img height={"200px"} width={"200px"} src={params.value} alt='wow'></img>
+          return <img style={{ height: "120px", width: "120px", objectFit: "cover", borderRadius: 8 }} src={params.value} alt='wow'></img>
         }
       },
       {
         field: 'id',
-        headerName: 'Go To',
-        width: 80,
+        headerName: 'מעבר',
+        width: 90,
         renderCell: (params) => {
           return (
             <Button
@@ -58,21 +57,21 @@ const useTableCreator = (cards) => {
     ];
   } else {
     columns = [
-      { field: 'title', headerName: 'Recipe Name', width: 180 },
-      { field: 'subtitle', headerName: 'Subtitle', width: 200 },
-      { field: 'category', headerName: 'Category', width: 100 },
+      { field: 'title', headerName: 'שם המתכון', width: 220 },
+      { field: 'subtitle', headerName: 'תת-כותרת', width: 280 },
+      { field: 'category', headerName: 'קטגוריה', width: 140 },
       {
         field: 'image',
-        headerName: 'Image',
-        width: 250,
+        headerName: 'תמונה',
+        width: 220,
         renderCell: (params) => {
-          return <img height={"200px"} width={"200px"} src={params.value} alt='wow'></img>
+          return <img style={{ height: "120px", width: "120px", objectFit: "cover", borderRadius: 8 }} src={params.value} alt='wow'></img>
         }
       },
       {
         field: 'id',
-        headerName: 'Go To',
-        width: 80,
+        headerName: 'מעבר',
+        width: 90,
         renderCell: (params) => {
           return (
             <Button

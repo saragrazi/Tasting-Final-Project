@@ -66,13 +66,13 @@ const CardForm = ({
             value={data?.category ? data?.category : ""}
             name="category"
           >
-            <MenuItem value={"meat-meal"}>ארוחות בשר</MenuItem>
-            <MenuItem value={"milky-meal"}>ארוחות חלביות</MenuItem>
-            <MenuItem value={"fish"}>דגים</MenuItem>
-            <MenuItem value={"salads"}>סלטים</MenuItem>
-            <MenuItem value={"desserts"}>קינוחים</MenuItem>
-            <MenuItem value={"cakes-and-cookies"}>עוגות ועוגיות</MenuItem>
-            <MenuItem value={"pies"}>פשטידות</MenuItem>
+            <MenuItem value={"ארוחות בשר"}>ארוחות בשר</MenuItem>
+            <MenuItem value={"ארוחות חלביות"}>ארוחות חלביות</MenuItem>
+            <MenuItem value={"דגים"}>דגים</MenuItem>
+            <MenuItem value={"סלטים"}>סלטים</MenuItem>
+            <MenuItem value={"קינוחים"}>קינוחים</MenuItem>
+            <MenuItem value={"עוגות ועוגיות"}>עוגות ועוגיות</MenuItem>
+            <MenuItem value={"פשטידות"}>פשטידות</MenuItem>
           </Select>
         </FormControl>
       {title !== "ערוך מתכון" && (

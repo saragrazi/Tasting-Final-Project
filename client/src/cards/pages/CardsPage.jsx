@@ -5,36 +5,22 @@ import CardsFeedback from '../components/CardsFeedback';
 import useCards from '../hooks/useCards';
 import { searchContext } from '../../providers/SearchProvider';
 import FilterComp from '../../filters/FilterComp';
-import { Box, IconButton } from '@mui/material';
+import { Box, IconButton, Tooltip } from '@mui/material';
 import DataTable from '../../table/components/CardsTable';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableRowsIcon from '@mui/icons-material/TableRows';
-import handleDeleteCard from '../hooks/useCards'
+import { getVisibleCards } from '../helpers/filterCards';
 
 const CardsPage = () => {
   const { searchQuery } = useContext(searchContext)
-  const { pending, error, cards, handleGetCards, setCards, } = useCards();
+  const { pending, error, cards, handleGetCards, setCards, handleDeleteCard } = useCards();
   const [viewType, setViewType] = useState("cards")
-  const [filtered, setFiltered] = useState()
   const [sortBy, setSortBy] = useState("")
   const handleOnChange = useCallback((e) => {
     setSortBy(e.target.value)
   }, [])
 
-  useMemo(() => {
-    const query = searchQuery.toLowerCase();
-    if (searchQuery.length > 0 && sortBy.length === 0) {
-      setFiltered(cards?.filter(card => card?.title?.toLowerCase().includes(query)))
-    } else if (sortBy.length > 0 && searchQuery.length === 0) {
-      setFiltered(cards.filter((card) => (card.category === sortBy)))
-    } else if (sortBy.length > 0 && searchQuery.length > 0) {
-      let TempCards = []
-      TempCards = (cards.filter((card) => (card.category === sortBy)))
-      setFiltered(TempCards.filter(card => card?.title?.toLowerCase().includes(query)))
-    } else {
-      setFiltered(cards)
-    }
-  }, [cards, searchQuery, sortBy])
+  const filtered = useMemo(() => getVisibleCards(cards || [], searchQuery, sortBy), [cards, searchQuery, sortBy]);
 
   useEffect(() => {
     handleGetCards();
@@ -52,13 +38,21 @@ const CardsPage = () => {
       <PageHeader title="מתכונים" textAlign={"center"} />
       <Box display={"flex"} flexDirection={{ xs: "column", sm: "row" }} gap={2} mb={3} alignItems="center">
         <FilterComp handleOnChange={handleOnChange} sortBy={sortBy} cards={cards} />
-        {viewType === 'cards' ?
-          (<IconButton
-            color="inherit"
-            onClick={() => { setViewType(viewType === 'cards' ? 'table' : 'cards') }}><TableRowsIcon /></IconButton>)
-          :
-          (<IconButton color='inherit' onClick={() => { setViewType(viewType === 'cards' ? "table" : "cards") }}><DashboardIcon /></IconButton>)
-        }
+        {viewType === 'cards' ? (
+          <Tooltip title="תצוגת טבלה">
+            <IconButton
+              color="inherit"
+              aria-label="החלף לתצוגת טבלה"
+              onClick={() => { setViewType('table') }}><TableRowsIcon /></IconButton>
+          </Tooltip>
+        ) : (
+          <Tooltip title="תצוגת כרטיסים">
+            <IconButton
+              color='inherit'
+              aria-label="החלף לתצוגת כרטיסים"
+              onClick={() => { setViewType('cards') }}><DashboardIcon /></IconButton>
+          </Tooltip>
+        )}
       </Box>
       {viewType === 'table' && (
         <DataTable cards={filtered} />

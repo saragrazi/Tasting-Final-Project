@@ -4,7 +4,7 @@ import useCards from "../hooks/useCards";
 import PageHeader from "../../components/PageHeader";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/routesModel";
-import { Box, Container, Fab, IconButton } from "@mui/material";
+import { Box, Container, Fab, IconButton, Tooltip } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CardsFeedback from "../components/CardsFeedback";
 import { searchContext } from "../../providers/SearchProvider";
@@ -12,33 +12,20 @@ import FilterComp from "../../filters/FilterComp";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import CardsTable from "../../table/components/CardsTable";
+import { getVisibleCards } from "../helpers/filterCards";
 
 const MyCardsPage = () => {
   const { user } = useUser();
   const { pending, error, cards, handleGetMyCards, setCards } = useCards();
   const { searchQuery } = useContext(searchContext)
   const navigate = useNavigate();
-  const [filtered, setFiltered] = useState()
   const [viewType, setViewType] = useState("cards")
   const [sortBy, setSortBy] = useState("")
   const handleOnChange = useCallback((e) => {
     setSortBy(e.target.value)
   }, [])
 
-  useMemo(() => {
-    const query = searchQuery.toLowerCase();
-    if (searchQuery.length > 0 && sortBy.length === 0) {
-      setFiltered(cards?.filter(card => card?.title?.toLowerCase().includes(query)))
-    } else if (sortBy.length > 0 && searchQuery.length === 0) {
-      setFiltered(cards.filter((card) => (card.category === sortBy)))
-    } else if (sortBy.length > 0 && searchQuery.length > 0) {
-      let TempCards = []
-      TempCards = (cards.filter((card) => (card.category === sortBy)))
-      setFiltered(TempCards.filter(card => card?.title?.toLowerCase().includes(query)))
-    } else {
-      setFiltered(cards)
-    }
-  }, [cards, searchQuery, sortBy])
+  const filtered = useMemo(() => getVisibleCards(cards || [], searchQuery, sortBy), [cards, searchQuery, sortBy]);
 
 
   useEffect(() => {
@@ -54,13 +41,21 @@ const MyCardsPage = () => {
       />
       <Box display={"flex"} flexDirection={{ xs: "column", sm: "row" }} gap={2} mb={3} alignItems="center">
         <FilterComp handleOnChange={handleOnChange} sortBy={sortBy} cards={cards} />
-        {viewType === 'cards' ?
-          (<IconButton
-            color="inherit"
-            onClick={() => { setViewType(viewType === 'cards' ? 'table' : 'cards') }}><TableRowsIcon /></IconButton>)
-          :
-          (<IconButton color='inherit' onClick={() => { setViewType(viewType === 'cards' ? "table" : "cards") }}><DashboardIcon /></IconButton>)
-        }
+        {viewType === 'cards' ? (
+          <Tooltip title="תצוגת טבלה">
+            <IconButton
+              color="inherit"
+              aria-label="החלף לתצוגת טבלה"
+              onClick={() => { setViewType('table') }}><TableRowsIcon /></IconButton>
+          </Tooltip>
+        ) : (
+          <Tooltip title="תצוגת כרטיסים">
+            <IconButton
+              color='inherit'
+              aria-label="החלף לתצוגת כרטיסים"
+              onClick={() => { setViewType('cards') }}><DashboardIcon /></IconButton>
+          </Tooltip>
+        )}
       </Box>
       <Fab
         onClick={() => navigate(ROUTES.CREATE_CARD)}

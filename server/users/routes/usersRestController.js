@@ -69,6 +69,15 @@ router.get("/", auth, async(req, res) => {
     }
 });
 
+router.get("/count", async(req, res) => {
+    try {
+        const users = await getUsers();
+        return res.send({ count: users.length });
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message);
+    }
+});
+
 router.get("/:id", auth, async(req, res) => {
     try {
         const { id } = req.params;

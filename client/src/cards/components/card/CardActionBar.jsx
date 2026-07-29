@@ -4,7 +4,7 @@ import { Box, CardActions, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useUser } from "../../../users/providers/UserProvider";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ROUTES from "../../../routes/routesModel";
 import useCardActionBar from "./hooks/useCardActionBar";
 import useCards from "../../hooks/useCards";
@@ -12,6 +12,7 @@ import useCards from "../../hooks/useCards";
 const CardActionBar = ({ cardId, userId, card, cards, setCards }) => {
   const { user } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
   const { handleLikeCard, handleDeleteCard } = useCards();
   const { onDelete, onLike, localLike, setLocalLike } = useCardActionBar(
     handleDeleteCard,
@@ -65,7 +66,13 @@ const CardActionBar = ({ cardId, userId, card, cards, setCards }) => {
               color: localLike ? "#d56c7c" : "inherit",
             }}
             aria-label="אהבתי"
-            onClick={() => onLike(cardId)}
+            onClick={async () => {
+              const isCurrentlyLiked = Boolean(localLike);
+              await onLike(cardId);
+              if (location.pathname.includes("favorites") && isCurrentlyLiked && typeof setCards === "function") {
+                setCards((prevCards) => prevCards?.filter((item) => item._id !== cardId) || []);
+              }
+            }}
           >
             <FavoriteIcon />
           </IconButton>

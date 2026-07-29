@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiUrl = process.env.REACT_APP_API_URL || 'https://my-tasting.onrender.com';
+const apiUrl = process.env.REACT_APP_API_URL || (window.location.hostname === 'localhost' ? 'http://localhost:8181' : 'https://my-tasting.onrender.com');
 
 export const login = async user => {
     try {
@@ -49,6 +49,15 @@ export const getUser = async userId => {
 export const getUsers = async userId => {
     try {
         const { data } = await axios.get(`${apiUrl}/users/`);
+        return data;
+    } catch (error) {
+        return Promise.reject(error.message);
+    }
+};
+
+export const getUsersCount = async () => {
+    try {
+        const { data } = await axios.get(`${apiUrl}/users/count`);
         return data;
     } catch (error) {
         return Promise.reject(error.message);

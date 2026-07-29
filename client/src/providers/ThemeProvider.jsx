@@ -20,8 +20,9 @@ export const ThemeProvider = ({ children }) => {
     );
 
     const theme = createTheme({
+        direction: 'rtl',
         palette: {
-            mode: isDark ? 'dark' : 'light',      
+            mode: isDark ? 'dark' : 'light',
         },
     });
 

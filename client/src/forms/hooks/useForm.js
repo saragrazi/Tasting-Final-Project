@@ -2,6 +2,22 @@ import { useState, useCallback, useMemo } from "react";
 import { object, func } from "prop-types";
 import Joi from "joi";
 
+const heMessages = {
+  "any.required": "{#label} הוא שדה חובה",
+  "any.only": "{#label} אינו תקין",
+  "string.base": "{#label} חייב להיות טקסט",
+  "string.empty": "{#label} הוא שדה חובה",
+  "string.min": "{#label} חייב להכיל לפחות {#limit} תווים",
+  "string.max": "{#label} יכול להכיל עד {#limit} תווים",
+  "number.base": "{#label} חייב להיות מספר",
+  "boolean.base": "{#label} חייב להיות ערך בוליאני",
+};
+
+const validateOptions = {
+  messages: { he: heMessages },
+  errors: { language: "he", wrap: { label: false } },
+};
+
 const useForm = (initialForm, schema, handleSubmit) => {
   const [data, setData] = useState(initialForm);
   const [uploadFile,setUploadFile] = useState(null)
@@ -16,7 +32,7 @@ const useForm = (initialForm, schema, handleSubmit) => {
     ({ name, value }) => {
       const obj = { [name]: value };
       const generateSchema = Joi.object({ [name]: schema[name] });
-      const { error } = generateSchema.validate(obj);
+      const { error } = generateSchema.validate(obj, validateOptions);
       return error ? error.details[0].message : null;
     },
     [schema]
@@ -50,7 +66,7 @@ const useForm = (initialForm, schema, handleSubmit) => {
   const validateForm = useCallback(() => {
 
     const schemaForValidate = Joi.object(schema);
-    const { error } = schemaForValidate.validate(data);
+    const { error } = schemaForValidate.validate(data, validateOptions);
     if (error) return error;
     return null;
   }, [schema, data]);

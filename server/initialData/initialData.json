@@ -46,87 +46,87 @@
   ],
   "cards": [
     {
-      "title": "Grilled Steak",
-      "subtitle": "Delicious beef steak grilled to perfection",
-      "cookingSteps": "Season the steak\nGrill to desired doneness\nRest before serving",
-      "ingredients": "Beef steak\nSeasoning",
-      "category": "meat-meal",
-      "email": "user@example.com",
+      "title": "סטייק אנטריקוט בצליה מושלמת",
+      "subtitle": "נתח אנטריקוט עסיסי עם שום טרי, טימין ופלפל שחור גרוס",
+      "cookingSteps": "להוציא את הסטייק לטמפרטורת החדר כ-30 דקות לפני הבישול\nלתבל נדיב במלח אטלנטי ופלפל שחור גרוס\nלחמם מחבת פסים או גריל לטמפרטורה גבוהה מאוד\n לצרוב את הסטייק 3-4 דקות מכל צד יחד עם שיני שום וענפי טימין\nלהניח למנוחה של 5 דקות לפני הפריסה",
+      "ingredients": "נתח אנטריקוט איכותי\nשיני שום קלופות\nענפי טימין טריים\nשמן זית\nמלח אטלנטי ופלפל שחור גרוס",
+      "category": "ארוחות בשר",
+      "email": "business@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2016/01/22/02/13/meat-1155132_640.jpg",
-        "alt": "Grilled Steak"
+        "alt": "סטייק על האש"
       }
     },
     {
-      "title": "Creamy Alfredo Pasta",
-      "subtitle": "Rich and creamy pasta with Alfredo sauce",
-      "cookingSteps": "Cook pasta\nPrepare Alfredo sauce\nCombine and serve",
-      "ingredients": "Pasta\nAlfredo sauce",
-      "category": "milky-meal",
-      "email": "user@example.com",
+      "title": "פסטה פטוצ'יני ברוטב שמנת פטריות",
+      "subtitle": "פסטה קטיפתית ברוטב שמנת עשיר, פטריות שמפיניון ופרמזן",
+      "cookingSteps": "לבשל את הפסטה במים רותחים ומומלחים עד דרגת אל-דנטה\nבמחבת רחבה להמיס חמאה ולטגן פטריות ושום קצוץ עד להזהבה\nלצקת את השמנת המתוקה, לתבל במלח, פלפל ואגוז מוסקט ולהביא לרתיחה עדינה\nלהעביר את הפסטה לרוטב, להוסיף פרמזן מגוררת ולערבב כדקה עד שהרוטב עוטף את הפסטה",
+      "ingredients": "פסטה פטוצ'יני\nשמנת מתוקה לבישול\nסלסילת פטריות שמפיניון\nשיני שום\nגבינת פרמזן מגוררת\nחמאה, מלח, פלפל שחור ואגוז מוסקט",
+      "category": "ארוחות חלביות",
+      "email": "business@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2016/04/15/09/10/pasta-1330541_1280.jpg",
-        "alt": "Creamy Alfredo Pasta"
+        "alt": "פסטה אלפרדו"
       }
     },
     {
-      "title": "Baked Salmon",
-      "subtitle": "Healthy baked salmon with lemon and herbs",
-      "cookingSteps": "Season the salmon\nBake until cooked through\nGarnish with lemon",
-      "ingredients": "Salmon\nLemon\nHerbs",
-      "category": "fish",
-      "email": "user@example.com",
+      "title": "פילה סלמון אפוי בשיני שום ולימון",
+      "subtitle": "נתחי סלמון נמסים בפה עטופים בשמן זית, לימון ועשבי תיבול",
+      "cookingSteps": "לחמם תנור ל-200 מעלות ומרפדים תבנית בנייר אפייה\nבקערית מערבבים שמן זית, שום כתוש, מיץ לימון, גרידת לימון ועשבי תיבול\nמניחים את נתחי הסלמון בתבנית ומברישים נדיב בתערובת\nמתבלים במלח ופלפל ואופים 12-15 דקות עד שהדג עסיסי ומוכן",
+      "ingredients": "נתחי פילה סלמון טרי\nלימון (מיץ וגרידה)\nשיני שום כתושות\nפטרוזיליה ושמיר קצוצים\nשמן זית, מלח אטלנטי ופלפל שחור",
+      "category": "דגים",
+      "email": "business@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2015/04/08/13/13/food-712665_640.jpg",
-        "alt": "Baked Salmon"
+        "alt": "סלמון אפוי"
       }
     },
     {
-      "title": "Greek Salad",
-      "subtitle": "Fresh and flavorful Greek salad",
-      "cookingSteps": "Chop vegetables\nCombine with feta and olives\nDress with olive oil",
-      "ingredients": "Cucumbers\nTomatoes\nFeta\nOlives\nOlive oil",
-      "category": "salads",
-      "email": "user@example.com",
+      "title": "סלט יווני אסלי עם גבינת פטה וזיתי קלמטה",
+      "subtitle": "ירקות טריים ופריכים בתיבול קלאסי של שמן זית, לימון אורגנו",
+      "cookingSteps": "לחתוך עגבניות, מלפפונים ובצל סגול לקוביות גדולות וגסות\nלהעביר לקערת הגשה ולהוסיף זיתי קלמטה\nלהניח פרוסה נדיבה של גבינת פטה מעל הירקות\nלזלף שמן זית איכותי, מיץ לימון טרי ולפזר אורגנו יבש, מלח ופלפל",
+      "ingredients": "מלפפונים טריים\nעגבניות מוצקות\nבצל סגול\nגבינת פטה איכותית\nזיתי קלמטה\nשמן זית, לימון ואורגנו יבש",
+      "category": "סלטים",
+      "email": "business@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2017/05/21/22/49/farmers-salad-2332580_640.jpg",
-        "alt": "Greek Salad"
+        "alt": "סלט יווני"
       }
     },
     {
-      "title": "Vanilla Ice Cream",
-      "subtitle": "Homemade creamy vanilla ice cream",
-      "cookingSteps": "Mix ice cream base\nChurn in ice cream maker\nFreeze until firm",
-      "ingredients": "Milk\nSugar\nVanilla",
-      "category": "desserts",
-      "email": "user@example.com",
+      "title": "גלידת וניל קטיפתית ביתית",
+      "subtitle": "גלידה עשירה במרקם שמנמנת עם מקל וניל טבעי",
+      "cookingSteps": "להקציף שמנת מתוקה עם סוכר ותמצית וניל איכותית עד לקבלת קצפת יציבה\nלפתוח מקל וניל, לגרד את הציפה ולהוסיף לקצפת\nלקפל פנימה חלב מרוכז או חלב ממותק בעדינות\nלהעביר לתבנית מתאימה ולהקפיא לפחות 6 שעות עד להתייצבות מלאה",
+      "ingredients": "שמנת מתוקה 38%\nחלב מרוכז ממותק\nמקל וניל טבעי / תמצית וניל איכותית\nקורט מלח",
+      "category": "קינוחים",
+      "email": "business@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2016/12/26/16/09/bowl-1932375_640.jpg",
-        "alt": "Vanilla Ice Cream"
+        "alt": "גלידת וניל"
       }
     },
     {
-      "title": "Classic Chocolate Chip Cookies",
-      "subtitle": "Homemade cookies with gooey chocolate chips",
-      "cookingSteps": "Mix cookie dough\nDrop onto baking sheets\nBake until golden brown",
-      "ingredients": "Flour\nSugar\nChocolate chips",
-      "category": "cakes-and-cookies",
-      "email": "user@example.com",
+      "title": "עוגיות שוקולד צ'יפס אמריקאיות",
+      "subtitle": "עוגיות זהובות וקראנצ'יות מבחוץ עם ליבה רכה ושוקולד נמס",
+      "cookingSteps": "לערבל חמאה רכה עם סוכר לבן וסוכר חום לקבלת תערובת קרמית\nלהוסיף ביצה ותמצית וניל ולערבב היטב\nלהוסיף קמח, סודה לשתייה ומלח ולערבב רק עד איחוד\nלקפל פנימה את נטיפי השוקולד צ'יפס, ליצור כדורים ולאפות ב-180 מעלות כ-10 דקות",
+      "ingredients": "חמאה רכה\nסוכר חום דחוס וסוכר לבן\nקמח לבן\nביצה\nנטיפי שוקולד צ'יפס איכותיים\nסודה לשתייה ותמצית וניל",
+      "category": "עוגות ועוגיות",
+      "email": "business@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2016/03/18/02/16/cookies-1264263_640.jpg",
-        "alt": "Classic Chocolate Chip Cookies"
+        "alt": "עוגיות שוקולד"
       }
     },
     {
-      "title": "Apple Pie",
-      "subtitle": "Traditional apple pie with a flaky crust",
-      "cookingSteps": "Prepare apple filling\nAssemble pie and bake\nServe with vanilla ice cream",
-      "ingredients": "Apples\nPie crust\nSugar",
-      "category": "pies",
-      "email": "user@example.com",
+      "title": "מאפה פשטידת פטריות ובצל כפרית",
+      "subtitle": "פשטידה זהובה ועשירה בגבינות, פטריות מוזהבות ובצל מטוגן",
+      "cookingSteps": "לרפד תבנית בבצק פריך או בצק עלים ולחורר מעט במזלג\nלטגן במחבת בצל ופטריות עד להזהבה מלאה ולקרר מעט\nבקערה לערבב גבינות, ביצים, קמח ותבלינים ולהוסיף את הפטריות\n לצקת את התערובת לתבנית ולאפות ב-180 מעלות כ-40 דקות עד להזהבה יציבה",
+      "ingredients": "בצק פריך / עלים\nסלסילת פטריות\nבצלים גדולים\nגבינה לבנה / קוטג'\nגבינה צהובה מגוררת\nביצים, קמח, מלח, פלפל ואגוז מוסקט",
+      "category": "פשטידות",
+      "email": "business@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2020/08/11/13/58/apple-pie-5479993_1280.jpg",
-        "alt": "Apple Pie"
+        "alt": "פאי תפוחים"
       }
     }
   ]

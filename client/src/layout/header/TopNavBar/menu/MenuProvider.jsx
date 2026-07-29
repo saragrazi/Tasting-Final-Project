@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { node } from "prop-types";
-import { Box, useMediaQuery, useTheme as useMuiTheme } from "@mui/material";
+import { useMediaQuery, useTheme as useMuiTheme } from "@mui/material";
 import MenuComponent from "./Menu";
 
 const MenuContext = React.createContext(null);
@@ -9,39 +9,26 @@ export const MenuProvider = ({ children }) => {
   const theme = useMuiTheme();
   const screenSizeChanged = useMediaQuery(theme.breakpoints.up("md"));
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [anchorEl, setAnchor] = useState(null);
+  // anchorEl points at the button that opened the menu, so the menu
+  // drops down directly underneath it instead of a fixed screen corner.
+  const [anchorEl, setAnchorEl] = useState(null);
 
-  const ancorRef = useRef();
-
-  useEffect(() => {
-    setAnchor(ancorRef.current);
-        // eslint-disable-next-line
-
-  }, []);
+  const openMenu = useCallback((target) => setAnchorEl(target), []);
+  const closeMenu = useCallback(() => setAnchorEl(null), []);
 
   useEffect(() => {
-    setIsOpen(false);
+    setAnchorEl(null);
   }, [screenSizeChanged]);
 
   return (
     <>
-      <MenuContext.Provider value={setIsOpen}>{children}</MenuContext.Provider>
+      <MenuContext.Provider value={openMenu}>{children}</MenuContext.Provider>
 
-      <Box
-        ref={ancorRef}
-        component="span"
-        position="fixed"
-        top="70px"
-        right="20px"
-      ></Box>
-      {anchorEl && (
-        <MenuComponent
-          anchorEl={anchorEl}
-          isOpen={isOpen}
-          onClose={() => setIsOpen(false)}
-        />
-      )}
+      <MenuComponent
+        anchorEl={anchorEl}
+        isOpen={Boolean(anchorEl)}
+        onClose={closeMenu}
+      />
     </>
   );
 };

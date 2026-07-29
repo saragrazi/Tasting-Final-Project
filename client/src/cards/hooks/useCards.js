@@ -86,7 +86,7 @@ const useCards = () => {
       setPending(true);
       const card = await createCard(formData)
       requestStatus(false, null, null, card);
-      setSnack('success', 'your card has been created!');
+      setSnack('success', 'המתכון שלך נוצר בהצלחה!');
       navigate(ROUTES.MY_CARDS);
     } catch (error) {
       requestStatus(false, error, null, null);
@@ -99,7 +99,7 @@ const useCards = () => {
       const normalCard = normalizeCard(card);
       const data = await editCard(normalCard, cardId);
       requestStatus(false, null, null, data);
-      setSnack('success', 'your card has been UPDATED!');
+      setSnack('success', 'המתכון שלך עודכן בהצלחה!');
       navigate(ROUTES.MY_CARDS)
     } catch (error) {
       requestStatus(false, error, null, null);
@@ -121,9 +121,10 @@ const useCards = () => {
       setPending(true);
       const card = await addReview(cardId, review);
       requestStatus(false, null, null, card);
-      setSnack('success', 'Your review was added!');
+      setSnack('success', 'הביקורת נוספה בהצלחה!');
     } catch (error) {
       requestStatus(false, error, null, null);
+      setSnack('error', error?.message || 'לא ניתן להוסיף ביקורת כרגע');
     }
   };
 
@@ -131,7 +132,7 @@ const useCards = () => {
     try {
       setPending(true);
       const card = await deleteCard(cardId);
-      setSnack('success', 'your card has been DELETED!');
+      setSnack('success', 'המתכון שלך נמחק בהצלחה!');
       requestStatus(false, null, null, card);
 
     } catch (error) {

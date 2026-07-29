@@ -24,7 +24,7 @@ export const useUserProfile = () => {
         try {
             setPending(true)
             await editUser(userId, normalized)
-            setSnack("success", "User Detail Updated")
+            setSnack("success", "פרטי המשתמש עודכנו")
             navigate("/")
             setOpen(false)
             setPending(false)

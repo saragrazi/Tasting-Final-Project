@@ -8,28 +8,23 @@ import { UserProvider } from './users/providers/UserProvider';
 import { SearchProvider } from './providers/SearchProvider';
 
 function App() {
-    return ( <
-        BrowserRouter >
-        <
-        ThemeProvider >
-        <
-        SnackbarProvider >
-        <
-        UserProvider >
-        <
-        SearchProvider >
-        <
-        Layout >
-        <
-        Router / >
-        <
-        /Layout> < /
-        SearchProvider > <
-        /UserProvider> < /
-        SnackbarProvider > <
-        /ThemeProvider> < /
-        BrowserRouter >
-    );
+  return (
+    <BrowserRouter>
+      <ThemeProvider>
+        <SnackbarProvider>
+          <UserProvider>
+            <SearchProvider>
+              <div dir="rtl" lang="he" style={{ minHeight: '100vh' }}>
+                <Layout>
+                  <Router />
+                </Layout>
+              </div>
+            </SearchProvider>
+          </UserProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
+    </BrowserRouter>
+  );
 }
 
 export default App;

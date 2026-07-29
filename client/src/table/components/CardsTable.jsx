@@ -14,10 +14,18 @@ export default function CardsTable({ cards }) {
       <DataGrid
         rows={rows}
         columns={columns}
+        rowHeight={150}
         sx={{
           boxShadow: isDark ? "1px 1px 5px 1px #78A75A" : "1px 1px 5px 1px #d4e8b9",
           border: 1,
           borderColor: '#457127',
+          '& .MuiDataGrid-cell': {
+            py: 1.5,
+            alignItems: 'center',
+          },
+          '& .MuiDataGrid-row': {
+            minHeight: 150,
+          },
           '& .MuiDataGrid-cell:hover': {
             color: 'primary.light',
           },
@@ -27,10 +35,10 @@ export default function CardsTable({ cards }) {
             sortModel: [{field: 'likes', sort: 'desc'}]
           },
           pagination: {
-            paginationModel: { page: 0, pageSize: 5 },
+            paginationModel: { page: 0, pageSize: 6 },
           },
         }}
-        pageSizeOptions={[5, 10]}
+        pageSizeOptions={[6, 10]}
         disableRowSelectionOnClick
       // checkboxSelection
       />

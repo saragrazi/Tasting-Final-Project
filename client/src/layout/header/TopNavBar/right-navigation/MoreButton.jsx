@@ -5,12 +5,12 @@ import IconButton from "@mui/material/IconButton";
 import { func } from "prop-types";
 import { useMenu } from "../menu/MenuProvider";
 
-const MoreButton = ({ onClick }) => {
-  const setIsOpen = useMenu();
+const MoreButton = () => {
+  const openMenu = useMenu();
   return (
     <Box sx={{ display: { xs: "inline-flex", md: "none" } }}>
       <IconButton
-        onClick={() => setIsOpen(true)}
+        onClick={(e) => openMenu(e.currentTarget)}
         size="large"
         color="inherit"
         aria-label="תפריט"
@@ -23,7 +23,7 @@ const MoreButton = ({ onClick }) => {
 };
 
 MoreButton.propTypes = {
-  onClick: func.isRequired,
+  onClick: func,
 };
 
 export default MoreButton;

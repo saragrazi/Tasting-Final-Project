@@ -1,5 +1,5 @@
 import axios from "axios";
-const apiUrl = process.env.REACT_APP_API_URL || "https://my-tasting.onrender.com";
+const apiUrl = process.env.REACT_APP_API_URL || (window.location.hostname === "localhost" ? "http://localhost:8181" : "https://my-tasting.onrender.com");
 
 
 export const checkAndSaveCard = async (card) => {

@@ -9,7 +9,19 @@ import {
 } from "@mui/material";
 import cardType from "../../models/types/cardType";
 
+const categoryLabels = {
+  "ארוחות בשר": "ארוחות בשר",
+  "ארוחות חלביות": "ארוחות חלביות",
+  "דגים": "דגים",
+  "סלטים": "סלטים",
+  "קינוחים": "קינוחים",
+  "עוגות ועוגיות": "עוגות ועוגיות",
+  "פשטידות": "פשטידות",
+};
+
 const CardBody = ({ card }) => {
+  const reviewerCount = card.reviews?.length || 0;
+
   return (
     <CardContent sx={{ flex: 1, p: 1, display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
       <CardHeader
@@ -21,7 +33,10 @@ const CardBody = ({ card }) => {
         <Rating value={card.averageRating || 0} precision={0.5} readOnly size="small" />
       </Box>
       <Typography color="text.secondary" variant="caption" sx={{ display: "block", textAlign: "right", mb: 1 }}>
-        קטגוריה: {card.category}
+        {reviewerCount > 0 ? `דורג על ידי ${reviewerCount} ${reviewerCount === 1 ? "משתמש" : "משתמשים"}` : "עדיין לא דורג"}
+      </Typography>
+      <Typography color="text.secondary" variant="caption" sx={{ display: "block", textAlign: "right", mb: 1 }}>
+        קטגוריה: {categoryLabels[card.category] || card.category}
       </Typography>
       <Divider sx={{ mt: 1 }} />
     </CardContent>

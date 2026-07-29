@@ -154,6 +154,11 @@ router.post("/:id/review", auth, async (req, res) => {
       return handleError(res, 400, "Rating must be a number between 1 and 5");
     }
 
+    const existingCard = await getCard(cardId);
+    if (String(existingCard.user_id) === String(req.user._id)) {
+      return handleError(res, 403, "לא ניתן לדרג את המתכון שלך");
+    }
+
     const review = {
       user_id: req.user._id,
       comment: comment?.trim() || "",

@@ -5,13 +5,13 @@ import Avatar from "@mui/material/Avatar";
 import { useMenu } from "../menu/MenuProvider";
 
 const Logged = () => {
-  const setIsOpen = useMenu();
+  const openMenu = useMenu();
 
   return (
     <Tooltip title="פתח הגדרות">
       <IconButton
         sx={{ p: 0, display: "inline-flex", marginLeft: 2 }}
-        onClick={() => setIsOpen(true)}
+        onClick={(e) => openMenu(e.currentTarget)}
       >
         <Avatar alt="אוואטר משתמש" src="/assets/images/avatar2.png" />
       </IconButton>

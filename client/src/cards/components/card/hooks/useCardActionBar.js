@@ -7,7 +7,7 @@ const useCardActionBar = (handleDeleteCard, handleLikeCard, setCards, cards) => 
   const { setSnack } = useSnack();
 
   const onDelete = useCallback(async (cardId) => {
-    if (window.confirm('Are you sure you want to delete this card')) {
+    if (window.confirm('האם אתה בטוח שברצונך למחוק את המתכון הזה?')) {
       try {
         handleDeleteCard(cardId)
         setCards(() => cards.filter((card) => card._id !== cardId)
