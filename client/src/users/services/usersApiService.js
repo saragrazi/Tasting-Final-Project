@@ -64,6 +64,15 @@ export const getUsersCount = async () => {
     }
 };
 
+export const setUserBlockedStatus = async (userId, isBlocked) => {
+    try {
+        const { data } = await axios.patch(`${apiUrl}/users/${userId}/block`, { isBlocked });
+        return data;
+    } catch (error) {
+        return Promise.reject(error.response?.data || error.message);
+    }
+};
+
 export const deleteUser = async userId => {
     try {
         const { data } = await axios.delete(`${apiUrl}/users/${userId}`);

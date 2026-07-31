@@ -1,6 +1,7 @@
 const chalk = require("chalk");
 const express = require("express");
 const app = express();
+app.set("trust proxy", 1);
 const { handleError } = require("./utils/handleErrors");
 const router = require("./router/router");
 const cors = require("./middlewares/cors");
@@ -24,9 +25,9 @@ app.use((err, req, res, next) => {
 
 const PORT = config.get("PORT");
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(chalk.blueBright(`Listening on: https://my-tasting.onrender.com`));
   connectToDb();
-  generateInitialCards();
-  generateInitialUsers();
+  await generateInitialUsers();
+  await generateInitialCards();
 });

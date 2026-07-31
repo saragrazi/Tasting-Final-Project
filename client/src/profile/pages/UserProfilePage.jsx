@@ -77,15 +77,12 @@ const UserProfilePage = () => {
             >
               <Box p={1} mr={5} sx={{ textAlign: "right" }}>
                 <Typography>שם פרטי: {userData?.name.first}</Typography>
-                {userData?.name.middle && (
-                  <Typography>שם אמצעי: {userData?.name.middle}</Typography>
-                )}
+                
                 <Typography>שם משפחה: {userData?.name.last}</Typography>
                 <Typography>טלפון: {userData?.phone}</Typography>
                 <Typography>אימייל: {userData?.email}</Typography>
                 <Typography>רחוב: {userData?.address.street}</Typography>
                 <Typography>עיר: {userData?.address.city}</Typography>
-                <Typography>מדינה: {userData?.address.state}</Typography>
                 <Typography>ארץ: {userData?.address.country}</Typography>
                 <Typography>
                   סוג משתמש: {userData?.isAdmin ? "מנהל" : ""}{" "}

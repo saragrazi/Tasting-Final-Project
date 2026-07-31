@@ -39,6 +39,10 @@ const loginUser = async({ email, password }) => {
                 throw new Error("Authentication Error: Invalid email or password");
             }
 
+            if (user.isBlocked) {
+                throw new Error("Authentication Error: חשבון זה נחסם על ידי מנהל המערכת");
+            }
+
             const token = generateAuthToken(user);
             return Promise.resolve(token);
         } catch (error) {
@@ -107,6 +111,19 @@ const changeUserBusinessStatus = async(userId, status) => {
     return Promise.resolve("card liked not in mongodb");
 };
 
+const setUserBlockedStatus = async(userId, isBlocked) => {
+    if (DB === "MONGODB") {
+        try {
+            const user = await User.findByIdAndUpdate(userId, { isBlocked }, { new: true })
+            return Promise.resolve(user);
+        } catch (error) {
+            error.status = 400;
+            return Promise.reject(error);
+        }
+    }
+    return Promise.resolve("user block status not in mongodb");
+};
+
 const deleteUser = async(userId) => {
     if (DB === "MONGODB") {
         try {
@@ -126,4 +143,5 @@ exports.getUsers = getUsers;
 exports.getUser = getUser;
 exports.updateUser = updateUser;
 exports.changeUserBusinessStatus = changeUserBusinessStatus;
+exports.setUserBlockedStatus = setUserBlockedStatus;
 exports.deleteUser = deleteUser;

@@ -31,15 +31,7 @@ const EditUserForm = ({
         data={data}
         sm={6}
       />
-      <Input
-        name="middle"
-        label="שם אמצעי"
-        error={errors.middle}
-        onChange={onInputChange}
-        data={data}
-        sm={6}
-        required={false}
-      />
+      
       <Input
         name="last"
         label="שם משפחה"
@@ -66,33 +58,7 @@ const EditUserForm = ({
         data={data}
         sm={6}
       />
-      <Input
-        name="url"
-        label="כתובת תמונה"
-        error={errors.url}
-        onChange={onInputChange}
-        data={data}
-        sm={6}
-        required={false}
-      />
-      <Input
-        name="alt"
-        label="טקסט תמונה"
-        error={errors.alt}
-        onChange={onInputChange}
-        data={data}
-        sm={6}
-        required={false}
-      />
-      <Input
-        name="state"
-        label="מדינה"
-        error={errors.state}
-        onChange={onInputChange}
-        data={data}
-        sm={6}
-        required={false}
-      />
+      
       <Input
         label="ארץ"
         name="country"

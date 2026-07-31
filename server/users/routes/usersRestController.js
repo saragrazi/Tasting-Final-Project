@@ -10,6 +10,7 @@ const {
     getUser,
     updateUser,
     changeUserBusinessStatus,
+    setUserBlockedStatus,
     deleteUser,
     logUserLoginFail,
 } = require("../models/usersAccessDataService");
@@ -117,6 +118,24 @@ router.patch("/:id", auth, async(req, res) => {
         const { id } = req.params;
         const { status } = req.body;
         const user = await changeUserBusinessStatus(id, status);
+        return res.send(user);
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message);
+    }
+});
+
+router.patch("/:id/block", auth, async(req, res) => {
+    try {
+        if (!req.user.isAdmin) {
+            return handleError(
+                res,
+                403,
+                "Authorization Error: רק מנהל יכול לחסום משתמשים"
+            );
+        }
+        const { id } = req.params;
+        const { isBlocked } = req.body;
+        const user = await setUserBlockedStatus(id, Boolean(isBlocked));
         return res.send(user);
     } catch (error) {
         return handleError(res, error.status || 500, error.message);

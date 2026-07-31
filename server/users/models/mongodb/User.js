@@ -27,6 +27,7 @@ const schema = new mongoose.Schema({
     address: Address,
     isAdmin: { type: Boolean, default: false },
     isBusiness: { type: Boolean, default: false },
+    isBlocked: { type: Boolean, default: false },
     createdAt: {
         type: Date,
         default: Date.now,
