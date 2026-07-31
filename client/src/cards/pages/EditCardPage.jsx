@@ -32,6 +32,10 @@ const EditCardPage = () => {
         ingredients: card.ingredients,
         cookingSteps: card.cookingSteps,
         category: card.category,
+        prepTime: card.prepTime,
+        measuringCup: card.measuringCup,
+        tips: card.tips,
+        videoLink: card.videoLink || "",
         user_id: card.user_id
       })
     }
@@ -59,6 +63,7 @@ const EditCardPage = () => {
         errors={value.errors}
         onFormChange={rest.validateForm}
         onInputChange={rest.handleChange}
+        handleFileUpload={rest.handleFileUpload}
         data={value.data}
       />
     </Container>

@@ -1,8 +1,12 @@
 const initialCardForm = {
     title: '',
     subtitle: '',
-    ingredients:'',
+    ingredients: [{ name: '', quantity: 1 }],
     cookingSteps: '',
+    prepTime: '',
+    measuringCup: '',
+    tips: '',
+    videoLink: '',
   };
   
   export default initialCardForm;

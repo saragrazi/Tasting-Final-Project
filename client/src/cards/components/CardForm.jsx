@@ -2,8 +2,11 @@ import React from "react";
 import { func, object, string } from "prop-types";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
-import { FormControl, FormLabel, InputLabel, MenuItem, Select } from "@mui/material";
+import DynamicListInput from "../../forms/components/DynamicListInput";
+import IngredientListInput from "../../forms/components/IngredientListInput";
+import { FormControl, FormControlLabel, Checkbox, FormLabel, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import FileInput from "../../forms/components/FileInput";
+import MEASURING_CUP_OPTIONS from "../models/measuringCupOptions";
 
 
 
@@ -28,7 +31,7 @@ const CardForm = ({
     >
       <Input
         name="title"
-        label="כותרת"
+        label="שם המתכון"
         error={errors.title}
         onChange={onInputChange}
         data={data}
@@ -37,26 +40,25 @@ const CardForm = ({
 
       <Input
         name="subtitle"
-        label="תת-כותרת"
+        label="תאור קצר"
         error={errors.subtitle}
         onChange={onInputChange}
         data={data}
       />
-        <Input
-          name="ingredients"
-          label="מרכיבים"
-          error={errors.ingredients}
-          onChange={onInputChange}
-          data={data}
-          multiline={true}
-        />
-      <Input
-        name="cookingSteps"
-        label="איך מכינים אותו?"
-        error={errors.cookingSteps}
+      <IngredientListInput
+        name="ingredients"
+        label="מרכיבים "
+        value={data.ingredients}
         onChange={onInputChange}
-        data={data}
-        multiline={true}
+        error={errors.ingredients}
+      />
+      <DynamicListInput
+        name="cookingSteps"
+        label="אופן ההכנה"
+        addLabel="הוסף שלב"
+        value={data.cookingSteps}
+        onChange={onInputChange}
+        error={errors.cookingSteps}
       />
         <FormControl sx={{ marginLeft: "8px", marginTop: "15px" }} fullWidth>
           <InputLabel sx={{ display: "flex" }}>קטגוריה</InputLabel>
@@ -73,22 +75,82 @@ const CardForm = ({
             <MenuItem value={"קינוחים"}>קינוחים</MenuItem>
             <MenuItem value={"עוגות ועוגיות"}>עוגות ועוגיות</MenuItem>
             <MenuItem value={"פשטידות"}>פשטידות</MenuItem>
+            <MenuItem value={"לחמים"}>לחמים</MenuItem>
           </Select>
         </FormControl>
-      {title !== "ערוך מתכון" && (
-
-        <FormControl sx={{ marginLeft: "8px", marginTop: "5px", width: "100%" }}>
-          <FormLabel>העלאת תמונת מנה</FormLabel>
-          <FileInput
-            name="dishImage"
-            label=""
-            onChange={handleFileUpload}
-            type="file"
-            error={errors.description}
-            data={data}
+      <Input
+        name="prepTime"
+        label="זמן הכנה (בדקות)"
+        type="number"
+        error={errors.prepTime}
+        onChange={onInputChange}
+        data={data}
+      />
+      <FormControl sx={{ marginLeft: "8px", marginTop: "15px" }} fullWidth disabled={data?.measuringCup === null}>
+        <InputLabel sx={{ display: "flex" }}>כוס מדידה</InputLabel>
+        <Select
+          label="כוס מדידה"
+          onChange={onInputChange}
+          value={data?.measuringCup ? data?.measuringCup : ""}
+          name="measuringCup"
+          error={Boolean(errors.measuringCup)}
+        >
+          {MEASURING_CUP_OPTIONS.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControlLabel
+        sx={{ mr: 0 }}
+        control={
+          <Checkbox
+            checked={data?.measuringCup === null}
+            onChange={(e) => {
+              const checked = e.target.checked;
+              onInputChange({ target: { name: "measuringCup", value: checked ? null : "" } });
+            }}
           />
-        </FormControl>
-      )}
+        }
+        label={<Typography variant="body2">לא השתמשתי בכוס מדידה במתכון זה</Typography>}
+      />
+      <Input
+        name="tips"
+        label="טיפים"
+        error={errors.tips}
+        onChange={onInputChange}
+        data={data}
+        multiline={true}
+      />
+      <Input
+        name="videoLink"
+        label="קישור לסרטון הכנה"
+        error={errors.videoLink}
+        onChange={onInputChange}
+        data={data}
+        required={false}
+      />
+      <FormControl sx={{ marginLeft: "8px", marginTop: "5px", width: "100%" }}>
+        <FormLabel>
+          {title === "ערוך מתכון" ? "החלפת תמונת מנה (רשות)" : "העלאת תמונת מנה (רשות)"}
+        </FormLabel>
+        <FileInput
+          name="dishImage"
+          label=""
+          onChange={handleFileUpload}
+          type="file"
+          accept="image/*"
+          error={errors.dishImage}
+          data={data}
+          required={false}
+        />
+        <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
+          {title === "ערוך מתכון"
+            ? "ניתן להעלות קובץ תמונה בלבד. אם לא תעלו תמונה חדשה, התמונה הקיימת תישאר."
+            : "ניתן להעלות קובץ תמונה בלבד. אם לא תעלו תמונה, תוצג תמונת ברירת מחדל."}
+        </Typography>
+      </FormControl>
     </Form>
   );
 };

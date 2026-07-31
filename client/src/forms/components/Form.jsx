@@ -15,6 +15,7 @@ const Form = ({
   spacing,
   styles,
   children,
+  submitLabel,
 }) => {
   return (
     <Box
@@ -43,7 +44,7 @@ const Form = ({
         </Grid>
         <Grid item xs={12}>
           <FormButton
-            node="שלח"
+            node={submitLabel}
             onClick={onSubmit}
             disabled={!!onChange()}
             size="large"
@@ -63,6 +64,7 @@ Form.propTypes = {
   onChange: func.isRequired,
   title: string.isRequired,
   styles: object.isRequired,
+  submitLabel: string,
 };
 
 Form.defaultProps = {
@@ -71,6 +73,7 @@ Form.defaultProps = {
   spacing: 1,
   title: "",
   styles: {},
+  submitLabel: "שלח",
 };
 
 export default React.memo(Form);

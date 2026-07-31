@@ -10,7 +10,10 @@ const heMessages = {
   "string.min": "{#label} חייב להכיל לפחות {#limit} תווים",
   "string.max": "{#label} יכול להכיל עד {#limit} תווים",
   "number.base": "{#label} חייב להיות מספר",
+  "number.min": "{#label} חייב להיות לפחות {#limit}",
   "boolean.base": "{#label} חייב להיות ערך בוליאני",
+  "array.base": "{#label} חייב להיות רשימה",
+  "array.min": "יש להוסיף לפחות {#limit} ל{#label}",
 };
 
 const validateOptions = {
@@ -40,7 +43,8 @@ const useForm = (initialForm, schema, handleSubmit) => {
 
   const handleFileUpload = useCallback((e) => {
     const { name, files } = e.target;
-    setUploadFile(e.target.files[0]);
+    if (!files || !files[0]) return;
+    setUploadFile(files[0]);
     setData(val => ({...val, [name]: files[0].name}));
 
   },[])

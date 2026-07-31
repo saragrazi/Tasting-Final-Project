@@ -7,7 +7,10 @@ import {
   Rating,
   Typography,
 } from "@mui/material";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import PersonIcon from "@mui/icons-material/Person";
 import cardType from "../../models/types/cardType";
+import formatPrepTime from "../../helpers/formatPrepTime";
 
 const categoryLabels = {
   "ארוחות בשר": "ארוחות בשר",
@@ -19,25 +22,50 @@ const categoryLabels = {
   "פשטידות": "פשטידות",
 };
 
+const clampSx = {
+  display: "-webkit-box",
+  WebkitLineClamp: 3,
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  textAlign: "right",
+};
+
 const CardBody = ({ card }) => {
-  const reviewerCount = card.reviews?.length || 0;
+  const ratingCount = card.ratings?.length || 0;
 
   return (
     <CardContent sx={{ flex: 1, p: 1, display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
       <CardHeader
-        title={card.title}
-        subheader={card.subtitle}
+        title={<Typography variant="h6" sx={clampSx}>{card.title}</Typography>}
+        subheader={<Typography variant="body2" color="text.secondary" sx={clampSx}>{card.subtitle}</Typography>}
         sx={{ p: 0, mb: 1, textAlign: "right" }}
       />
-      <Box display="flex" justifyContent="flex-end" alignItems="center" gap={1} mb={1}>
+      <Box display="flex" justifyContent="flex-start" alignItems="center" gap={1} mb={1}>
         <Rating value={card.averageRating || 0} precision={0.5} readOnly size="small" />
       </Box>
       <Typography color="text.secondary" variant="caption" sx={{ display: "block", textAlign: "right", mb: 1 }}>
-        {reviewerCount > 0 ? `דורג על ידי ${reviewerCount} ${reviewerCount === 1 ? "משתמש" : "משתמשים"}` : "עדיין לא דורג"}
+        {ratingCount > 0 ? `דורג על ידי ${ratingCount} ${ratingCount === 1 ? "משתמש" : "משתמשים"}` : "עדיין לא דורג"}
       </Typography>
       <Typography color="text.secondary" variant="caption" sx={{ display: "block", textAlign: "right", mb: 1 }}>
         קטגוריה: {categoryLabels[card.category] || card.category}
       </Typography>
+      {Boolean(card.prepTime) && (
+        <Box display="flex" justifyContent="flex-start" alignItems="center" gap={0.5} mb={1}>
+          <Typography color="text.secondary" variant="caption">
+            זמן הכנה: {formatPrepTime(card.prepTime)}
+          </Typography>
+          <AccessTimeIcon sx={{ fontSize: 14 }} color="disabled" />
+        </Box>
+      )}
+      {Boolean(card.authorName) && (
+        <Box display="flex" justifyContent="flex-start" alignItems="center" gap={0.5} mb={1}>
+          <Typography color="text.secondary" variant="caption">
+            נכתב על ידי: {card.authorName}
+          </Typography>
+          <PersonIcon sx={{ fontSize: 14 }} color="disabled" />
+        </Box>
+      )}
       <Divider sx={{ mt: 1 }} />
     </CardContent>
   );

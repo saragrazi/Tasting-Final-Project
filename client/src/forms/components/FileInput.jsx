@@ -13,9 +13,10 @@ const FileInput = ({
   required,
   error,
   onChange,
+  accept,
   ...rest
 }) => {
-  
+
   return (
     <Grid item xs={12} {...rest}>
       <TextField
@@ -31,7 +32,7 @@ const FileInput = ({
         fullWidth
         autoComplete="off"
         dir="rtl"
-        inputProps={{ style: { textAlign: "right" } }}
+        inputProps={{ style: { textAlign: "right" }, accept }}
       />
     </Grid>
   );
@@ -45,6 +46,7 @@ FileInput.propTypes = {
   onChange: func.isRequired,
   variant: string,
   data: object,
+  accept: string,
 };
 
 FileInput.defaultProps = {
