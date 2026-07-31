@@ -71,12 +71,13 @@ const createCard = async normalizedCard => {
 const addRating = async (cardId, rating) => {
   if (DB === "MONGODB") {
     try {
-      const card = await Card.findById(cardId);
+      const card = await Card.findByIdAndUpdate(
+        cardId,
+        { $push: { ratings: rating } },
+        { new: true }
+      );
       if (!card)
         throw new Error("A card with this ID cannot be found in the database");
-
-      card.ratings.push(rating);
-      await card.save();
 
       return Promise.resolve(card);
     } catch (error) {
@@ -90,12 +91,13 @@ const addRating = async (cardId, rating) => {
 const addComment = async (cardId, comment) => {
   if (DB === "MONGODB") {
     try {
-      const card = await Card.findById(cardId);
+      const card = await Card.findByIdAndUpdate(
+        cardId,
+        { $push: { comments: comment } },
+        { new: true }
+      );
       if (!card)
         throw new Error("A card with this ID cannot be found in the database");
-
-      card.comments.push(comment);
-      await card.save();
 
       return Promise.resolve(card);
     } catch (error) {
@@ -109,16 +111,19 @@ const addComment = async (cardId, comment) => {
 const deleteComment = async (cardId, commentId) => {
   if (DB === "MONGODB") {
     try {
-      const card = await Card.findById(cardId);
+      const card = await Card.findByIdAndUpdate(
+        cardId,
+        {
+          $pull: {
+            comments: {
+              $or: [{ _id: commentId }, { parentCommentId: commentId }],
+            },
+          },
+        },
+        { new: true }
+      );
       if (!card)
         throw new Error("A card with this ID cannot be found in the database");
-
-      card.comments = card.comments.filter(
-        (c) =>
-          String(c._id) !== String(commentId) &&
-          String(c.parentCommentId) !== String(commentId)
-      );
-      await card.save();
 
       return Promise.resolve(card);
     } catch (error) {
@@ -151,21 +156,18 @@ const updateCard = async (cardId, normalizedCard) => {
 const likeCard = async (cardId, userId) => {
   if (DB === "MONGODB") {
     try {
-      let card = await Card.findById(cardId);
-      if (!card)
+      const existingCard = await Card.findById(cardId);
+      if (!existingCard)
         throw new Error("A card with this ID cannot be found in the database");
 
-      const cardLikes = card.likes.find(id => id === userId);
+      const hasLiked = existingCard.likes.some((id) => id === userId);
 
-      if (!cardLikes) {
-        card.likes.push(userId);
-        card = await card.save();
-        return Promise.resolve(card);
-      }
+      const card = await Card.findByIdAndUpdate(
+        cardId,
+        hasLiked ? { $pull: { likes: userId } } : { $addToSet: { likes: userId } },
+        { new: true }
+      );
 
-      const cardFiltered = card.likes.filter(id => id !== userId);
-      card.likes = cardFiltered;
-      card = await card.save();
       return Promise.resolve(card);
     } catch (error) {
       error.status = 400;
