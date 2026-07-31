@@ -1,13 +1,15 @@
 import { Box } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import { heIL } from '@mui/x-data-grid/locales';
 import { useTheme } from '../../providers/ThemeProvider';
 import useTableCreator from '../hooks/useTableCreator';
 import { array } from 'prop-types';
 
+const dataGridHebrewText = heIL.components.MuiDataGrid.defaultProps.localeText;
 
 export default function CardsTable({ cards }) {
   const {isDark} = useTheme()
-  const {columns, rows}= useTableCreator(cards)
+  const {columns, rows, onRowClick}= useTableCreator(cards)
 
   return (
     <Box mt={3} style={{ width: '100%' }}>
@@ -15,6 +17,8 @@ export default function CardsTable({ cards }) {
         rows={rows}
         columns={columns}
         rowHeight={150}
+        onRowClick={onRowClick}
+        localeText={dataGridHebrewText}
         sx={{
           boxShadow: isDark ? "1px 1px 5px 1px #78A75A" : "1px 1px 5px 1px #d4e8b9",
           border: 1,
@@ -25,6 +29,7 @@ export default function CardsTable({ cards }) {
           },
           '& .MuiDataGrid-row': {
             minHeight: 150,
+            cursor: 'pointer',
           },
           '& .MuiDataGrid-cell:hover': {
             color: 'primary.light',
@@ -32,7 +37,7 @@ export default function CardsTable({ cards }) {
         }}
         initialState={{
           sorting: {
-            sortModel: [{field: 'likes', sort: 'desc'}]
+            sortModel: [{field: 'rating', sort: 'desc'}]
           },
           pagination: {
             paginationModel: { page: 0, pageSize: 6 },

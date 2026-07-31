@@ -10,7 +10,7 @@ export const getVisibleCards = (cards = [], searchQuery = "", sortBy = "") => {
     const ratingA = Number(a.averageRating || 0);
     const ratingB = Number(b.averageRating || 0);
     if (ratingA === ratingB) {
-      return (b.reviews?.length || 0) - (a.reviews?.length || 0);
+      return (b.ratings?.length || 0) - (a.ratings?.length || 0);
     }
     return ratingB - ratingA;
   });

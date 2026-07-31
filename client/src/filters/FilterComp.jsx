@@ -26,7 +26,8 @@ const FilterComp = ({handleOnChange, sortBy}) => {
                 <MenuItem value={"קינוחים"}>קינוחים</MenuItem>
                 <MenuItem value={"עוגות ועוגיות"}>עוגות ועוגיות</MenuItem>
                 <MenuItem value={"פשטידות"}>פשטידות</MenuItem>
-                
+                <MenuItem value={"לחמים"}>לחמים</MenuItem>
+
             </Select>
         </FormControl>
     )
