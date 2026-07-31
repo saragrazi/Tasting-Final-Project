@@ -17,6 +17,8 @@ const loginSchema = {
         'הסיסמה חייבת להכיל לפחות שבעה תווים, אות גדולה, אות קטנה, מספר ואחד מהתווים הבאים: !@#$%^&*-',
     })
     .required(),
+
+  rememberMe: Joi.boolean(),
 };
 
 export default loginSchema;

@@ -7,7 +7,10 @@ const initialSignUpForm = {
     country: "",
     city: "",
     street: "",
+    houseNumber: "",
+    zip: "",
     isBusiness: false,
+    rememberMe: false,
   };
 
   export default initialSignUpForm;

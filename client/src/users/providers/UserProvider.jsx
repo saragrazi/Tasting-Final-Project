@@ -12,7 +12,7 @@ export const UserProvider = ({ children }) => {
     if (!user) {
       const userFromLocaleStorage = getUser();
       setUser(userFromLocaleStorage);
-      setToken(localStorage?.getItem("token"));
+      setToken(getToken());
     }
   }, [user]);
 

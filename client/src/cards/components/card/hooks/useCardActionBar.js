@@ -4,22 +4,29 @@ import { func, object } from "prop-types";
 
 const useCardActionBar = (handleDeleteCard, handleLikeCard, setCards, cards) => {
   const [localLike, setLocalLike] = useState()
+  const [cardIdToDelete, setCardIdToDelete] = useState(null);
   const { setSnack } = useSnack();
 
-  const onDelete = useCallback(async (cardId) => {
-    if (window.confirm('האם אתה בטוח שברצונך למחוק את המתכון הזה?')) {
-      try {
-        handleDeleteCard(cardId)
-        setCards(() => cards.filter((card) => card._id !== cardId)
-        );
-      } catch (err) {
+  const onDelete = useCallback((cardId) => {
+    setCardIdToDelete(cardId);
+  }, [])
 
-        setSnack("error", err)
-      }
-    } else {
-      return
+  const onCancelDelete = useCallback(() => {
+    setCardIdToDelete(null);
+  }, [])
+
+  const onConfirmDelete = useCallback(async () => {
+    const cardId = cardIdToDelete;
+    setCardIdToDelete(null);
+    try {
+      handleDeleteCard(cardId)
+      setCards(() => cards.filter((card) => card._id !== cardId)
+      );
+    } catch (err) {
+
+      setSnack("error", err)
     }
-  },[cards,handleDeleteCard,setCards,setSnack])
+  },[cardIdToDelete,cards,handleDeleteCard,setCards,setSnack])
 
   const onLike = useCallback(async (cardId) => {
     try {
@@ -40,7 +47,10 @@ const useCardActionBar = (handleDeleteCard, handleLikeCard, setCards, cards) => 
     onDelete,
     onLike,
     localLike,
-    setLocalLike
+    setLocalLike,
+    cardIdToDelete,
+    onCancelDelete,
+    onConfirmDelete
   }
 }
 

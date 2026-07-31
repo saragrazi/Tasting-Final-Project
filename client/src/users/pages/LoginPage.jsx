@@ -9,6 +9,10 @@ import loginSchema from "../models/joi-schema/loginSchema";
 import Container from "@mui/material/Container";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
+import Grid from "@mui/material/Grid";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Typography from "@mui/material/Typography";
 
 const LoginPage = () => {
   const { user } = useUser();
@@ -36,6 +40,7 @@ const LoginPage = () => {
         onReset={rest.handleReset}
         onChange={rest.validateForm}
         title="התחברות"
+        submitLabel="התחבר"
         styles={{ maxWidth: "450px", direction: "rtl", textAlign: "right" }}
         to={ROUTES.CARDS}>
         <Input
@@ -54,6 +59,22 @@ const LoginPage = () => {
           onChange={rest.handleChange}
           data={value.data}
         />
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={Boolean(value.data.rememberMe)}
+                onChange={(e) =>
+                  rest.setData({ ...value.data, rememberMe: e.target.checked })
+                }
+              />
+            }
+            label="זכור אותי"
+          />
+          <Typography variant="caption" color="text.secondary" display="block">
+            במידה ואפשרות זו תיבחר, לא תצטרך להתחבר מחדש
+          </Typography>
+        </Grid>
       </Form>
     </Container>
   );

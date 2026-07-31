@@ -8,18 +8,22 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ROUTES from "../../../routes/routesModel";
 import useCardActionBar from "./hooks/useCardActionBar";
 import useCards from "../../hooks/useCards";
+import DeleteModal from "../DeleteModal";
 
 const CardActionBar = ({ cardId, userId, card, cards, setCards }) => {
   const { user } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
   const { handleLikeCard, handleDeleteCard } = useCards();
-  const { onDelete, onLike, localLike, setLocalLike } = useCardActionBar(
-    handleDeleteCard,
-    handleLikeCard,
-    setCards,
-    cards
-  );
+  const {
+    onDelete,
+    onLike,
+    localLike,
+    setLocalLike,
+    cardIdToDelete,
+    onCancelDelete,
+    onConfirmDelete,
+  } = useCardActionBar(handleDeleteCard, handleLikeCard, setCards, cards);
   useEffect(() => {
     const isLiked = async () => {
       const hasUser = await card.likes.filter((like) => like === user?._id);
@@ -78,6 +82,13 @@ const CardActionBar = ({ cardId, userId, card, cards, setCards }) => {
           </IconButton>
         )}
       </Box>
+      <DeleteModal
+        isOpen={Boolean(cardIdToDelete)}
+        onClose={onCancelDelete}
+        onConfirm={onConfirmDelete}
+        title="מחיקת מתכון"
+        message="האם אתה בטוח שברצונך למחוק את המתכון הזה?"
+      />
     </CardActions>
   );
 };

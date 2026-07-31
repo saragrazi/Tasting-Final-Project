@@ -5,7 +5,7 @@ const key = config.get("JWT_KEY");
 
 const generateAuthToken = (user) => {
     const { _id, isBusiness, isAdmin } = user;
-    const token = jwt.sign({ _id, isBusiness, isAdmin }, key);
+    const token = jwt.sign({ _id, isBusiness, isAdmin }, key, { expiresIn: "3650d" });
     return token;
 };
 

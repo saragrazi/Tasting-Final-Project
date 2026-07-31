@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../providers/UserProvider';
 import useAxios from '../../hooks/useAxios';
-import { login, signUp } from '../services/usersApiService';
+import { login, signUp, getUsers, setUserBlockedStatus } from '../services/usersApiService';
 import {
     getUser,
     removeToken,
@@ -34,9 +34,10 @@ const useUsers = () => {
     const handleLogin = useCallback(
         async user => {
             try {
-                const token = await login(user);
+                const { rememberMe, ...credentials } = user;
+                const token = await login(credentials);
                 setToken(token);
-                setTokenInLocalStorage(token);
+                setTokenInLocalStorage(token, rememberMe);
                 const userFromLocalStorage = getUser();
                 requestStatus(false, null, null, userFromLocalStorage);
                 navigate(ROUTES.CARDS);
@@ -53,6 +54,31 @@ const useUsers = () => {
         }, [setUser]
     );
 
+    const handleGetUsers = useCallback(
+        async () => {
+            try {
+                setPending(true);
+                const allUsers = await getUsers();
+                requestStatus(false, null, allUsers, user);
+            } catch (error) {
+                requestStatus(false, error, null, user);
+            }
+        }, [requestStatus, user]
+    );
+
+    const handleBlockUser = useCallback(
+        async (userId, isBlocked) => {
+            try {
+                await setUserBlockedStatus(userId, isBlocked);
+                setUsers((prev) =>
+                    prev.map((u) => (u._id === userId ? { ...u, isBlocked } : u))
+                );
+            } catch (error) {
+                setError(error);
+            }
+        }, []
+    );
+
     const handleSignup = useCallback(
         async user => {
             try {
@@ -62,6 +88,7 @@ const useUsers = () => {
                 await handleLogin({
                     email: user.email,
                     password: user.password,
+                    rememberMe: user.rememberMe,
                 });
             } catch (error) {
                 requestStatus(false, error, null);
@@ -69,7 +96,17 @@ const useUsers = () => {
         }, [handleLogin, requestStatus]
     );
 
-    return { pending, error, user, users, handleLogin, handleLogout, handleSignup };
+    return {
+        pending,
+        error,
+        user,
+        users,
+        handleLogin,
+        handleLogout,
+        handleSignup,
+        handleGetUsers,
+        handleBlockUser,
+    };
 };
 
 export default useUsers;

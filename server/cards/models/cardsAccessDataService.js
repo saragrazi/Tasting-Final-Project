@@ -45,10 +45,6 @@ const getCard = async cardId => {
     try {
       let card = await Card.findById(cardId);
       if (!card) throw new Error("Could not find this card in the database");
-      const ratings = card.reviews?.map(r => r.rating || 0) || [];
-      card.averageRating = ratings.length
-        ? ratings.reduce((sum, value) => sum + value, 0) / ratings.length
-        : 0;
       return Promise.resolve(card);
     } catch (error) {
       error.status = 404;
@@ -72,32 +68,15 @@ const createCard = async normalizedCard => {
   return Promise.resolve("createCard card not in mongodb");
 };
 
-const addReview = async (cardId, review) => {
+const addRating = async (cardId, rating) => {
   if (DB === "MONGODB") {
     try {
       const card = await Card.findById(cardId);
       if (!card)
         throw new Error("A card with this ID cannot be found in the database");
 
-      const alreadyReviewed = card.reviews.some(
-        (existingReview) =>
-          String(existingReview.user_id) === String(review.user_id)
-      );
-
-      if (alreadyReviewed) {
-        const error = new Error("You already reviewed this recipe");
-        error.status = 400;
-        return handleBadRequest("Mongoose", error);
-      }
-
-      card.reviews.push(review);
+      card.ratings.push(rating);
       await card.save();
-
-      const ratings = card.reviews.map((r) => r.rating || 0);
-      card.averageRating =
-        ratings.length > 0
-          ? ratings.reduce((sum, value) => sum + value, 0) / ratings.length
-          : 0;
 
       return Promise.resolve(card);
     } catch (error) {
@@ -105,7 +84,49 @@ const addReview = async (cardId, review) => {
       return handleBadRequest("Mongoose", error);
     }
   }
-  return Promise.resolve("addReview card not in mongodb");
+  return Promise.resolve("addRating card not in mongodb");
+};
+
+const addComment = async (cardId, comment) => {
+  if (DB === "MONGODB") {
+    try {
+      const card = await Card.findById(cardId);
+      if (!card)
+        throw new Error("A card with this ID cannot be found in the database");
+
+      card.comments.push(comment);
+      await card.save();
+
+      return Promise.resolve(card);
+    } catch (error) {
+      error.status = 400;
+      return handleBadRequest("Mongoose", error);
+    }
+  }
+  return Promise.resolve("addComment card not in mongodb");
+};
+
+const deleteComment = async (cardId, commentId) => {
+  if (DB === "MONGODB") {
+    try {
+      const card = await Card.findById(cardId);
+      if (!card)
+        throw new Error("A card with this ID cannot be found in the database");
+
+      card.comments = card.comments.filter(
+        (c) =>
+          String(c._id) !== String(commentId) &&
+          String(c.parentCommentId) !== String(commentId)
+      );
+      await card.save();
+
+      return Promise.resolve(card);
+    } catch (error) {
+      error.status = 400;
+      return handleBadRequest("Mongoose", error);
+    }
+  }
+  return Promise.resolve("deleteComment card not in mongodb");
 };
 
 const updateCard = async (cardId, normalizedCard) => {
@@ -184,7 +205,9 @@ exports.getCards = getCards;
 exports.getMyCards = getMyCards;
 exports.getCard = getCard;
 exports.createCard = createCard;
-exports.addReview = addReview;
+exports.addRating = addRating;
+exports.addComment = addComment;
+exports.deleteComment = deleteComment;
 exports.updateCard = updateCard;
 exports.likeCard = likeCard;
 exports.deleteCard = deleteCard;

@@ -4,9 +4,7 @@ const apiUrl = process.env.REACT_APP_API_URL || (window.location.hostname === "l
 
 export const checkAndSaveCard = async (card) => {
   try {
-    const { data } = await axios.post(`${apiUrl}/cards/check-and-save`, card, {
-      headers: { 'Content-Type':'multipart/form-data'}
-    });
+    const { data } = await axios.post(`${apiUrl}/cards/check-and-save`, card);
     return data;
   } catch (error) {
     return Promise.reject(error.message);
@@ -43,7 +41,7 @@ export const getMyCards = async () => {
 
 export const createCard = async (card) => {
   try {
-    const { data } = await axios.post(`${apiUrl}/cards`, card, { headers: { 'Content-Type':'multipart/form-data'}});
+    const { data } = await axios.post(`${apiUrl}/cards`, card);
     return data;
   } catch (error) {
     return Promise.reject(error.message);
@@ -55,7 +53,7 @@ export const editCard = async (card, cardId) => {
     const { data } = await axios.put(`${apiUrl}/cards/${cardId}`, card);
     return data;
   } catch (error) {
-    return Promise.reject(error.message);
+    return Promise.reject(error.response?.data || error.message);
   }
 };
 
@@ -68,12 +66,33 @@ export const likeCard = async (cardId) => {
   }
 };
 
-export const addReview = async (cardId, review) => {
+export const addRating = async (cardId, rating) => {
   try {
-    const { data } = await axios.post(`${apiUrl}/cards/${cardId}/review`, review);
+    const { data } = await axios.post(`${apiUrl}/cards/${cardId}/rate`, { rating });
     return data;
   } catch (error) {
-    return Promise.reject(error.message);
+    return Promise.reject(error.response?.data || error.message);
+  }
+};
+
+export const addComment = async (cardId, { text, parentCommentId }) => {
+  try {
+    const { data } = await axios.post(`${apiUrl}/cards/${cardId}/comment`, {
+      text,
+      parentCommentId,
+    });
+    return data;
+  } catch (error) {
+    return Promise.reject(error.response?.data || error.message);
+  }
+};
+
+export const deleteComment = async (cardId, commentId) => {
+  try {
+    const { data } = await axios.delete(`${apiUrl}/cards/${cardId}/comment/${commentId}`);
+    return data;
+  } catch (error) {
+    return Promise.reject(error.response?.data || error.message);
   }
 };
 

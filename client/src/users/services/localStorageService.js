@@ -1,14 +1,24 @@
 import JwtDecode from 'jwt-decode';
 const TOKEN = 'token';
 
-export const setTokenInLocalStorage = token => {
-  localStorage.setItem (TOKEN, token);
+export const setTokenInLocalStorage = (token, rememberMe = true) => {
+  if (rememberMe) {
+    localStorage.setItem (TOKEN, token);
+    sessionStorage.removeItem (TOKEN);
+  } else {
+    sessionStorage.setItem (TOKEN, token);
+    localStorage.removeItem (TOKEN);
+  }
+};
+
+export const getToken = () => {
+  return localStorage.getItem (TOKEN) || sessionStorage.getItem (TOKEN);
 };
 
 export const getUser = () => {
   try {
-    const user = localStorage.getItem (TOKEN);
-    return JwtDecode (user);
+    const token = getToken ();
+    return JwtDecode (token);
   } catch (err) {
     return null;
   }
@@ -16,8 +26,5 @@ export const getUser = () => {
 
 export const removeToken = () => {
   localStorage.removeItem (TOKEN);
-};
-
-export const getToken = () => {
-  localStorage.getItem (TOKEN);
+  sessionStorage.removeItem (TOKEN);
 };

@@ -15,21 +15,12 @@ const storage = multer.diskStorage({
 })
 
 function fileFilter (req, file, cb) {
-  const extention = (String(file.mimetype).split('/')[1]);
-  const acceptedFiles = ['jpg', 'png', 'jpeg']
-  for (const file of acceptedFiles) {
-
-    if(extention !== file) {
-      
-      cb(null, false)
-    } else {
-      cb(null,true)
-    }
-  }
-  
+  const isImage = String(file.mimetype).startsWith('image/');
+  cb(null, isImage);
 }
 
 const upload = multer({ dest: 'uploads/',preservePath: true,storage:storage, fileFilter: fileFilter})
+
 
 const {
   getCards,
@@ -37,11 +28,14 @@ const {
   getCard,
   createCard,
   updateCard,
-  addReview,
+  addRating,
+  addComment,
   likeCard,
   deleteCard,
+  deleteComment,
   getCardByTitle,
 } = require("../models/cardsAccessDataService");
+const { getUser } = require("../../users/models/usersAccessDataService");
 const validateCard = require("../validations/cardValidationService");
 const normalizeEditCard = require("../helpers/normalizeEditCard");
 const router = express.Router();
@@ -88,11 +82,16 @@ router.post("/", auth, upload.single('image'), async (req, res) => {
     }
 
 
-    card.image = {
-      url:  `https://my-tasting.onrender.com/images/${user._id}-${file.originalname}`,
-      alt: "",
-    }
-    
+    card.image = file
+      ? {
+          url: `${req.protocol}://${req.get("host")}/images/${user._id}-${file.originalname}`,
+          alt: "",
+        }
+      : {
+          url: `${req.protocol}://${req.get("host")}/images/default-recipe.jpg`,
+          alt: "תמונת ברירת מחדל למתכון",
+        };
+
     if (!user.isBusiness)
       return handleError(res, 403, "Authentication Error: Unauthorize user");
 
@@ -109,9 +108,10 @@ router.post("/", auth, upload.single('image'), async (req, res) => {
   }
 });
 
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", auth, upload.single('image'), async (req, res) => {
   try {
-    let card = req.body;
+    let card = JSON.parse(req.body.form);
+    let file = req.file;
     const cardId = req.params.id;
     const userId = req.user._id;
 
@@ -119,6 +119,15 @@ router.put("/:id", auth, async (req, res) => {
       const message =
         "Authorization Error: Only the user who created the business card can update its details";
       return handleError(res, 403, message);
+    }
+
+    if (file) {
+      card.image = {
+        url: `${req.protocol}://${req.get("host")}/images/${userId}-${file.originalname}`,
+        alt: "",
+      };
+    } else {
+      delete card.image;
     }
 
     const { error } = validateCard(card);
@@ -145,10 +154,10 @@ router.patch("/:id", auth, async (req, res) => {
   }
 });
 
-router.post("/:id/review", auth, async (req, res) => {
+router.post("/:id/rate", auth, async (req, res) => {
   try {
     const cardId = req.params.id;
-    const { rating, comment } = req.body;
+    const { rating } = req.body;
 
     if (!rating || rating < 1 || rating > 5) {
       return handleError(res, 400, "Rating must be a number between 1 and 5");
@@ -159,13 +168,72 @@ router.post("/:id/review", auth, async (req, res) => {
       return handleError(res, 403, "לא ניתן לדרג את המתכון שלך");
     }
 
-    const review = {
+    const alreadyRated = existingCard.ratings.some(
+      (r) => String(r.user_id) === String(req.user._id)
+    );
+    if (alreadyRated) {
+      return handleError(res, 400, "כבר דירגת את המתכון הזה");
+    }
+
+    const card = await addRating(cardId, { user_id: req.user._id, rating });
+    return res.send(card);
+  } catch (error) {
+    return handleError(res, error.status || 500, error.message);
+  }
+});
+
+router.post("/:id/comment", auth, async (req, res) => {
+  try {
+    const cardId = req.params.id;
+    const { text, parentCommentId } = req.body;
+
+    if (!text || !text.trim()) {
+      return handleError(res, 400, "תגובה לא יכולה להיות ריקה");
+    }
+
+    const existingCard = await getCard(cardId);
+    const userId = String(req.user._id);
+
+    if (parentCommentId) {
+      const parentComment = existingCard.comments.id(parentCommentId);
+      if (!parentComment) {
+        return handleError(res, 404, "התגובה שאליה מגיבים לא נמצאה");
+      }
+      if (parentComment.parentCommentId) {
+        return handleError(res, 400, "אפשר להגיב רק לתגובה ראשית");
+      }
+    } else if (!req.user.isAdmin) {
+      const alreadyCommented = existingCard.comments.some(
+        (c) => !c.parentCommentId && String(c.user_id) === userId
+      );
+      if (alreadyCommented) {
+        return handleError(res, 400, "כבר כתבת תגובה על המתכון הזה");
+      }
+    }
+
+    const author = await getUser(req.user._id);
+    const comment = {
       user_id: req.user._id,
-      comment: comment?.trim() || "",
-      rating,
+      authorName: `${author.name.first} ${author.name.last}`,
+      text: text.trim(),
+      parentCommentId: parentCommentId || null,
     };
 
-    const card = await addReview(cardId, review);
+    const card = await addComment(cardId, comment);
+    return res.send(card);
+  } catch (error) {
+    return handleError(res, error.status || 500, error.message);
+  }
+});
+
+router.delete("/:id/comment/:commentId", auth, async (req, res) => {
+  try {
+    if (!req.user.isAdmin) {
+      return handleError(res, 403, "רק מנהל יכול למחוק תגובות");
+    }
+
+    const { id, commentId } = req.params;
+    const card = await deleteComment(id, commentId);
     return res.send(card);
   } catch (error) {
     return handleError(res, error.status || 500, error.message);

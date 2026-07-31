@@ -1,11 +1,12 @@
 import axios from 'axios';
 import {useSnack} from '../providers/SnackbarProvider';
 import {useUser} from '../users/providers/UserProvider';
+import {removeToken} from '../users/services/localStorageService';
 import {useEffect} from 'react';
 
 const useAxios = () => {
   const {setSnack} = useSnack ();
-  const {token} = useUser ();
+  const {token, setUser, setToken} = useUser ();
 
   useEffect (
     () => {
@@ -19,12 +20,17 @@ const useAxios = () => {
           return Promise.resolve (data);
         },
         error => {
+          if (token && error.response?.status === 401) {
+            removeToken ();
+            setUser (null);
+            setToken (null);
+          }
           setSnack ('error', error.message);
           return Promise.reject (error);
         }
       );
     },
-    [token, setSnack]
+    [token, setSnack, setUser, setToken]
   );
 };
 

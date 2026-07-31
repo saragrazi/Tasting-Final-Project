@@ -3,6 +3,8 @@ import { func, object, string } from "prop-types";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
+import Alert from "@mui/material/Alert";
+import Typography from "@mui/material/Typography";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
 import ROUTES from "../../routes/routesModel";
@@ -24,8 +26,14 @@ const UserForm = ({
       onChange={onFormChange}
       styles={{ maxWidth: "800px", direction: "rtl", textAlign: "right" }}
       title={title}
+      submitLabel="הירשם"
       to={ROUTES.CARDS}
     >
+      <Grid item xs={12}>
+        <Alert severity="warning">
+          שימו לב! נכון לעכשיו, לא ניתן לשחזר את הסיסמה. אנא שמרו אותה במקום בטוח.
+        </Alert>
+      </Grid>
       <Input
         name="first"
         label="שם פרטי"
@@ -34,15 +42,7 @@ const UserForm = ({
         data={data}
         sm={6}
       />
-      <Input
-        name="middle"
-        label="שם אמצעי"
-        error={errors.middle}
-        onChange={onInputChange}
-        data={data}
-        sm={6}
-        required={false}
-      />
+     
       <Input
         name="last"
         label="שם משפחה"
@@ -78,33 +78,7 @@ const UserForm = ({
         data={data}
         sm={6}
       />
-      <Input
-        name="url"
-        label="כתובת תמונה"
-        error={errors.url}
-        onChange={onInputChange}
-        data={data}
-        sm={6}
-        required={false}
-      />
-      <Input
-        name="alt"
-        label="טקסט תמונה"
-        error={errors.alt}
-        onChange={onInputChange}
-        data={data}
-        sm={6}
-        required={false}
-      />
-      <Input
-        name="state"
-        label="מדינה"
-        error={errors.state}
-        onChange={onInputChange}
-        data={data}
-        sm={6}
-        required={false}
-      />
+    
       <Input
         label="ארץ"
         name="country"
@@ -156,6 +130,23 @@ const UserForm = ({
           control={<Checkbox value={data.isBusiness} color="primary" />}
           label="הרשמה כעסק"
         />
+      </Grid>
+      <Grid item xs={12}>
+        <FormControlLabel
+          control={
+            <Checkbox
+              checked={Boolean(data.rememberMe)}
+              onChange={(e) =>
+                setData({ ...data, rememberMe: e.target.checked })
+              }
+              color="primary"
+            />
+          }
+          label="זכור אותי"
+        />
+        <Typography variant="caption" color="text.secondary" display="block">
+          במידה ואפשרות זו תיבחר, לא תצטרך להתחבר מחדש
+        </Typography>
       </Grid>
     </Form>
   );
