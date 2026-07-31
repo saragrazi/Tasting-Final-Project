@@ -5,6 +5,7 @@ const {
   getCardByTitle,
 } = require("../cards/models/cardsAccessDataService");
 const { registerUser } = require("../users/models/usersAccessDataService");
+const User = require("../users/models/mongodb/User");
 const data = require("./initialData.json");
 const normalizeUser = require("../users/helpers/normalizeUser");
 const { generateUserPassword } = require("../users/helpers/bcrypt");
@@ -16,8 +17,17 @@ const generateInitialCards = async () => {
       const existingCard = await getCardByTitle(cardData.title);
       if (existingCard) continue;
 
-      const userId = "6376274068d78742d84f31d2";
-      const card = await normalizeCard(cardData, userId);
+      const author = await User.findOne({ email: cardData.email });
+      if (!author) {
+        console.log(
+          chalk.redBright(
+            `No user found for email "${cardData.email}", skipping card "${cardData.title}"`
+          )
+        );
+        continue;
+      }
+
+      const card = await normalizeCard(cardData, author._id);
       await createCard(card);
     } catch (error) {
       console.log(chalk.redBright(error.message));
