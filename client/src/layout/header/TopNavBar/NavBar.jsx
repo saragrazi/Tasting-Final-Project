@@ -17,8 +17,8 @@ export const NavBar = () => {
             alignItems: "center",
           }}
         >
-          <RightNavBar />
           <LeftNavBar />
+          <RightNavBar />
         </Toolbar>
       </AppBar>
     </MenuProvider>

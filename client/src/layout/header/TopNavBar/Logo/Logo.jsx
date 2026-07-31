@@ -7,6 +7,11 @@ const Logo = () => {
   return (
     <>
       <NavBarLink to={ROUTES.ROOT}>
+        <img
+          src={`${process.env.PUBLIC_URL}/assets/images/chefs-hat-white.png`}
+          alt="כובע שף"
+          style={{ height: "30px", marginLeft: "10px" }}
+        />
         <Typography
           variant="h4"
           sx={{
@@ -17,11 +22,6 @@ const Logo = () => {
         >
           Tasting
         </Typography>
-        <img
-          src={`${process.env.PUBLIC_URL}/assets/images/chefs-hat-white.png`}
-          alt="כובע שף"
-          style={{ height: "30px", marginLeft: "10px" }}
-        />
       </NavBarLink>
     </>
   );

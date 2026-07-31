@@ -24,6 +24,40 @@ export const ThemeProvider = ({ children }) => {
         palette: {
             mode: isDark ? 'dark' : 'light',
         },
+        components: {
+            MuiInputLabel: {
+                styleOverrides: {
+                    root: {
+                        right: 16,
+                        left: 'auto',
+                        transformOrigin: 'top right',
+                        '&.MuiInputLabel-shrink': {
+                            transformOrigin: 'top right',
+                            padding: '0 12px',
+                        },
+                    },
+                },
+            },
+            MuiOutlinedInput: {
+                styleOverrides: {
+                    notchedOutline: {
+                        textAlign: 'right',
+                    },
+                },
+            },
+            MuiSelect: {
+                styleOverrides: {
+                    icon: {
+                        right: 'auto',
+                        left: 7,
+                    },
+                    select: {
+                        paddingRight: 14,
+                        paddingLeft: 32,
+                    },
+                },
+            },
+        },
     });
 
     const value = useMemo(() => {

@@ -59,6 +59,7 @@ const RightNavBar = () => {
           display: "inline-flex",
           alignItems: "center",
           gap: 1,
+          flexDirection: "row-reverse",
         }}
       >
         <Chip

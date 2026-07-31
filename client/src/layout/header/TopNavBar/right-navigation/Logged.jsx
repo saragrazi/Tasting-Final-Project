@@ -8,7 +8,14 @@ const Logged = () => {
   const openMenu = useMenu();
 
   return (
-    <Tooltip title="פתח הגדרות">
+    <Tooltip
+      title="פתח הגדרות"
+      componentsProps={{
+        popper: {
+          modifiers: [{ name: "offset", options: { offset: [0, 10] } }],
+        },
+      }}
+    >
       <IconButton
         sx={{ p: 0, display: "inline-flex", marginLeft: 2 }}
         onClick={(e) => openMenu(e.currentTarget)}
