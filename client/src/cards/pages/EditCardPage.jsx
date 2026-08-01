@@ -26,10 +26,17 @@ const EditCardPage = () => {
     const cardData = async () => {
       const card = await getCard(params.id)
       setCardId(card._id)
+      const ingredients = Array.isArray(card.ingredients)
+        ? card.ingredients
+        : (card.ingredients || '')
+            .split('\n')
+            .map((line) => line.trim())
+            .filter(Boolean)
+            .map((name) => ({ name, quantity: null }));
       rest.setData({
         title: card.title,
         subtitle: card.subtitle,
-        ingredients: card.ingredients,
+        ingredients,
         cookingSteps: card.cookingSteps,
         category: card.category,
         prepTime: card.prepTime,

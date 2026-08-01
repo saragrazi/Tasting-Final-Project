@@ -204,17 +204,27 @@ const CardDetailsPage = () => {
             <Typography variant="h6" mt={3} mb={1}>
               המרכיבים:
             </Typography>
-            {card?.ingredients?.map((ingredient, index) => (
-              <Box key={index} display="flex" alignItems="flex-start" gap={1} mt={1}>
-                <CheckCircleIcon fontSize="small" sx={{ color: '#4caf50', mt: '2px' }} />
-                <Typography>
-                  {ingredient.quantity !== null && ingredient.quantity !== undefined
-                    ? `${ingredient.quantity} `
-                    : ''}
-                  {ingredient.name}
-                </Typography>
-              </Box>
-            ))}
+            {Array.isArray(card?.ingredients)
+              ? card.ingredients.map((ingredient, index) => (
+                  <Box key={index} display="flex" alignItems="flex-start" gap={1} mt={1}>
+                    <CheckCircleIcon fontSize="small" sx={{ color: '#4caf50', mt: '2px' }} />
+                    <Typography>
+                      {ingredient.quantity !== null && ingredient.quantity !== undefined
+                        ? `${ingredient.quantity} `
+                        : ''}
+                      {ingredient.name}
+                    </Typography>
+                  </Box>
+                ))
+              : card?.ingredients
+                  ?.split('\n')
+                  .filter(Boolean)
+                  .map((row, index) => (
+                    <Box key={index} display="flex" alignItems="flex-start" gap={1} mt={1}>
+                      <CheckCircleIcon fontSize="small" sx={{ color: '#4caf50', mt: '2px' }} />
+                      <Typography>{row}</Typography>
+                    </Box>
+                  ))}
 
             {/* אופן ההכנה */}
             <Typography variant="h6" mt={3} mb={1}>
