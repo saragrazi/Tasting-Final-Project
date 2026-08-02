@@ -25,7 +25,11 @@ const useAxios = () => {
             setUser (null);
             setToken (null);
           }
-          setSnack ('error', error.message);
+          const serverMessage =
+            typeof error.response?.data === 'string'
+              ? error.response.data
+              : error.response?.data?.message;
+          setSnack ('error', serverMessage || error.message);
           return Promise.reject (error);
         }
       );

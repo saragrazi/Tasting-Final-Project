@@ -10,7 +10,7 @@ const registerUser = async(normalizedUser) => {
         try {
             const { email } = normalizedUser;
             let user = await User.findOne({ email });
-            if (user) throw new Error("User already registered");
+            if (user) throw new Error("כתובת האימייל הזו כבר רשומה במערכת. נסו להתחבר במקום.");
 
             user = new User(normalizedUser);
             user = await user.save();

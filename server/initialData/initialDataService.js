@@ -43,7 +43,7 @@ const generateInitialUsers = async () => {
       normalizedUser.password = generateUserPassword(normalizedUser.password);
       await registerUser(normalizedUser);
     } catch (error) {
-      if (error.message !== "User already registered") {
+      if (!error.message.includes("כבר רשומה במערכת")) {
         console.log(chalk.redBright(error.message));
       }
     }
