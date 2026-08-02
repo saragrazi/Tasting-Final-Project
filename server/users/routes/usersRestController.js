@@ -142,9 +142,19 @@ router.patch("/:id/block", auth, async(req, res) => {
     }
 });
 
-router.delete("/:id", async(req, res) => {
+router.delete("/:id", auth, async(req, res) => {
     try {
+        if (!req.user.isAdmin) {
+            return handleError(
+                res,
+                403,
+                "Authorization Error: רק מנהל יכול למחוק משתמשים"
+            );
+        }
         const { id } = req.params;
+        if (String(req.user._id) === String(id)) {
+            return handleError(res, 400, "לא ניתן למחוק את חשבון המנהל שלך");
+        }
         const user = await deleteUser(id);
         return res.send(user);
     } catch (error) {

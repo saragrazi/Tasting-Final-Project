@@ -1,10 +1,11 @@
 const { handleError } = require("../utils/handleErrors");
 const { verifyToken } = require("./Providers/jwt");
+const User = require("../users/models/mongodb/User");
 const config = require("config");
 
 const tokenGenerator = config.get("TOKEN_GENERATOR");
 
-const auth = (req, res, next) => {
+const auth = async (req, res, next) => {
   if (tokenGenerator === "jwt") {
     try {
       const tokenFromClient = req.header("x-auth-token");
@@ -13,6 +14,10 @@ const auth = (req, res, next) => {
 
       const userInfo = verifyToken(tokenFromClient);
       if (!userInfo) throw new Error("Authentication Error: Unauthorize user");
+
+      const user = await User.findById(userInfo._id);
+      if (!user) throw new Error("Authentication Error: Unauthorize user");
+      if (user.isBlocked) throw new Error("חשבון זה נחסם על ידי מנהל המערכת");
 
       req.user = userInfo;
       return next();

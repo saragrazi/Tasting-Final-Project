@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../providers/UserProvider';
 import useAxios from '../../hooks/useAxios';
-import { login, signUp, getUsers, setUserBlockedStatus } from '../services/usersApiService';
+import { login, signUp, getUsers, setUserBlockedStatus, deleteUser } from '../services/usersApiService';
 import {
     getUser,
     removeToken,
@@ -79,6 +79,17 @@ const useUsers = () => {
         }, []
     );
 
+    const handleDeleteUser = useCallback(
+        async (userId) => {
+            try {
+                await deleteUser(userId);
+                setUsers((prev) => prev.filter((u) => u._id !== userId));
+            } catch (error) {
+                setError(error);
+            }
+        }, []
+    );
+
     const handleSignup = useCallback(
         async user => {
             try {
@@ -106,6 +117,7 @@ const useUsers = () => {
         handleSignup,
         handleGetUsers,
         handleBlockUser,
+        handleDeleteUser,
     };
 };
 

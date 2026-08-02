@@ -15,12 +15,14 @@ import { useTheme } from "../../providers/ThemeProvider";
 import useUsers from "../hooks/useUsers";
 import { getCards } from "../../cards/services/cardService";
 import ROUTES from "../../routes/routesModel";
+import DeleteModal from "../../cards/components/DeleteModal";
 
 const UsersManagementPage = () => {
   const { user } = useUser();
   const { isDark } = useTheme();
-  const { users, handleGetUsers, handleBlockUser } = useUsers();
+  const { users, handleGetUsers, handleBlockUser, handleDeleteUser } = useUsers();
   const [cards, setCards] = useState([]);
+  const [userIdToDelete, setUserIdToDelete] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -68,17 +70,31 @@ const UsersManagementPage = () => {
               </Box>
 
               {!isSelf && (
-                <Button
-                  size="small"
-                  variant="contained"
-                  onClick={() => handleBlockUser(u._id, !u.isBlocked)}
-                  sx={{
-                    backgroundColor: u.isBlocked ? "#457127" : "#e53e3e",
-                    "&:hover": { backgroundColor: u.isBlocked ? "#365a1e" : "#c53030" },
-                  }}
-                >
-                  {u.isBlocked ? "בטל חסימה" : "חסום משתמש"}
-                </Button>
+                <Box display="flex" gap={1}>
+                  <Button
+                    size="small"
+                    variant="contained"
+                    onClick={() => handleBlockUser(u._id, !u.isBlocked)}
+                    sx={{
+                      backgroundColor: u.isBlocked ? "#457127" : "#e53e3e",
+                      "&:hover": { backgroundColor: u.isBlocked ? "#365a1e" : "#c53030" },
+                    }}
+                  >
+                    {u.isBlocked ? "בטל חסימה" : "חסום משתמש"}
+                  </Button>
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    onClick={() => setUserIdToDelete(u._id)}
+                    sx={{
+                      color: "#e53e3e",
+                      borderColor: "#e53e3e",
+                      "&:hover": { backgroundColor: "rgba(229,62,62,0.08)", borderColor: "#c53030" },
+                    }}
+                  >
+                    מחק משתמש
+                  </Button>
+                </Box>
               )}
             </Box>
 
@@ -113,6 +129,17 @@ const UsersManagementPage = () => {
           </Box>
         );
       })}
+
+      <DeleteModal
+        isOpen={Boolean(userIdToDelete)}
+        onClose={() => setUserIdToDelete(null)}
+        onConfirm={() => {
+          handleDeleteUser(userIdToDelete);
+          setUserIdToDelete(null);
+        }}
+        title="מחיקת משתמש"
+        message="האם אתה בטוח שברצונך למחוק את המשתמש הזה? הפעולה אינה הפיכה."
+      />
     </Container>
   );
 };
