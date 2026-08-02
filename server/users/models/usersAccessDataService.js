@@ -30,13 +30,13 @@ const loginUser = async({ email, password }) => {
         try {
             const user = await User.findOne({ email });
             if (!user) {
-                throw new Error("Authentication Error: Invalid email or password");
+                throw new Error("האימייל או הסיסמה שגויים");
             }
 
             const validPassword = comparePassword(password, user.password);
             if (!validPassword) {
 
-                throw new Error("Authentication Error: Invalid email or password");
+                throw new Error("האימייל או הסיסמה שגויים");
             }
 
             if (user.isBlocked) {

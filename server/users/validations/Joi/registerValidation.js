@@ -13,13 +13,13 @@ const registerValidation = (user) => {
     phone: Joi.string()
       .ruleset.regex(/0[0-9]{1,2}\-?\s?[0-9]{3}\s?[0-9]{4}/)
 
-      .rule({ message: 'user "phone" mast be a valid phone number' })
+      .rule({ message: 'יש להזין מספר טלפון תקין' })
       .required(),
     email: Joi.string()
       .ruleset.pattern(
         /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/
       )
-      .rule({ message: 'user "mail" mast be a valid mail' })
+      .rule({ message: 'יש להזין כתובת אימייל תקינה' })
       .required(),
     password: Joi.string()
       .ruleset.regex(
@@ -27,7 +27,7 @@ const registerValidation = (user) => {
       )
       .rule({
         message:
-          'user "password" must be at least nine characters long and contain an uppercase letter, a lowercase letter, a number and one of the following characters !@#$%^&*-',
+          'הסיסמה חייבת להכיל לפחות שבעה תווים, אות גדולה, אות קטנה, מספר ואחד מהתווים הבאים: !@#$%^&*-',
       })
       .required(),
     image: Joi.object()
@@ -36,7 +36,7 @@ const registerValidation = (user) => {
           .ruleset.regex(
             /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/
           )
-          .rule({ message: "user image mast be a valid url" })
+          .rule({ message: "כתובת תמונת המשתמש אינה תקינה" })
           .allow(""),
         alt: Joi.string().min(2).max(256).allow(""),
       })
