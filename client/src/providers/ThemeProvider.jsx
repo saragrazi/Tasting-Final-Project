@@ -23,6 +23,11 @@ export const ThemeProvider = ({ children }) => {
         direction: 'rtl',
         palette: {
             mode: isDark ? 'dark' : 'light',
+            primary: {
+                main: '#d06b6b',
+                dark: '#b5585a',
+                contrastText: '#fff',
+            },
         },
         components: {
             MuiInputLabel: {
