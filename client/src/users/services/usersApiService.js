@@ -55,15 +55,6 @@ export const getUsers = async userId => {
     }
 };
 
-export const getUsersCount = async () => {
-    try {
-        const { data } = await axios.get(`${apiUrl}/users/count`);
-        return data;
-    } catch (error) {
-        return Promise.reject(error.message);
-    }
-};
-
 export const setUserBlockedStatus = async (userId, isBlocked) => {
     try {
         const { data } = await axios.patch(`${apiUrl}/users/${userId}/block`, { isBlocked });

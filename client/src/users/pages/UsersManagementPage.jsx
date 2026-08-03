@@ -37,7 +37,10 @@ const UsersManagementPage = () => {
 
   return (
     <Container sx={{ direction: "rtl", textAlign: "right", minHeight: "80vh" }}>
-      <PageHeader title="ניהול משתמשים" subtitle="צפייה בכל המשתמשים, המתכונים שלהם, וחסימת משתמשים" />
+      <PageHeader
+        title="ניהול משתמשים"
+        subtitle={`צפייה בכל המשתמשים, המתכונים שלהם, וחסימת משתמשים${users ? ` (סה"כ ${users.length} משתמשים)` : ""}`}
+      />
 
       {users?.map((u) => {
         const userCards = cardsByUser(u._id);

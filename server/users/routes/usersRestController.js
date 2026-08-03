@@ -71,22 +71,6 @@ router.get("/", auth, async(req, res) => {
     }
 });
 
-router.get("/count", auth, async(req, res) => {
-    try {
-        if (!req.user.isAdmin)
-            return handleError(
-                res,
-                403,
-                "Authorization Error: רק מנהל יכול לראות את מספר המשתמשים"
-            );
-
-        const users = await getUsers();
-        return res.send({ count: users.length });
-    } catch (error) {
-        return handleError(res, error.status || 500, error.message);
-    }
-});
-
 router.get("/:id", auth, async(req, res) => {
     try {
         const { id } = req.params;
