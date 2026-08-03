@@ -1,7 +1,9 @@
+const mongoose = require("mongoose");
 const Card = require("./mongodb/Card");
 const { handleBadRequest } = require("../../utils/handleErrors");
 
 const DB = process.env.DB || "MONGODB";
+const DEFAULT_PAGE_SIZE = 40;
 
 const getCardByTitle = async (title) => {
   try {
@@ -39,6 +41,63 @@ const getMyCards = async userId => {
   }
   return Promise.resolve("get card not in mongodb");
 };
+
+const getCardsPaginated = async ({
+  page = 1,
+  limit = DEFAULT_PAGE_SIZE,
+  search = "",
+  category = "",
+  matchExtra = {},
+} = {}) => {
+  if (DB === "MONGODB") {
+    try {
+      const match = { ...matchExtra };
+      if (category) match.category = category;
+      if (search) match.title = { $regex: search, $options: "i" };
+
+      const pageSize = Number(limit) || DEFAULT_PAGE_SIZE;
+      const pageNumber = Math.max(1, Number(page) || 1);
+      const skip = (pageNumber - 1) * pageSize;
+
+      const [result] = await Card.aggregate([
+        { $match: match },
+        {
+          $addFields: {
+            averageRating: { $ifNull: [{ $avg: "$ratings.rating" }, 0] },
+            ratingsCount: { $size: { $ifNull: ["$ratings", []] } },
+          },
+        },
+        { $sort: { averageRating: -1, ratingsCount: -1 } },
+        {
+          $facet: {
+            cards: [{ $skip: skip }, { $limit: pageSize }],
+            totalCount: [{ $count: "count" }],
+          },
+        },
+      ]);
+
+      const cards = result?.cards || [];
+      const total = result?.totalCount?.[0]?.count || 0;
+      return Promise.resolve({ cards, total });
+    } catch (error) {
+      error.status = 400;
+      return handleBadRequest("Mongoose", error);
+    }
+  }
+  return Promise.resolve({ cards: [], total: 0 });
+};
+
+const getMyCardsPaginated = (userId, options = {}) =>
+  getCardsPaginated({
+    ...options,
+    matchExtra: { user_id: new mongoose.Types.ObjectId(userId) },
+  });
+
+const getMyFavoriteCardsPaginated = (userId, options = {}) =>
+  getCardsPaginated({
+    ...options,
+    matchExtra: { likes: userId },
+  });
 
 const getCard = async cardId => {
   if (DB === "MONGODB") {
@@ -205,6 +264,9 @@ const deleteCard = async (cardId, user) => {
 
 exports.getCards = getCards;
 exports.getMyCards = getMyCards;
+exports.getCardsPaginated = getCardsPaginated;
+exports.getMyCardsPaginated = getMyCardsPaginated;
+exports.getMyFavoriteCardsPaginated = getMyFavoriteCardsPaginated;
 exports.getCard = getCard;
 exports.createCard = createCard;
 exports.addRating = addRating;

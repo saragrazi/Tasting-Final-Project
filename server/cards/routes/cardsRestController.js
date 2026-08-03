@@ -25,6 +25,9 @@ const upload = multer({ dest: 'uploads/',preservePath: true,storage:storage, fil
 const {
   getCards,
   getMyCards,
+  getCardsPaginated,
+  getMyCardsPaginated,
+  getMyFavoriteCardsPaginated,
   getCard,
   createCard,
   updateCard,
@@ -54,6 +57,36 @@ router.get("/my-cards", auth, async (req, res) => {
     const userId = req.user._id;
     const card = await getMyCards(userId);
     return res.send(card);
+  } catch (error) {
+    return handleError(res, error.status || 500, error.message);
+  }
+});
+
+router.get("/browse", async (req, res) => {
+  try {
+    const { page, limit, search, category } = req.query;
+    const result = await getCardsPaginated({ page, limit, search, category });
+    return res.send(result);
+  } catch (error) {
+    return handleError(res, error.status || 500, error.message);
+  }
+});
+
+router.get("/my-cards/browse", auth, async (req, res) => {
+  try {
+    const { page, limit, search, category } = req.query;
+    const result = await getMyCardsPaginated(req.user._id, { page, limit, search, category });
+    return res.send(result);
+  } catch (error) {
+    return handleError(res, error.status || 500, error.message);
+  }
+});
+
+router.get("/my-favorites/browse", auth, async (req, res) => {
+  try {
+    const { page, limit, search, category } = req.query;
+    const result = await getMyFavoriteCardsPaginated(req.user._id, { page, limit, search, category });
+    return res.send(result);
   } catch (error) {
     return handleError(res, error.status || 500, error.message);
   }
