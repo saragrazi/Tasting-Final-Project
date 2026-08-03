@@ -1,5 +1,6 @@
 const express = require("express");
 const auth = require("../../auth/authService");
+const { verifyToken } = require("../../auth/Providers/jwt");
 const { handleError } = require("../../utils/handleErrors");
 const normalizeCard = require("../helpers/normalizeCard");
 const multer  = require('multer')
@@ -65,7 +66,7 @@ router.get("/my-cards", auth, async (req, res) => {
 router.get("/browse", async (req, res) => {
   try {
     const { page, limit, search, category } = req.query;
-    const result = await getCardsPaginated({ page, limit, search, category });
+    const result = await getCardsPaginated({ page, limit, search, category, excludePrivate: true });
     return res.send(result);
   } catch (error) {
     return handleError(res, error.status || 500, error.message);
@@ -96,6 +97,17 @@ router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const card = await getCard(id);
+
+    if (card.isPrivate) {
+      const tokenFromClient = req.header("x-auth-token");
+      const requester = tokenFromClient ? verifyToken(tokenFromClient) : null;
+      const isOwner = requester && String(requester._id) === String(card.user_id);
+      const isAdmin = requester && requester.isAdmin;
+      if (!isOwner && !isAdmin) {
+        return handleError(res, 404, "המתכון לא נמצא");
+      }
+    }
+
     return res.send(card);
   } catch (error) {
     return handleError(res, error.status || 500, error.message);
@@ -125,8 +137,9 @@ router.post("/", auth, upload.single('image'), async (req, res) => {
           alt: "תמונת ברירת מחדל למתכון",
         };
 
-    if (!user.isBusiness)
-      return handleError(res, 403, "Authentication Error: Unauthorize user");
+    // Only business accounts may publish a recipe publicly - anyone else's
+    // recipes always stay private, regardless of what the client sends.
+    card.isPrivate = user.isBusiness ? Boolean(card.isPrivate) : true;
 
     const { error } = validateCard(card);
     if (error)
@@ -162,6 +175,8 @@ router.put("/:id", auth, upload.single('image'), async (req, res) => {
     } else {
       delete card.image;
     }
+
+    card.isPrivate = req.user.isBusiness ? Boolean(card.isPrivate) : true;
 
     const { error } = validateCard(card);
     if (error)

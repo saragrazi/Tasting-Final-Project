@@ -48,10 +48,12 @@ const getCardsPaginated = async ({
   search = "",
   category = "",
   matchExtra = {},
+  excludePrivate = false,
 } = {}) => {
   if (DB === "MONGODB") {
     try {
       const match = { ...matchExtra };
+      if (excludePrivate) match.isPrivate = { $ne: true };
       if (category) match.category = category;
       if (search) match.title = { $regex: search, $options: "i" };
 

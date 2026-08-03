@@ -35,6 +35,7 @@ const validateCardWithJoi = card => {
       ,
     user_id: Joi.string().allow(""),
     authorName: Joi.string().allow(""),
+    isPrivate: Joi.boolean(),
   });
 
   return schema.validate(card);

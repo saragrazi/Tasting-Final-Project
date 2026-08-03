@@ -60,6 +60,10 @@ const cardSchema = new mongoose.Schema({
     url: String,
     alt: String,
   },
+  isPrivate: {
+    type: Boolean,
+    default: false,
+  },
   likes: [String],
   ratings: [
     {
