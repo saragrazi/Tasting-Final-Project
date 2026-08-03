@@ -4,7 +4,7 @@ import useCards from "../hooks/useCards";
 import PageHeader from "../../components/PageHeader";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/routesModel";
-import { Box, Container, Fab, IconButton, Tooltip } from "@mui/material";
+import { Box, Container, Fab, IconButton, Tooltip, useMediaQuery, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CardsFeedback from "../components/CardsFeedback";
 import { searchContext } from "../../providers/SearchProvider";
@@ -21,6 +21,8 @@ const MyCardsPage = () => {
   const navigate = useNavigate();
   const [viewType, setViewType] = useState("cards")
   const [sortBy, setSortBy] = useState("")
+  const muiTheme = useTheme();
+  const isMobile = useMediaQuery(muiTheme.breakpoints.down('sm'));
   const handleOnChange = useCallback((e) => {
     setSortBy(e.target.value)
   }, [])
@@ -33,6 +35,10 @@ const MyCardsPage = () => {
     else handleGetMyCards();
   }, [handleGetMyCards, navigate, user]);
 
+  useEffect(() => {
+    if (isMobile && viewType === 'table') setViewType('cards');
+  }, [isMobile, viewType]);
+
   return (
     <Container sx={{ position: "relative", minHeight: "90vh", direction: "rtl" }}>
       <PageHeader
@@ -41,20 +47,22 @@ const MyCardsPage = () => {
       />
       <Box display={"flex"} flexDirection={{ xs: "column", sm: "row" }} gap={2} mb={3} alignItems="center">
         <FilterComp handleOnChange={handleOnChange} sortBy={sortBy} cards={cards} />
-        {viewType === 'cards' ? (
-          <Tooltip title="תצוגת טבלה">
-            <IconButton
-              color="inherit"
-              aria-label="החלף לתצוגת טבלה"
-              onClick={() => { setViewType('table') }}><TableRowsIcon /></IconButton>
-          </Tooltip>
-        ) : (
-          <Tooltip title="תצוגת כרטיסים">
-            <IconButton
-              color='inherit'
-              aria-label="החלף לתצוגת כרטיסים"
-              onClick={() => { setViewType('cards') }}><DashboardIcon /></IconButton>
-          </Tooltip>
+        {!isMobile && (
+          viewType === 'cards' ? (
+            <Tooltip title="תצוגת טבלה">
+              <IconButton
+                color="inherit"
+                aria-label="החלף לתצוגת טבלה"
+                onClick={() => { setViewType('table') }}><TableRowsIcon /></IconButton>
+            </Tooltip>
+          ) : (
+            <Tooltip title="תצוגת כרטיסים">
+              <IconButton
+                color='inherit'
+                aria-label="החלף לתצוגת כרטיסים"
+                onClick={() => { setViewType('cards') }}><DashboardIcon /></IconButton>
+            </Tooltip>
+          )
         )}
       </Box>
       <Fab
