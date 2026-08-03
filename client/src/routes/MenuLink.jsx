@@ -6,7 +6,7 @@ import { makeFirstLetterCapital } from "../forms/utils/algoMethods";
 
 const MenuLink = ({ text, navigateTo, onClick, styles }) => {
   return (
-    <NavBarLink to={navigateTo}>
+    <NavBarLink to={navigateTo} color="inherit">
       <MenuItem sx={{ ...styles }} onClick={onClick}>
         {makeFirstLetterCapital(text)}
       </MenuItem>
