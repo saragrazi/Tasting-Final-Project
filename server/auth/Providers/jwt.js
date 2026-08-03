@@ -4,8 +4,8 @@ const config = require("config");
 const key = config.get("JWT_KEY");
 
 const generateAuthToken = (user) => {
-    const { _id, isBusiness, isAdmin } = user;
-    const token = jwt.sign({ _id, isBusiness, isAdmin }, key, { expiresIn: "3650d" });
+    const { _id, isBusiness, isAdmin, name } = user;
+    const token = jwt.sign({ _id, isBusiness, isAdmin, name }, key, { expiresIn: "3650d" });
     return token;
 };
 
