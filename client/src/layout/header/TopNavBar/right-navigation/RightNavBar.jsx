@@ -32,6 +32,11 @@ const RightNavBar = () => {
   };
 
   useEffect(() => {
+    if (!user?.isAdmin) {
+      setUsersCount(null);
+      return undefined;
+    }
+
     let isMounted = true;
 
     const loadUsersCount = async () => {
@@ -50,7 +55,7 @@ const RightNavBar = () => {
       isMounted = false;
       window.removeEventListener("focus", loadUsersCount);
     };
-  }, [currentUserId]);
+  }, [currentUserId, user?.isAdmin]);
 
   return (
     <>
@@ -63,13 +68,15 @@ const RightNavBar = () => {
           minWidth: 0,
         }}
       >
-        <Chip
-          label={usersCount === null ? "טוען..." : `${usersCount} משתמשים`}
-          size="small"
-          color="success"
-          variant="outlined"
-          sx={{ display: { xs: "none", sm: "inline-flex" }, mr: 1, height: 30, px: 1, fontWeight: 600 }}
-        />
+        {user?.isAdmin && (
+          <Chip
+            label={usersCount === null ? "טוען..." : `${usersCount} משתמשים`}
+            size="small"
+            color="success"
+            variant="outlined"
+            sx={{ display: { xs: "none", sm: "inline-flex" }, mr: 1, height: 30, px: 1, fontWeight: 600 }}
+          />
+        )}
 
         {!user && <NotLogged />}
 

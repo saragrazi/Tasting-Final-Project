@@ -71,8 +71,15 @@ router.get("/", auth, async(req, res) => {
     }
 });
 
-router.get("/count", async(req, res) => {
+router.get("/count", auth, async(req, res) => {
     try {
+        if (!req.user.isAdmin)
+            return handleError(
+                res,
+                403,
+                "Authorization Error: רק מנהל יכול לראות את מספר המשתמשים"
+            );
+
         const users = await getUsers();
         return res.send({ count: users.length });
     } catch (error) {
