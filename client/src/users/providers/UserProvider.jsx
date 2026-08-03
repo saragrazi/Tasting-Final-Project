@@ -7,6 +7,7 @@ const UserContext = React.createContext(null);
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(getToken);
+  const [welcomeUser, setWelcomeUser] = useState(null);
 
   useEffect(() => {
     if (!user) {
@@ -17,8 +18,8 @@ export const UserProvider = ({ children }) => {
   }, [user]);
 
   const value = useMemo(() => {
-    return { user, setUser, token, setToken };
-  }, [user, token]);
+    return { user, setUser, token, setToken, welcomeUser, setWelcomeUser };
+  }, [user, token, welcomeUser]);
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };

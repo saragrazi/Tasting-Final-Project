@@ -6,6 +6,7 @@ import { ThemeProvider } from './providers/ThemeProvider';
 import { SnackbarProvider } from './providers/SnackbarProvider';
 import { UserProvider } from './users/providers/UserProvider';
 import { SearchProvider } from './providers/SearchProvider';
+import WelcomeModal from './users/components/WelcomeModal';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
                 <Layout>
                   <Router />
                 </Layout>
+                <WelcomeModal />
               </div>
             </SearchProvider>
           </UserProvider>

@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../providers/UserProvider';
-import { useSnack } from '../../providers/SnackbarProvider';
 import useAxios from '../../hooks/useAxios';
 import { login, signUp, getUsers, setUserBlockedStatus, deleteUser } from '../services/usersApiService';
 import {
@@ -20,8 +19,7 @@ const useUsers = () => {
 
 
     const navigate = useNavigate();
-    const { user, setUser, setToken } = useUser();
-    const { setSnack } = useSnack();
+    const { user, setUser, setToken, setWelcomeUser } = useUser();
     useAxios();
 
     const requestStatus = useCallback(
@@ -43,16 +41,16 @@ const useUsers = () => {
                 const userFromLocalStorage = getUser();
                 requestStatus(false, null, null, userFromLocalStorage);
                 if (userFromLocalStorage?.name?.first) {
-                    setSnack(
-                        'success',
-                        `שלום, ${userFromLocalStorage.name.first} ${userFromLocalStorage.name.last}!`
-                    );
+                    setWelcomeUser({
+                        first: userFromLocalStorage.name.first,
+                        last: userFromLocalStorage.name.last,
+                    });
                 }
                 navigate(ROUTES.CARDS);
             } catch (error) {
                 requestStatus(false, error, null);
             }
-        }, [navigate, requestStatus, setToken, setSnack]
+        }, [navigate, requestStatus, setToken, setWelcomeUser]
     );
 
     const handleLogout = useCallback(
