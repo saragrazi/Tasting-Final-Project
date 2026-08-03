@@ -10,14 +10,15 @@ const Logo = () => {
         <img
           src={`${process.env.PUBLIC_URL}/assets/images/chefs-hat-white.png`}
           alt="כובע שף"
-          style={{ height: "30px", marginLeft: "10px" }}
+          style={{ height: "26px", marginLeft: "8px" }}
         />
         <Typography
-          variant="h4"
           sx={{
-            display: { xs: "none", md: "inline-flex" },
-            marginLeft: 2,
+            display: "inline-flex",
+            marginLeft: { xs: 0, md: 2 },
             fontFamily: "fantasy",
+            fontSize: { xs: "1.1rem", sm: "1.4rem", md: "2.125rem" },
+            whiteSpace: "nowrap",
           }}
         >
           Tasting
