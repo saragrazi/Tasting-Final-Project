@@ -58,8 +58,8 @@ const AboutPage = () => {
             מצאתם משהו שאתם יודעים שתרצו לבשל שוב? שמרו אותו במועדפים, ותמצאו אותו בקלות.
           </Typography>
 
-          <Typography align="right" paragraph sx={{ mt: 2 }}>
-            אז מה מבשלים היום? בואו נגלה ביחד.
+          <Typography className="welcome1" align="right" sx={{ mt: 2, fontWeight: "bold" }}>
+            אז מה מבשלים היום? בואו נגלה ביחד!
           </Typography>
 
           <Typography className="welcome1" align="right" sx={{ mt: 2, fontWeight: "bold" }}>
