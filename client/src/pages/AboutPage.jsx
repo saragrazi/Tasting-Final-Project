@@ -8,7 +8,6 @@ import StarRateIcon from "@mui/icons-material/StarRate";
 import ForumIcon from "@mui/icons-material/Forum";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import GroupsIcon from "@mui/icons-material/Groups";
 
 const SectionTitle = ({ icon, children }) => (
   <Box sx={{ mt: 3, mb: 1, display: "flex", alignItems: "center", gap: 1, fontWeight: "bold" }}>
@@ -28,65 +27,47 @@ const AboutPage = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} alignItems="center" sx={{ direction: "rtl", textAlign: "right" }}>
           <Typography className="welcome" align="right" paragraph>
-            ברוכים הבאים ל-Tasting - המקום שבו מתכונים הופכים לחוויה. בין אם אתם מחפשים השראה
-            לארוחת ערב, רוצים לשתף את המתכון המשפחתי שלכם, או פשוט אוהבים לגלוש בין מנות טעימות -
-            כאן זה הבית שלכם.
+            ברוכים הבאים ל-Tasting - מקום קטן וחמים לכל מי שאוהב אוכל. בין אם אתם מבשלים, סתם
+            מסתכלים, או מחפשים רעיון לארוחה הערב - תרגישו בבית.
           </Typography>
 
           <SectionTitle icon={<MenuBookIcon sx={{ color: "#d06b6b" }} />}>
-            מתכונים מפורטים כמו ספר בישול אמיתי
+            מתכונים ברורים ופשוטים
           </SectionTitle>
           <Typography align="right" paragraph>
-            כל מתכון ב-Tasting בנוי בקפידה: רשימת מרכיבים עם כמות מדויקת לכל מוצר, שלבי הכנה
-            ברורים וממוספרים, זמן הכנה משוער, התייחסות לגודל כוס המידה שבה משתמשים, וטיפים
-            אישיים מהיוצר שיעזרו לכם להצליח בפעם הראשונה. יש גם אפשרות לצרף קישור לסרטון הכנה,
-            למי שאוהב לראות ולא רק לקרוא.
+            מרכיבים, שלבי הכנה, וטיפ קטן מהיוצר - הכל מסודר ונעים לעין.
           </Typography>
 
           <SectionTitle icon={<StarRateIcon sx={{ color: "#d06b6b" }} />}>
-            דרגו, ושוחחו על המתכון
+            דרגו ותכתבו
           </SectionTitle>
           <Typography align="right" paragraph>
-            אהבתם מתכון? תנו לו דירוג כוכבים - פעם אחת לכל מתכון. בנוסף, כל אחד יכול להשאיר
-            תגובה אישית משלו על המתכון. כל תגובה נפתחת לשרשור אמיתי - כל אחד יכול להצטרף ולהגיב
-            בתוכה, כך שנוצרת שיחה חיה סביב כל מנה, בדיוק כמו לדבר עם חברים על אוכל.
+            אהבתם מתכון? תנו לו כוכב. בא לכם להגיד משהו? תכתבו תגובה. פשוט ככה.
           </Typography>
 
           <SectionTitle icon={<ViewModuleIcon sx={{ color: "#d06b6b" }} />}>
-            התאימו את התצוגה לעצמכם
+            איך שנוח לכם
           </SectionTitle>
           <Typography align="right" paragraph>
-            בחרו בין תצוגת כרטיסים נעימה לגלישה, לבין תצוגת טבלה מסודרת להשוואה מהירה בין
-            מתכונים - כולל דירוג, זמן הכנה וקטגוריה במבט אחד. יש גם חיפוש מהיר, סינון לפי
-            קטגוריה, ומצב כהה לעיניים שלכם בשעות הערב.
+            חיפוש, סינון לפי קטגוריה, ומצב כהה לשעות הערב - הכל כדי שתרגישו נוח.
           </Typography>
 
           <SectionTitle icon={<FavoriteIcon sx={{ color: "#d06b6b" }} />}>
-            המועדפים שלכם, תמיד בהישג יד
+            המועדפים שלכם
           </SectionTitle>
           <Typography align="right" paragraph>
-            מצאתם מתכון שאתם יודעים שתחזרו אליו? שמרו אותו במועדפים בלחיצת כפתור, וכך תוכלו
-            למצוא אותו שוב במקום אחד, בלי לחפש בין כל המתכונים.
+            מצאתם משהו שאתם יודעים שתרצו לבשל שוב? שמרו אותו במועדפים, ותמצאו אותו בקלות.
           </Typography>
 
           <SectionTitle icon={<ForumIcon sx={{ color: "#d06b6b" }} />}>
-            הוסיפו, ערכו, שתפו
+            יש לכם עסק?
           </SectionTitle>
           <Typography align="right" paragraph>
-            נרשמתם כעסק? תוכלו להוסיף מתכונים משלכם עם תמונה משלכם (או תמונת ברירת מחדל אם
-            אין לכם אחת כרגע), לערוך אותם בכל עת, ולעקוב אחרי המתכונים שלכם בעמוד "המתכונים שלי".
-          </Typography>
-
-          <SectionTitle icon={<GroupsIcon sx={{ color: "#d06b6b" }} />}>
-            הצטרפו לקהילת Tasting
-          </SectionTitle>
-          <Typography align="right" paragraph>
-            בין אם אתם שפים מנוסים או רק מתחילים במטבח, Tasting כאן כדי להפוך כל ארוחה
-            להרפתקה קולינרית קטנה. הצטרפו אלינו, גלו מתכון חדש, ותנו לו לספר לכם סיפור.
+            אפשר להעלות מתכונים משלכם, עם תמונה, ולערוך אותם מתי שבא לכם.
           </Typography>
 
           <Typography className="welcome1" align="right" sx={{ mt: 2, fontWeight: "bold" }}>
-            בתיאבון, ובהצלחה בהרפתקאות הקולינריות שלכם ב-Tasting!
+            בתיאבון!
           </Typography>
         </Grid>
         <Grid
