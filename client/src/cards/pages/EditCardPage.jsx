@@ -27,7 +27,10 @@ const EditCardPage = () => {
       const card = await getCard(params.id)
       setCardId(card._id)
       const ingredients = Array.isArray(card.ingredients)
-        ? card.ingredients
+        ? card.ingredients.map((ingredient) => ({
+            name: ingredient.name,
+            quantity: ingredient.quantity ?? null,
+          }))
         : (card.ingredients || '')
             .split('\n')
             .map((line) => line.trim())
