@@ -6,7 +6,7 @@ const usePaginatedCards = (fetchFn) => {
   const [cards, setCards] = useState([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(0);
-  const [pending, setPending] = useState(false);
+  const [pending, setPending] = useState(true);
   const [error, setError] = useState(null);
   const filtersRef = useRef({ search: "", category: "" });
 
