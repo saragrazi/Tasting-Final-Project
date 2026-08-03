@@ -101,7 +101,7 @@ const UserProfilePage = () => {
                       color="primary"
                       onClick={handleBecomeBusiness}
                     >
-                      הפוך לחשבון עסקי
+                      הפוך לעסקי - ללא עלות
                     </Button>
                     <Typography variant="caption" color="text.secondary" display="block" mt={0.5}>
                       עם חשבון עסקי אפשר להעלות ולפרסם מתכונים משלך

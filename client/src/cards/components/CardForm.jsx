@@ -162,7 +162,7 @@ const CardForm = ({
               sx={{ mt: 1 }}
               onClick={handleBecomeBusiness}
             >
-              הפוך לחשבון עסקי
+              הפוך לעסקי - ללא עלות
             </Button>
           </>
         )}
