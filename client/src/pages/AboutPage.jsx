@@ -27,35 +27,41 @@ const AboutPage = () => {
         <Grid item xs={12} md={8} alignItems="center" sx={{ direction: "rtl", textAlign: "right" }}>
           <Typography className="welcome" align="right" paragraph>
             ברוכים הבאים ל-Tasting - מקום קטן וחמים לכל מי שאוהב אוכל. בין אם אתם מבשלים, סתם
-            מסתכלים, או מחפשים רעיון לארוחה הערב - תרגישו בבית.
+            מסתכלים, או מחפשים רעיון לארוחה הערב - תרגישו בבית. אין כאן מילים מסובכות, רק מתכונים
+            טובים ואנשים שאוהבים לבשל.
           </Typography>
 
           <SectionTitle icon={<MenuBookIcon sx={{ color: "#d06b6b" }} />}>
             מתכונים ברורים ופשוטים
           </SectionTitle>
           <Typography align="right" paragraph>
-            מרכיבים, שלבי הכנה, וטיפ קטן מהיוצר - הכל מסודר ונעים לעין.
+            בכל מתכון תמצאו רשימת מרכיבים עם כמויות, שלבי הכנה ממוספרים, וזמן הכנה משוער כדי
+            שתדעו לתכנן קדימה. יש גם טיפ קטן מהיוצר, ולפעמים גם קישור לסרטון הכנה - למי שאוהב
+            לראות ולא רק לקרוא.
           </Typography>
 
           <SectionTitle icon={<StarRateIcon sx={{ color: "#d06b6b" }} />}>
             דרגו ותכתבו
           </SectionTitle>
           <Typography align="right" paragraph>
-            אהבתם מתכון? תנו לו כוכב. בא לכם להגיד משהו? תכתבו תגובה. פשוט ככה.
+            אהבתם מתכון? תנו לו כוכב. בא לכם להגיד משהו? תכתבו תגובה - ואפשר גם להגיב לתגובה של
+            מישהו אחר, כמו שיחה קטנה סביב האוכל. כל אחד יכול לדרג ולהגיב, פעם אחת לכל מתכון.
           </Typography>
 
           <SectionTitle icon={<ViewModuleIcon sx={{ color: "#d06b6b" }} />}>
             איך שנוח לכם
           </SectionTitle>
           <Typography align="right" paragraph>
-            חיפוש, סינון לפי קטגוריה, ומצב כהה לשעות הערב - הכל כדי שתרגישו נוח.
+            חיפוש מהיר, סינון לפי קטגוריה, ומצב כהה לשעות הערב. אפשר גם לבחור בין תצוגת כרטיסים
+            נעימה לגלישה, לבין תצוגת טבלה מסודרת אם בא לכם להשוות כמה מתכונים במבט אחד.
           </Typography>
 
           <SectionTitle icon={<FavoriteIcon sx={{ color: "#d06b6b" }} />}>
             המועדפים שלכם
           </SectionTitle>
           <Typography align="right" paragraph>
-            מצאתם משהו שאתם יודעים שתרצו לבשל שוב? שמרו אותו במועדפים, ותמצאו אותו בקלות.
+            מצאתם משהו שאתם יודעים שתרצו לבשל שוב? שמרו אותו במועדפים בלחיצת כפתור, וכך תמצאו
+            אותו שוב במקום אחד - בלי לחפש מחדש בין כל המתכונים.
           </Typography>
 
           <Typography className="welcome1" align="right" sx={{ mt: 2, fontWeight: "bold" }}>
