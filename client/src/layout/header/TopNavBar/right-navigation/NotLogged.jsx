@@ -5,7 +5,7 @@ import ROUTES from "../../../../routes/routesModel";
 
 const NotLogged = () => {
   return (
-    <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
+    <Box sx={{ display: { xs: "none", md: "inline-flex" }, alignItems: "center", gap: 1 }}>
       <NavItem label="התחברות" to={ROUTES.LOGIN}></NavItem>
       <NavItem label="הרשמה" to={ROUTES.SIGNUP}></NavItem>
     </Box>

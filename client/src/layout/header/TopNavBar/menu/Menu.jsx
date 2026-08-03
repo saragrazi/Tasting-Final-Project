@@ -31,7 +31,6 @@ const MenuComponent = ({ isOpen, anchorEl, onClose }) => {
           text="אודות"
           navigateTo={ROUTES.ABOUT}
           onClick={onClose}
-          styles={{ color: "black" }}
         ></MenuLink>
         {!user && (
           <>
@@ -39,13 +38,13 @@ const MenuComponent = ({ isOpen, anchorEl, onClose }) => {
               text="התחברות"
               navigateTo={ROUTES.LOGIN}
               onClick={onClose}
-              styles={{ display: { xs: "block", md: "none" }, color: "black" }}
+              styles={{ display: { xs: "block", md: "none" } }}
             ></MenuLink>
             <MenuLink
               text="הרשמה"
               navigateTo={ROUTES.SIGNUP}
               onClick={onClose}
-              styles={{ display: { xs: "block", md: "none" }, color: "black" }}
+              styles={{ display: { xs: "block", md: "none" } }}
             ></MenuLink>
           </>
         )}
@@ -55,8 +54,29 @@ const MenuComponent = ({ isOpen, anchorEl, onClose }) => {
               text="פרופיל"
               navigateTo={ROUTES.USER_PROFILE}
               onClick={onClose}
-              styles={{ color: "black" }}
             ></MenuLink>
+            {user.isBusiness && (
+              <MenuLink
+                text="המתכונים שלי"
+                navigateTo={ROUTES.MY_CARDS}
+                onClick={onClose}
+                styles={{ display: { xs: "block", md: "none" } }}
+              ></MenuLink>
+            )}
+            <MenuLink
+              text="המועדפים שלי"
+              navigateTo={ROUTES.FAV_CARDS}
+              onClick={onClose}
+              styles={{ display: { xs: "block", md: "none" } }}
+            ></MenuLink>
+            {user.isAdmin && (
+              <MenuLink
+                text="ניהול משתמשים"
+                navigateTo={ROUTES.USERS_MANAGEMENT}
+                onClick={onClose}
+                styles={{ display: { xs: "block", md: "none" } }}
+              ></MenuLink>
+            )}
             {/* <MenuLink
               text="ערוך פרופיל"
               navigateTo={ROUTES.EDIT_PROFILE}
@@ -66,7 +86,6 @@ const MenuComponent = ({ isOpen, anchorEl, onClose }) => {
               text="התנתק"
               navigateTo={ROUTES.CARDS}
               onClick={onLogout}
-              styles={{ color: "black" }}
             ></MenuLink>
           </>
         )}

@@ -40,13 +40,13 @@ const SearchBar = () => {
           : "inline-flex"
       }
     >
-      <FormControl variant="standard">
+      <FormControl variant="standard" sx={{ width: { xs: 110, sm: 160, md: 200 } }}>
         <OutlinedInput
           onInput={(e) => {
             handleChange(e);
           }}
           ref={refy}
-          sx={{ backgroundColor: isDark ? "#333333" : "#e3f2fd" }}
+          sx={{ backgroundColor: isDark ? "#333333" : "#e3f2fd", width: "100%" }}
           placeholder="חפש"
           size="small"
           value={SearchQuery}

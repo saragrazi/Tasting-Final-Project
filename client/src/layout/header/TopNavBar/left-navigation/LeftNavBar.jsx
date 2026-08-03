@@ -13,7 +13,7 @@ const LeftNavBar = () => {
       <LogoIcon />
       <Logo />
 
-      <Box sx={{ display: "inline-flex", alignItems: "center", gap: 1 }}>
+      <Box sx={{ display: { xs: "none", md: "inline-flex" }, alignItems: "center", gap: 1 }}>
         <NavItem label="אודות" to={ROUTES.ABOUT} />
         {user && user.isBusiness && (
           <NavItem label="המתכונים שלי" to={ROUTES.MY_CARDS} />

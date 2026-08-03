@@ -58,8 +58,9 @@ const RightNavBar = () => {
         sx={{
           display: "inline-flex",
           alignItems: "center",
-          gap: 1,
+          gap: { xs: 0.5, sm: 1 },
           flexDirection: "row-reverse",
+          minWidth: 0,
         }}
       >
         <Chip
@@ -67,7 +68,7 @@ const RightNavBar = () => {
           size="small"
           color="success"
           variant="outlined"
-          sx={{ mr: 1, height: 30, px: 1, fontWeight: 600 }}
+          sx={{ display: { xs: "none", sm: "inline-flex" }, mr: 1, height: 30, px: 1, fontWeight: 600 }}
         />
 
         {!user && <NotLogged />}
