@@ -1,12 +1,14 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../providers/UserProvider';
+import { useSnack } from '../../providers/SnackbarProvider';
 import useAxios from '../../hooks/useAxios';
-import { login, signUp, getUsers, setUserBlockedStatus, deleteUser } from '../services/usersApiService';
+import { login, signUp, getUsers, setUserBlockedStatus, deleteUser, editBusinessStatus } from '../services/usersApiService';
 import {
     getUser,
     removeToken,
     setTokenInLocalStorage,
+    updateStoredToken,
 } from '../services/localStorageService';
 import ROUTES from '../../routes/routesModel';
 import normalizeUser from '../helpers/normalization/normalizeUser';
@@ -20,6 +22,7 @@ const useUsers = () => {
 
     const navigate = useNavigate();
     const { user, setUser, setToken, setWelcomeUser } = useUser();
+    const { setSnack } = useSnack();
     useAxios();
 
     const requestStatus = useCallback(
@@ -85,6 +88,20 @@ const useUsers = () => {
         }, []
     );
 
+    const handleBecomeBusiness = useCallback(
+        async () => {
+            try {
+                const { token } = await editBusinessStatus(user._id, true);
+                updateStoredToken(token);
+                setToken(token);
+                setUser(getUser());
+                setSnack('success', 'החשבון שלך הפך לעסקי בהצלחה! עכשיו אפשר להוסיף מתכונים.');
+            } catch (error) {
+                setSnack('error', error || 'לא ניתן היה לשדרג את החשבון כרגע');
+            }
+        }, [user, setToken, setUser, setSnack]
+    );
+
     const handleDeleteUser = useCallback(
         async (userId) => {
             try {
@@ -124,6 +141,7 @@ const useUsers = () => {
         handleGetUsers,
         handleBlockUser,
         handleDeleteUser,
+        handleBecomeBusiness,
     };
 };
 

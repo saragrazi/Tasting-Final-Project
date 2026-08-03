@@ -55,14 +55,12 @@ const MenuComponent = ({ isOpen, anchorEl, onClose }) => {
               navigateTo={ROUTES.USER_PROFILE}
               onClick={onClose}
             ></MenuLink>
-            {user.isBusiness && (
-              <MenuLink
-                text="המתכונים שלי"
-                navigateTo={ROUTES.MY_CARDS}
-                onClick={onClose}
-                styles={{ display: { xs: "block", md: "none" } }}
-              ></MenuLink>
-            )}
+            <MenuLink
+              text="המתכונים שלי"
+              navigateTo={ROUTES.MY_CARDS}
+              onClick={onClose}
+              styles={{ display: { xs: "block", md: "none" } }}
+            ></MenuLink>
             <MenuLink
               text="המועדפים שלי"
               navigateTo={ROUTES.FAV_CARDS}

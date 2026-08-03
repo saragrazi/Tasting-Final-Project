@@ -28,3 +28,8 @@ export const removeToken = () => {
   localStorage.removeItem (TOKEN);
   sessionStorage.removeItem (TOKEN);
 };
+
+export const updateStoredToken = (token) => {
+  const rememberMe = Boolean(localStorage.getItem (TOKEN));
+  setTokenInLocalStorage (token, rememberMe);
+};

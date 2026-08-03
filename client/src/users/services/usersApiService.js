@@ -30,10 +30,10 @@ export const editUser = async(id, card) => {
 };
 export const editBusinessStatus = async(id, status) => {
     try {
-        const { data } = await axios.patch(`${apiUrl}/users/${id}`, status);
+        const { data } = await axios.patch(`${apiUrl}/users/${id}`, { status });
         return data;
     } catch (error) {
-        return Promise.reject(error.response.data);
+        return Promise.reject(error.response?.data || error.message);
     }
 };
 

@@ -2,6 +2,7 @@ const express = require("express");
 const auth = require("../../auth/authService");
 const { handleError } = require("../../utils/handleErrors");
 const { generateUserPassword } = require("../helpers/bcrypt");
+const { generateAuthToken } = require("../../auth/Providers/jwt");
 const normalizeUser = require("../helpers/normalizeUser");
 const {
     registerUser,
@@ -116,9 +117,19 @@ router.put("/:id", auth, async(req, res) => {
 router.patch("/:id", auth, async(req, res) => {
     try {
         const { id } = req.params;
+
+        if (String(req.user._id) !== String(id) && !req.user.isAdmin) {
+            return handleError(
+                res,
+                403,
+                "Authorization Error: ניתן לשנות רק את הסטטוס העסקי של החשבון שלך"
+            );
+        }
+
         const { status } = req.body;
-        const user = await changeUserBusinessStatus(id, status);
-        return res.send(user);
+        const user = await changeUserBusinessStatus(id, Boolean(status));
+        const token = generateAuthToken(user);
+        return res.send({ token });
     } catch (error) {
         return handleError(res, error.status || 500, error.message);
     }

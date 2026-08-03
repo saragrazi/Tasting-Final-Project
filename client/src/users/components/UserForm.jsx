@@ -132,7 +132,7 @@ const UserForm = ({
         sm={6}
         required={false}
       />
-      <Grid item>
+      <Grid item xs={12}>
         <FormControlLabel
           onChange={(e) => {
             setData({ ...data, isBusiness: !!e.target.checked });
@@ -141,6 +141,9 @@ const UserForm = ({
           control={<Checkbox value={data.isBusiness} color="primary" />}
           label="הרשמה כעסק"
         />
+        <Typography variant="caption" color="text.secondary" display="block">
+          סמנו כאן אם תרצו להעלות ולפרסם מתכונים משלכם. אפשר גם לשדרג לחשבון עסקי מאוחר יותר, דרך עמוד הפרופיל.
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <FormControlLabel

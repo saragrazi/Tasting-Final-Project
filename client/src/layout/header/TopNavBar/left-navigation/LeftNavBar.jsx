@@ -13,9 +13,7 @@ const LeftNavBar = () => {
 
       <Box sx={{ display: { xs: "none", md: "inline-flex" }, alignItems: "center", gap: 1 }}>
         <NavItem label="אודות" to={ROUTES.ABOUT} />
-        {user && user.isBusiness && (
-          <NavItem label="המתכונים שלי" to={ROUTES.MY_CARDS} />
-        )}
+        {user && <NavItem label="המתכונים שלי" to={ROUTES.MY_CARDS} />}
         {user && <NavItem label="המועדפים שלי" to={ROUTES.FAV_CARDS} />}
         {user && user.isAdmin && (
           <NavItem label="ניהול משתמשים" to={ROUTES.USERS_MANAGEMENT} />

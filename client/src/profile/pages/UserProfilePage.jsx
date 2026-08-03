@@ -9,10 +9,12 @@ import EditUserForm from "../components/EditUserForm";
 import initialEditForm from "../../users/helpers/initial-forms/initialEditForm";
 import editSchema from "../../users/models/joi-schema/editSchema";
 import CancelPresentationIcon from "@mui/icons-material/CancelPresentation";
+import useUsers from "../../users/hooks/useUsers";
 const UserProfilePage = () => {
   const { getUserProfile, handleEditUser, userData, setUserId, open, setOpen } =
     useUserProfile();
   const { user } = useUser();
+  const { handleBecomeBusiness } = useUsers();
   const navigate = useNavigate();
   const [userFormData, setUserFormData] = useState({});
 
@@ -91,6 +93,21 @@ const UserProfilePage = () => {
                     ? "משתמש רגיל"
                     : ""}
                 </Typography>
+                {!user?.isBusiness && (
+                  <Box mt={1}>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="primary"
+                      onClick={handleBecomeBusiness}
+                    >
+                      הפוך לחשבון עסקי
+                    </Button>
+                    <Typography variant="caption" color="text.secondary" display="block" mt={0.5}>
+                      עם חשבון עסקי אפשר להעלות ולפרסם מתכונים משלך
+                    </Typography>
+                  </Box>
+                )}
               </Box>
               <Box>
                 <img

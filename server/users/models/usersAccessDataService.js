@@ -101,8 +101,9 @@ const updateUser = async(userId, normalizedUser) => {
 const changeUserBusinessStatus = async(userId, status) => {
     if (DB === "MONGODB") {
         try {
-            await User.findByIdAndUpdate(userId, { isBusiness: status })
-            return Promise.resolve(`user no. ${userId} change his business status!`);
+            const user = await User.findByIdAndUpdate(userId, { isBusiness: status }, { new: true });
+            if (!user) throw new Error("Could not find this user in the database");
+            return Promise.resolve(user);
         } catch (error) {
             error.status = 400;
             return Promise.reject(error);
