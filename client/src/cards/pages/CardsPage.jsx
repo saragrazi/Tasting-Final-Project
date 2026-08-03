@@ -1,19 +1,21 @@
 import { Container } from '@mui/system';
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import PageHeader from '../../components/PageHeader';
 import CardsFeedback from '../components/CardsFeedback';
 import useCards from '../hooks/useCards';
+import usePaginatedCards from '../hooks/usePaginatedCards';
+import { getCardsBrowse } from '../services/cardService';
 import { searchContext } from '../../providers/SearchProvider';
 import FilterComp from '../../filters/FilterComp';
-import { Box, IconButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Button, IconButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import DataTable from '../../table/components/CardsTable';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableRowsIcon from '@mui/icons-material/TableRows';
-import { getVisibleCards } from '../helpers/filterCards';
 
 const CardsPage = () => {
   const { searchQuery } = useContext(searchContext)
-  const { pending, error, cards, handleGetCards, setCards, handleDeleteCard } = useCards();
+  const { handleDeleteCard } = useCards();
+  const { cards, pending, error, hasMore, reload, loadMore, setCards } = usePaginatedCards(getCardsBrowse);
   const [viewType, setViewType] = useState("cards")
   const [sortBy, setSortBy] = useState("")
   const muiTheme = useTheme();
@@ -22,21 +24,21 @@ const CardsPage = () => {
     setSortBy(e.target.value)
   }, [])
 
-  const filtered = useMemo(() => getVisibleCards(cards || [], searchQuery, sortBy), [cards, searchQuery, sortBy]);
-
   useEffect(() => {
-    handleGetCards();
-
+    const timer = setTimeout(() => {
+      reload({ search: searchQuery, category: sortBy });
+    }, 350);
+    return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [searchQuery, sortBy]);
 
   useEffect(() => {
     if (isMobile && viewType === 'table') setViewType('cards');
   }, [isMobile, viewType]);
 
   const onDeleteCard = (cardId) => {
-  
     handleDeleteCard(cardId);
+    setCards((prev) => prev.filter((c) => c._id !== cardId));
   };
 
   return (
@@ -63,18 +65,25 @@ const CardsPage = () => {
         )}
       </Box>
       {viewType === 'table' && (
-        <DataTable cards={filtered} />
+        <DataTable cards={cards} />
       )}
       {viewType === 'cards' && (
         <Box mt={3}>
           <CardsFeedback
             pending={pending}
             error={error}
-            cards={filtered}
+            cards={cards}
             onDelete={onDeleteCard}
             setCards={setCards}
             searchQuery={searchQuery}
           />
+          {hasMore && !pending && (
+            <Box display="flex" justifyContent="center" mt={3}>
+              <Button variant="contained" color="primary" onClick={loadMore}>
+                טען עוד
+              </Button>
+            </Box>
+          )}
         </Box>
       )}
     </Container>

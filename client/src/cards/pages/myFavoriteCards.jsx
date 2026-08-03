@@ -1,21 +1,21 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useUser } from "../../users/providers/UserProvider";
-import useCards from "../hooks/useCards";
+import usePaginatedCards from "../hooks/usePaginatedCards";
+import { getMyFavoriteCardsBrowse } from "../services/cardService";
 import PageHeader from "../../components/PageHeader";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/routesModel";
-import { Box, Container, IconButton, Tooltip, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Container, IconButton, Tooltip, useMediaQuery, useTheme } from "@mui/material";
 import CardsFeedback from "../components/CardsFeedback";
 import { searchContext } from "../../providers/SearchProvider";
 import FilterComp from "../../filters/FilterComp";
 import CardsTable from "../../table/components/CardsTable";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableRowsIcon from '@mui/icons-material/TableRows';
-import { getVisibleCards } from "../helpers/filterCards";
 
 const MyFavoriteCards = () => {
   const { user } = useUser();
-  const { pending, error, cards, handleGetFavCards, setCards } = useCards();
+  const { cards, pending, error, hasMore, reload, loadMore, setCards } = usePaginatedCards(getMyFavoriteCardsBrowse);
   const navigate = useNavigate();
   const { searchQuery } = useContext(searchContext)
   const [sortBy, setSortBy] = useState("")
@@ -26,24 +26,24 @@ const MyFavoriteCards = () => {
     setSortBy(e.target.value)
   }, [])
 
-  const filtered = useMemo(() => getVisibleCards(cards || [], searchQuery, sortBy), [cards, searchQuery, sortBy]);
-
   useEffect(() => {
     if (isMobile && viewType === 'table') setViewType('cards');
   }, [isMobile, viewType]);
 
   useEffect(() => {
-    const getCards = async () => {
-      if (!user) {
-        navigate(ROUTES.CARDS);
-      }
-      else {
-        await handleGetFavCards(user._id);
-      }
+    if (!user) {
+      navigate(ROUTES.CARDS);
     }
-    getCards()
-    // eslint-disable-next-line
-  }, []);
+  }, [navigate, user]);
+
+  useEffect(() => {
+    if (!user) return undefined;
+    const timer = setTimeout(() => {
+      reload({ search: searchQuery, category: sortBy });
+    }, 350);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQuery, sortBy, user]);
 
   return (
     <Container sx={{ position: "relative", minHeight: "90vh", direction: "rtl" }}>
@@ -72,18 +72,25 @@ const MyFavoriteCards = () => {
         )}
       </Box>
       {viewType === 'table' && (
-        <CardsTable cards={filtered} />
+        <CardsTable cards={cards} />
       )}
       {viewType === 'cards' && (
         <Box mt={3}>
           <CardsFeedback
             pending={pending}
             error={error}
-            cards={filtered}
+            cards={cards}
             onDelete={() => { }}
             setCards={setCards}
             showDelete={false}
           />
+          {hasMore && !pending && (
+            <Box display="flex" justifyContent="center" mt={3}>
+              <Button variant="contained" color="primary" onClick={loadMore}>
+                טען עוד
+              </Button>
+            </Box>
+          )}
         </Box>
       )}
 

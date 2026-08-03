@@ -1,10 +1,11 @@
-import React, { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useUser } from "../../users/providers/UserProvider";
-import useCards from "../hooks/useCards";
+import usePaginatedCards from "../hooks/usePaginatedCards";
+import { getMyCardsBrowse } from "../services/cardService";
 import PageHeader from "../../components/PageHeader";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/routesModel";
-import { Box, Container, Fab, IconButton, Tooltip, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Container, Fab, IconButton, Tooltip, useMediaQuery, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CardsFeedback from "../components/CardsFeedback";
 import { searchContext } from "../../providers/SearchProvider";
@@ -12,11 +13,10 @@ import FilterComp from "../../filters/FilterComp";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import CardsTable from "../../table/components/CardsTable";
-import { getVisibleCards } from "../helpers/filterCards";
 
 const MyCardsPage = () => {
   const { user } = useUser();
-  const { pending, error, cards, handleGetMyCards, setCards } = useCards();
+  const { cards, pending, error, hasMore, reload, loadMore, setCards } = usePaginatedCards(getMyCardsBrowse);
   const { searchQuery } = useContext(searchContext)
   const navigate = useNavigate();
   const [viewType, setViewType] = useState("cards")
@@ -27,13 +27,18 @@ const MyCardsPage = () => {
     setSortBy(e.target.value)
   }, [])
 
-  const filtered = useMemo(() => getVisibleCards(cards || [], searchQuery, sortBy), [cards, searchQuery, sortBy]);
-
-
   useEffect(() => {
     if (!user || !user.isBusiness) navigate(ROUTES.CARDS);
-    else handleGetMyCards();
-  }, [handleGetMyCards, navigate, user]);
+  }, [navigate, user]);
+
+  useEffect(() => {
+    if (!user || !user.isBusiness) return undefined;
+    const timer = setTimeout(() => {
+      reload({ search: searchQuery, category: sortBy });
+    }, 350);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQuery, sortBy, user]);
 
   useEffect(() => {
     if (isMobile && viewType === 'table') setViewType('cards');
@@ -74,17 +79,24 @@ const MyCardsPage = () => {
         <AddIcon />
       </Fab>
       {viewType === 'table' && (
-        <CardsTable cards={filtered} />
+        <CardsTable cards={cards} />
       )}
       {viewType === 'cards' && (
         <Box mt={3}>
           <CardsFeedback
             pending={pending}
             error={error}
-          cards={filtered}
+          cards={cards}
           onDelete={() => { }}
           setCards={setCards}
           />
+          {hasMore && !pending && (
+            <Box display="flex" justifyContent="center" mt={3}>
+              <Button variant="contained" color="primary" onClick={loadMore}>
+                טען עוד
+              </Button>
+            </Box>
+          )}
         </Box>
       )}
     </Container>

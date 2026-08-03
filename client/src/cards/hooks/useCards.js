@@ -4,9 +4,7 @@ import { useSnack } from "../../providers/SnackbarProvider";
 import ROUTES from "../../routes/routesModel";
 import normalizeCard from "../helpers/normalization/normalizeCard";
 import {
-  getCards,
   getCard,
-  getMyCards,
   createCard,
   editCard,
   deleteCard,
@@ -36,16 +34,6 @@ const useCards = () => {
     setCard(card);
   };
 
-  const handleGetCards = async () => {
-    try {
-      setPending(true);
-      const cards = await getCards();
-      requestStatus(false, null, cards, null);
-    } catch (error) {
-      requestStatus(false, error, null, null);
-    }
-  };
-
   const handleGetCard = async cardId => {
     try {
       setPending(true);
@@ -55,29 +43,6 @@ const useCards = () => {
       requestStatus(false, error, null, null);
     }
   };
-
-  const handleGetMyCards = useCallback(async () => {
-    try {
-      setPending(true);
-      const cards = await getMyCards();
-      requestStatus(false, null, cards, null);
-    } catch (error) {
-      requestStatus(false, error, null, null);
-    }
-  }, [])
-
-  const handleGetFavCards = async (userId) => {
-    try {
-      setPending(true)
-      const cards = await getCards()
-      const favCards = cards.filter(card => {
-        return card.likes.filter((like) => (like === userId))[0]
-      })
-      requestStatus(false, null, favCards, null)
-    } catch (error) {
-      requestStatus(false, error, null, null);
-    }
-  }
 
   const handleCreateCard = useCallback(async (cardFromClient,image) => {
     const formData = new FormData();
@@ -179,9 +144,7 @@ const useCards = () => {
     setCards,
     setCard,
     setLike,
-    handleGetCards,
     handleGetCard,
-    handleGetMyCards,
     handleCreateCard,
     handleUpdateCard,
     handleDeleteCard,
@@ -189,7 +152,6 @@ const useCards = () => {
     handleAddRating,
     handleAddComment,
     handleDeleteComment,
-    handleGetFavCards,
     setCardId,
   };
 };

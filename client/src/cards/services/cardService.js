@@ -39,6 +39,39 @@ export const getMyCards = async () => {
   }
 };
 
+export const getCardsBrowse = async ({ page, limit, search, category } = {}) => {
+  try {
+    const { data } = await axios.get(`${apiUrl}/cards/browse`, {
+      params: { page, limit, search, category },
+    });
+    return data;
+  } catch (error) {
+    return Promise.reject(error.response?.data || error.message);
+  }
+};
+
+export const getMyCardsBrowse = async ({ page, limit, search, category } = {}) => {
+  try {
+    const { data } = await axios.get(`${apiUrl}/cards/my-cards/browse`, {
+      params: { page, limit, search, category },
+    });
+    return data;
+  } catch (error) {
+    return Promise.reject(error.response?.data || error.message);
+  }
+};
+
+export const getMyFavoriteCardsBrowse = async ({ page, limit, search, category } = {}) => {
+  try {
+    const { data } = await axios.get(`${apiUrl}/cards/my-favorites/browse`, {
+      params: { page, limit, search, category },
+    });
+    return data;
+  } catch (error) {
+    return Promise.reject(error.response?.data || error.message);
+  }
+};
+
 export const createCard = async (card) => {
   try {
     const { data } = await axios.post(`${apiUrl}/cards`, card);
