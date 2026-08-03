@@ -49,6 +49,7 @@ const LoginPage = () => {
           type="email"
           error={value.errors.email}
           onChange={rest.handleChange}
+          onBlur={rest.handleBlur}
           data={value.data}
         />
         <Input
@@ -57,6 +58,7 @@ const LoginPage = () => {
           type="password"
           error={value.errors.password}
           onChange={rest.handleChange}
+          onBlur={rest.handleBlur}
           data={value.data}
         />
         <Grid item xs={12}>

@@ -12,6 +12,7 @@ const EditUserForm = ({
   errors,
   data,
   onInputChange,
+  onInputBlur,
   setData,
 }) => {
   return (
@@ -28,6 +29,7 @@ const EditUserForm = ({
         label="שם פרטי"
         error={errors.first}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -37,6 +39,7 @@ const EditUserForm = ({
         label="שם משפחה"
         error={errors.last}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -46,6 +49,7 @@ const EditUserForm = ({
         type="phone"
         error={errors.phone}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -55,6 +59,7 @@ const EditUserForm = ({
         type="email"
         error={errors.email}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -64,6 +69,7 @@ const EditUserForm = ({
         name="country"
         error={errors.country}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -72,6 +78,7 @@ const EditUserForm = ({
         label="עיר"
         error={errors.city}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -80,6 +87,7 @@ const EditUserForm = ({
         label="רחוב"
         error={errors.street}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -89,6 +97,7 @@ const EditUserForm = ({
         type="number"
         error={errors.houseNumber}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -97,6 +106,7 @@ const EditUserForm = ({
         label="מיקוד"
         error={errors.zip}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
         required={false}
@@ -113,6 +123,7 @@ EditUserForm.propTypes = {
   errors: object.isRequired,
   data: object.isRequired,
   onInputChange: func.isRequired,
+  onInputBlur: func,
   setData: func.isRequired,
 };
 

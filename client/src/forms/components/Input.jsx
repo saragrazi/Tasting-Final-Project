@@ -14,6 +14,7 @@ const Input = ({
   required,
   error,
   onChange,
+  onBlur,
   ...rest
 }) => {
   return (
@@ -29,6 +30,7 @@ const Input = ({
         helperText={error}
         error={Boolean(error)}
         onChange={onChange}
+        onBlur={onBlur}
         fullWidth
         multiline={multiline}
         autoComplete="off"
@@ -46,6 +48,7 @@ Input.propTypes = {
   type: string.isRequired,
   error: string,
   onChange: func.isRequired,
+  onBlur: func,
   variant: string,
   data: object,
 };

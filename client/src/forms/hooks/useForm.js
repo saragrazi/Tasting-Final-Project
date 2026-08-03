@@ -62,7 +62,21 @@ const useForm = (initialForm, schema, handleSubmit) => {
         });
 
       setData(prev => ({ ...prev, [name]: value }));
-    
+
+    },
+    [validateProperty]
+  );
+
+  const handleBlur = useCallback(
+    ({ target }) => {
+      const errorMessage = validateProperty(target);
+      if (errorMessage) setErrors(prev => ({ ...prev, [target.name]: errorMessage }));
+      else
+        setErrors(prev => {
+          let obj = { ...prev };
+          delete obj[target.name];
+          return obj;
+        });
     },
     [validateProperty]
   );
@@ -87,6 +101,7 @@ const useForm = (initialForm, schema, handleSubmit) => {
     value,
     onSubmit,
     handleChange,
+    handleBlur,
     handleReset,
     validateForm,
     setData,

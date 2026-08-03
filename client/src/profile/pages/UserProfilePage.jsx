@@ -117,6 +117,7 @@ const UserProfilePage = () => {
               onReset={rest.handleReset}
               onFormChange={rest.validateForm}
               onInputChange={rest.handleChange}
+              onInputBlur={rest.handleBlur}
               data={value.data}
               errors={value.errors}
               setData={rest.setData}

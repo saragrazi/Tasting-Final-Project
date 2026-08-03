@@ -70,6 +70,7 @@ const EditCardPage = () => {
         errors={value.errors}
         onFormChange={rest.validateForm}
         onInputChange={rest.handleChange}
+        onInputBlur={rest.handleBlur}
         handleFileUpload={rest.handleFileUpload}
         data={value.data}
       />

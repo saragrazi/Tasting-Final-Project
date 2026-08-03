@@ -17,6 +17,7 @@ const UserForm = ({
   errors,
   data,
   onInputChange,
+  onInputBlur,
   setData,
 }) => {
   return (
@@ -39,6 +40,7 @@ const UserForm = ({
         label="שם פרטי"
         error={errors.first}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -48,6 +50,7 @@ const UserForm = ({
         label="שם משפחה"
         error={errors.last}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -57,6 +60,7 @@ const UserForm = ({
         type="phone"
         error={errors.phone}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -66,6 +70,7 @@ const UserForm = ({
         type="email"
         error={errors.email}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -75,6 +80,7 @@ const UserForm = ({
         type="password"
         error={errors.password}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -84,6 +90,7 @@ const UserForm = ({
         name="country"
         error={errors.country}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -92,6 +99,7 @@ const UserForm = ({
         label="עיר"
         error={errors.city}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -100,6 +108,7 @@ const UserForm = ({
         label="רחוב"
         error={errors.street}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -109,6 +118,7 @@ const UserForm = ({
         type="number"
         error={errors.houseNumber}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
       />
@@ -117,6 +127,7 @@ const UserForm = ({
         label="מיקוד"
         error={errors.zip}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         sm={6}
         required={false}
@@ -160,6 +171,7 @@ UserForm.propTypes = {
   errors: object.isRequired,
   data: object.isRequired,
   onInputChange: func.isRequired,
+  onInputBlur: func,
   setData: func.isRequired,
 };
 

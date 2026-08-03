@@ -16,6 +16,7 @@ const CardForm = ({
   errors,
   onFormChange,
   onInputChange,
+  onInputBlur,
   handleFileUpload,
   data,
   title,
@@ -34,6 +35,7 @@ const CardForm = ({
         label="שם המתכון"
         error={errors.title}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
       />
 
@@ -43,6 +45,7 @@ const CardForm = ({
         label="תאור קצר"
         error={errors.subtitle}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
       />
       <IngredientListInput
@@ -84,6 +87,7 @@ const CardForm = ({
         type="number"
         error={errors.prepTime}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
       />
       <FormControl sx={{ marginLeft: "8px", marginTop: "15px" }} fullWidth disabled={data?.measuringCup === null}>
@@ -120,6 +124,7 @@ const CardForm = ({
         label="טיפים"
         error={errors.tips}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         multiline={true}
       />
@@ -128,6 +133,7 @@ const CardForm = ({
         label="קישור לסרטון הכנה"
         error={errors.videoLink}
         onChange={onInputChange}
+        onBlur={onInputBlur}
         data={data}
         required={false}
       />
@@ -161,6 +167,7 @@ CardForm.propTypes = {
   errors: object.isRequired,
   onFormChange: func.isRequired,
   onInputChange: func.isRequired,
+  onInputBlur: func,
   onFileChange: func,
   data: object.isRequired,
   title: string.isRequired,
