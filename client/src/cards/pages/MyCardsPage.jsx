@@ -16,7 +16,7 @@ import CardsTable from "../../table/components/CardsTable";
 
 const MyCardsPage = () => {
   const { user } = useUser();
-  const { cards, pending, error, hasMore, reload, loadMore, setCards } = usePaginatedCards(getMyCardsBrowse);
+  const { cards, pending, error, hasMore, reload, loadMore, setCards, removeCard } = usePaginatedCards(getMyCardsBrowse);
   const { searchQuery } = useContext(searchContext)
   const navigate = useNavigate();
   const [viewType, setViewType] = useState("cards")
@@ -89,6 +89,7 @@ const MyCardsPage = () => {
           cards={cards}
           onDelete={() => { }}
           setCards={setCards}
+          removeCard={removeCard}
           />
           {hasMore && !pending && (
             <Box display="flex" justifyContent="center" mt={3}>

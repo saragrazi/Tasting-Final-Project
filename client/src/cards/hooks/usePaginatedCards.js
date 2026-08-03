@@ -48,9 +48,14 @@ const usePaginatedCards = (fetchFn) => {
     return fetchPage(page + 1, filtersRef.current, true);
   }, [fetchPage, page]);
 
+  const removeCard = useCallback((cardId) => {
+    setCards((prev) => prev.filter((c) => c._id !== cardId));
+    setTotal((prev) => Math.max(0, prev - 1));
+  }, []);
+
   const hasMore = cards.length < total;
 
-  return { cards, total, pending, error, hasMore, reload, loadMore, setCards };
+  return { cards, total, pending, error, hasMore, reload, loadMore, setCards, removeCard };
 };
 
 export default usePaginatedCards;

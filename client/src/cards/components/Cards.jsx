@@ -6,7 +6,7 @@ import cardType from "../models/types/cardType";
 import DeleteModal from "./DeleteModal";
 
 
-const Cards = ({ cards,setCards }) => {
+const Cards = ({ cards,setCards,removeCard }) => {
   const onLike = (cardId) => console.log(`you liked card no:${cardId}`);
   const onDelete = (cardId) => console.log(`you deleted card no:${cardId}`);
   const onEdit = (cardId) => console.log(`you edited card no:${cardId}`);
@@ -22,6 +22,7 @@ const Cards = ({ cards,setCards }) => {
             card={card}
             cards={cards}
             setCards={setCards}
+            removeCard={removeCard}
           />
         </Grid>
       ))}

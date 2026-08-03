@@ -10,7 +10,7 @@ import useCardActionBar from "./hooks/useCardActionBar";
 import useCards from "../../hooks/useCards";
 import DeleteModal from "../DeleteModal";
 
-const CardActionBar = ({ cardId, userId, card, cards, setCards }) => {
+const CardActionBar = ({ cardId, userId, card, cards, setCards, removeCard }) => {
   const { user } = useUser();
   const navigate = useNavigate();
   const location = useLocation();
@@ -23,7 +23,7 @@ const CardActionBar = ({ cardId, userId, card, cards, setCards }) => {
     cardIdToDelete,
     onCancelDelete,
     onConfirmDelete,
-  } = useCardActionBar(handleDeleteCard, handleLikeCard, setCards, cards);
+  } = useCardActionBar(handleDeleteCard, handleLikeCard, setCards, cards, removeCard);
   useEffect(() => {
     const isLiked = async () => {
       const hasUser = await card.likes.filter((like) => like === user?._id);
@@ -73,8 +73,8 @@ const CardActionBar = ({ cardId, userId, card, cards, setCards }) => {
             onClick={async () => {
               const isCurrentlyLiked = Boolean(localLike);
               await onLike(cardId);
-              if (location.pathname.includes("favorites") && isCurrentlyLiked && typeof setCards === "function") {
-                setCards((prevCards) => prevCards?.filter((item) => item._id !== cardId) || []);
+              if (location.pathname.includes("favorites") && isCurrentlyLiked && typeof removeCard === "function") {
+                removeCard(cardId);
               }
             }}
           >

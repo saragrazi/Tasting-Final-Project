@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import ROUTES from "../../../routes/routesModel";
 import { array, func } from "prop-types";
 
-const CardComponent = ({ cards, card, onLike, onDelete, onEdit, setCards }) => {
+const CardComponent = ({ cards, card, onLike, onDelete, onEdit, setCards, removeCard }) => {
   const navigate = useNavigate();
 
   return (
@@ -47,6 +47,7 @@ const CardComponent = ({ cards, card, onLike, onDelete, onEdit, setCards }) => {
         card={card}
         cards={cards}
         setCards={setCards}
+        removeCard={removeCard}
       />
     </Card>
   );

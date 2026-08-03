@@ -2,7 +2,7 @@ import { useCallback, useState } from "react"
 import { useSnack } from "../../../../providers/SnackbarProvider"
 import { func, object } from "prop-types";
 
-const useCardActionBar = (handleDeleteCard, handleLikeCard, setCards, cards) => {
+const useCardActionBar = (handleDeleteCard, handleLikeCard, setCards, cards, removeCard) => {
   const [localLike, setLocalLike] = useState()
   const [cardIdToDelete, setCardIdToDelete] = useState(null);
   const { setSnack } = useSnack();
@@ -20,13 +20,16 @@ const useCardActionBar = (handleDeleteCard, handleLikeCard, setCards, cards) => 
     setCardIdToDelete(null);
     try {
       handleDeleteCard(cardId)
-      setCards(() => cards.filter((card) => card._id !== cardId)
-      );
+      if (typeof removeCard === "function") {
+        removeCard(cardId);
+      } else {
+        setCards(() => cards.filter((card) => card._id !== cardId));
+      }
     } catch (err) {
 
       setSnack("error", err)
     }
-  },[cardIdToDelete,cards,handleDeleteCard,setCards,setSnack])
+  },[cardIdToDelete,cards,handleDeleteCard,setCards,removeCard,setSnack])
 
   const onLike = useCallback(async (cardId) => {
     try {

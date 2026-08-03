@@ -15,7 +15,7 @@ import TableRowsIcon from '@mui/icons-material/TableRows';
 
 const MyFavoriteCards = () => {
   const { user } = useUser();
-  const { cards, pending, error, hasMore, reload, loadMore, setCards } = usePaginatedCards(getMyFavoriteCardsBrowse);
+  const { cards, pending, error, hasMore, reload, loadMore, setCards, removeCard } = usePaginatedCards(getMyFavoriteCardsBrowse);
   const navigate = useNavigate();
   const { searchQuery } = useContext(searchContext)
   const [sortBy, setSortBy] = useState("")
@@ -82,6 +82,7 @@ const MyFavoriteCards = () => {
             cards={cards}
             onDelete={() => { }}
             setCards={setCards}
+            removeCard={removeCard}
             showDelete={false}
           />
           {hasMore && !pending && (

@@ -15,7 +15,7 @@ import TableRowsIcon from '@mui/icons-material/TableRows';
 const CardsPage = () => {
   const { searchQuery } = useContext(searchContext)
   const { handleDeleteCard } = useCards();
-  const { cards, pending, error, hasMore, reload, loadMore, setCards } = usePaginatedCards(getCardsBrowse);
+  const { cards, pending, error, hasMore, reload, loadMore, setCards, removeCard } = usePaginatedCards(getCardsBrowse);
   const [viewType, setViewType] = useState("cards")
   const [sortBy, setSortBy] = useState("")
   const muiTheme = useTheme();
@@ -38,7 +38,7 @@ const CardsPage = () => {
 
   const onDeleteCard = (cardId) => {
     handleDeleteCard(cardId);
-    setCards((prev) => prev.filter((c) => c._id !== cardId));
+    removeCard(cardId);
   };
 
   return (
@@ -75,6 +75,7 @@ const CardsPage = () => {
             cards={cards}
             onDelete={onDeleteCard}
             setCards={setCards}
+            removeCard={removeCard}
             searchQuery={searchQuery}
           />
           {hasMore && !pending && (
