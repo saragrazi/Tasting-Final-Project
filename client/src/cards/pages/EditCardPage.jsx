@@ -43,14 +43,15 @@ const EditCardPage = () => {
         measuringCup: card.measuringCup,
         tips: card.tips,
         videoLink: card.videoLink || "",
-        user_id: card.user_id
+        user_id: card.user_id,
+        isPrivate: Boolean(card.isPrivate),
       })
     }
     cardData()
     // eslint-disable-next-line
   }, [])
 
-  if (!user || !user.isBusiness) return <Navigate replace to={ROUTES.CARDS} />;
+  if (!user) return <Navigate replace to={ROUTES.CARDS} />;
 
   return (
     <Container

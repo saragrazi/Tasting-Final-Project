@@ -1,4 +1,4 @@
-import { Box, CardMedia, Container, Divider, Typography, TextField, Button, Rating, Grid, Modal, Backdrop, IconButton } from '@mui/material';
+import { Box, CardMedia, Chip, Container, Divider, Typography, TextField, Button, Rating, Grid, Modal, Backdrop, IconButton } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LocalCafeIcon from '@mui/icons-material/LocalCafe';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -95,6 +95,9 @@ const CardDetailsPage = () => {
       >
         <Box mt={2} display="flex" alignItems="center" flexDirection={{ xs: 'column', sm: 'column' }}>
           {/* כותרת */}
+          {card?.isPrivate && (
+            <Chip label="פרטי - לא לפרסום" size="small" sx={{ mb: 1, backgroundColor: '#d06b6b', color: '#fff' }} />
+          )}
           <Typography color="#d06b6b" sx={{ textShadow: '1px 1px 1px black' }} mb={2} variant="h3">
             {card?.title}
           </Typography>

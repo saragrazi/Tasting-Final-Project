@@ -8,7 +8,6 @@ import ROUTES from "../../routes/routesModel";
 import { Box, Button, Container, Fab, IconButton, Tooltip, useMediaQuery, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CardsFeedback from "../components/CardsFeedback";
-import BecomeBusinessPrompt from "../components/BecomeBusinessPrompt";
 import { searchContext } from "../../providers/SearchProvider";
 import FilterComp from "../../filters/FilterComp";
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -33,7 +32,7 @@ const MyCardsPage = () => {
   }, [navigate, user]);
 
   useEffect(() => {
-    if (!user || !user.isBusiness) return undefined;
+    if (!user) return undefined;
     const timer = setTimeout(() => {
       reload({ search: searchQuery, category: sortBy });
     }, 350);
@@ -46,18 +45,6 @@ const MyCardsPage = () => {
   }, [isMobile, viewType]);
 
   if (!user) return null;
-
-  if (!user.isBusiness) {
-    return (
-      <Container sx={{ minHeight: "90vh", direction: "rtl" }}>
-        <PageHeader
-          title="המתכונים שלי"
-          textAlign={"center"}
-        />
-        <BecomeBusinessPrompt />
-      </Container>
-    );
-  }
 
   return (
     <Container sx={{ position: "relative", minHeight: "90vh", direction: "rtl" }}>

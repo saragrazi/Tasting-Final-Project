@@ -7,8 +7,6 @@ import ROUTES from "../../routes/routesModel";
 import { Navigate } from "react-router-dom";
 import { Container } from "@mui/material";
 import CardForm from "../components/CardForm";
-import BecomeBusinessPrompt from "../components/BecomeBusinessPrompt";
-import PageHeader from "../../components/PageHeader";
 import { cardSchema } from "../models/joi-schema/cardSchema";
 
 const CreateCardPage = () => {
@@ -21,15 +19,6 @@ const CreateCardPage = () => {
   );
 
   if (!user) return <Navigate replace to={ROUTES.CARDS} />;
-
-  if (!user.isBusiness) {
-    return (
-      <Container sx={{ direction: "rtl" }}>
-        <PageHeader title="צור מתכון" textAlign={"center"} />
-        <BecomeBusinessPrompt />
-      </Container>
-    );
-  }
 
   return (
     <Container

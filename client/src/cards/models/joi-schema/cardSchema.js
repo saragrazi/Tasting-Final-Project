@@ -28,7 +28,8 @@ export const cardSchema = {
     .rule({ message: 'יש להזין קישור תקין לוידאו' })
     .allow(""),
   dishImage: Joi.string().label("תמונת מנה").allow(""),
-  user_id: Joi.string().min(2).max(256)
+  user_id: Joi.string().min(2).max(256),
+  isPrivate: Joi.boolean(),
 };
 export const EditcardSchema = {
   title: Joi.string().label("שם המתכון").min(2).max(256).required(),
@@ -54,7 +55,8 @@ export const EditcardSchema = {
     .rule({ message: 'יש להזין קישור תקין לוידאו' })
     .allow(""),
   dishImage: Joi.string().label("תמונת מנה").allow(""),
-  user_id: Joi.string().min(2).max(256)
+  user_id: Joi.string().min(2).max(256),
+  isPrivate: Joi.boolean(),
 };
 
 

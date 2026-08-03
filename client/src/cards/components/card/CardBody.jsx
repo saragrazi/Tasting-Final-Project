@@ -3,6 +3,7 @@ import {
   Box,
   CardContent,
   CardHeader,
+  Chip,
   Divider,
   Rating,
   Typography,
@@ -37,7 +38,14 @@ const CardBody = ({ card }) => {
   return (
     <CardContent sx={{ flex: 1, p: 1, display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
       <CardHeader
-        title={<Typography variant="h6" sx={clampSx}>{card.title}</Typography>}
+        title={
+          <Box display="flex" alignItems="center" gap={1}>
+            <Typography variant="h6" sx={clampSx}>{card.title}</Typography>
+            {card.isPrivate && (
+              <Chip label="פרטי" size="small" sx={{ height: 18, fontSize: "0.65rem" }} />
+            )}
+          </Box>
+        }
         subheader={<Typography variant="body2" color="text.secondary" sx={clampSx}>{card.subtitle}</Typography>}
         sx={{ p: 0, mb: 1, textAlign: "right" }}
       />

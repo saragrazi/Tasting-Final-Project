@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { func, object, string } from "prop-types";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
 import DynamicListInput from "../../forms/components/DynamicListInput";
 import IngredientListInput from "../../forms/components/IngredientListInput";
-import { FormControl, FormControlLabel, Checkbox, FormLabel, InputLabel, MenuItem, Select, Typography } from "@mui/material";
+import { FormControl, FormControlLabel, Checkbox, FormLabel, InputLabel, MenuItem, Select, Typography, Box, Button } from "@mui/material";
 import FileInput from "../../forms/components/FileInput";
 import MEASURING_CUP_OPTIONS from "../models/measuringCupOptions";
+import { useUser } from "../../users/providers/UserProvider";
+import useUsers from "../../users/hooks/useUsers";
 
 
 
@@ -21,6 +23,17 @@ const CardForm = ({
   data,
   title,
 }) => {
+  const { user } = useUser();
+  const { handleBecomeBusiness } = useUsers();
+  const isBusiness = Boolean(user?.isBusiness);
+
+  useEffect(() => {
+    if (!isBusiness && data.isPrivate !== true) {
+      onInputChange({ target: { name: "isPrivate", value: true } });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isBusiness]);
+
   return (
     <Form
       onSubmit={onSubmit}
@@ -119,6 +132,41 @@ const CardForm = ({
         }
         label={<Typography variant="body2">לא השתמשתי בכוס מדידה במתכון זה</Typography>}
       />
+      <Box sx={{ width: "100%", mt: 2, p: 1.5, borderRadius: 1, backgroundColor: "rgba(208,107,107,0.08)" }}>
+        <FormControlLabel
+          sx={{ mr: 0 }}
+          control={
+            <Checkbox
+              checked={Boolean(data?.isPrivate)}
+              disabled={!isBusiness}
+              onChange={(e) => {
+                onInputChange({ target: { name: "isPrivate", value: e.target.checked } });
+              }}
+            />
+          }
+          label={<Typography variant="body2" sx={{ fontWeight: 600 }}>פרטי - לא לפרסום</Typography>}
+        />
+        {isBusiness ? (
+          <Typography variant="caption" color="text.secondary" display="block">
+            אם תסמנו, המתכון יופיע רק אצלכם ב"המתכונים שלי" ולא יוצג לאף אחד אחר. אם לא, כולם יוכלו לראות אותו.
+          </Typography>
+        ) : (
+          <>
+            <Typography variant="caption" color="text.secondary" display="block">
+              מתכונים של משתמשים רגילים תמיד נשארים פרטיים ונראים רק אצלכם. כדי לפרסם מתכון לכולם, צריך חשבון עסקי.
+            </Typography>
+            <Button
+              size="small"
+              variant="outlined"
+              color="primary"
+              sx={{ mt: 1 }}
+              onClick={handleBecomeBusiness}
+            >
+              הפוך לחשבון עסקי
+            </Button>
+          </>
+        )}
+      </Box>
       <Input
         name="tips"
         label="טיפים"

@@ -10,6 +10,7 @@ const normalizeCard = card => {
     tips: card.tips,
     videoLink: card.videoLink || "",
     user_id: card.user_id,
+    isPrivate: Boolean(card.isPrivate),
     };
 };
 

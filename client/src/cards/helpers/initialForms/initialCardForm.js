@@ -7,6 +7,7 @@ const initialCardForm = {
     measuringCup: '',
     tips: '',
     videoLink: '',
+    isPrivate: false,
   };
   
   export default initialCardForm;
