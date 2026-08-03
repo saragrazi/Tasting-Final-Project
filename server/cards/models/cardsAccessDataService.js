@@ -67,7 +67,7 @@ const getCardsPaginated = async ({
             ratingsCount: { $size: { $ifNull: ["$ratings", []] } },
           },
         },
-        { $sort: { averageRating: -1, ratingsCount: -1 } },
+        { $sort: { averageRating: -1, ratingsCount: -1, _id: 1 } },
         {
           $facet: {
             cards: [{ $skip: skip }, { $limit: pageSize }],
