@@ -5,7 +5,6 @@ import Grid from "@mui/material/Grid";
 import { Typography, Box } from "@mui/material";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import StarRateIcon from "@mui/icons-material/StarRate";
-import ForumIcon from "@mui/icons-material/Forum";
 import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 
@@ -59,11 +58,8 @@ const AboutPage = () => {
             מצאתם משהו שאתם יודעים שתרצו לבשל שוב? שמרו אותו במועדפים, ותמצאו אותו בקלות.
           </Typography>
 
-          <SectionTitle icon={<ForumIcon sx={{ color: "#d06b6b" }} />}>
-            יש לכם עסק?
-          </SectionTitle>
-          <Typography align="right" paragraph>
-            אפשר להעלות מתכונים משלכם, עם תמונה, ולערוך אותם מתי שבא לכם.
+          <Typography align="right" paragraph sx={{ mt: 2 }}>
+            אז מה מבשלים היום? בואו נגלה ביחד.
           </Typography>
 
           <Typography className="welcome1" align="right" sx={{ mt: 2, fontWeight: "bold" }}>
