@@ -1,5 +1,5 @@
 import React from "react";
-import { func, object, string } from "prop-types";
+import { func, object, string, bool } from "prop-types";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
@@ -18,6 +18,7 @@ const UserForm = ({
   onInputChange,
   onInputBlur,
   setData,
+  pending,
 }) => {
   return (
     <Form
@@ -27,6 +28,7 @@ const UserForm = ({
       styles={{ maxWidth: "800px", direction: "rtl", textAlign: "right" }}
       title={title}
       submitLabel="הירשם"
+      pending={pending}
       to={ROUTES.CARDS}
     >
       <Input
@@ -170,6 +172,11 @@ UserForm.propTypes = {
   onInputChange: func.isRequired,
   onInputBlur: func,
   setData: func.isRequired,
+  pending: bool,
+};
+
+UserForm.defaultProps = {
+  pending: false,
 };
 
 export default React.memo(UserForm);

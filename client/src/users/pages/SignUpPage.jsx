@@ -44,6 +44,7 @@ const SignUpPage = () => {
         data={value.data}
         errors={value.errors}
         setData={rest.setData}
+        pending={rest.pending}
       />
     </Container>
   );

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { func, object, string } from "prop-types";
+import { func, object, string, bool } from "prop-types";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
 import DynamicListInput from "../../forms/components/DynamicListInput";
@@ -22,6 +22,7 @@ const CardForm = ({
   handleFileUpload,
   data,
   title,
+  pending,
 }) => {
   const { user } = useUser();
   const { handleBecomeBusiness } = useUsers();
@@ -42,6 +43,7 @@ const CardForm = ({
       onChange={onFormChange}
       styles={{ maxWidth: "400px", display: "flex", flexDirection: "column", direction: "rtl", textAlign: "right" }}
       title={title}
+      pending={pending}
     >
       <Box sx={{ width: "100%", mb: 2, p: 1.5, borderRadius: 1, backgroundColor: "rgba(208,107,107,0.08)" }}>
         <FormControlLabel
@@ -217,6 +219,11 @@ CardForm.propTypes = {
   onFileChange: func,
   data: object.isRequired,
   title: string.isRequired,
+  pending: bool,
+};
+
+CardForm.defaultProps = {
+  pending: false,
 };
 
 export default React.memo(CardForm);

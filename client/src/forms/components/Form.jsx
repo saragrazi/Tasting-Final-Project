@@ -1,9 +1,10 @@
 import React from "react";
-import { node, func, string, number, object } from "prop-types";
+import { node, func, string, number, object, bool } from "prop-types";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import FormButton from "./FormButtom";
 import Typography from "@mui/material/Typography";
+import CircularProgress from "@mui/material/CircularProgress";
 import LoopIcon from "@mui/icons-material/Loop";
 
 const Form = ({
@@ -16,6 +17,7 @@ const Form = ({
   styles,
   children,
   submitLabel,
+  pending,
 }) => {
   return (
     <Box
@@ -40,13 +42,14 @@ const Form = ({
             variant="outlined"
             component="div"
             onClick={onReset}
+            disabled={pending}
           />
         </Grid>
         <Grid item xs={12}>
           <FormButton
-            node={submitLabel}
+            node={pending ? <CircularProgress size={22} color="inherit" /> : submitLabel}
             onClick={onSubmit}
-            disabled={!!onChange()}
+            disabled={!!onChange() || pending}
             size="large"
           />
         </Grid>
@@ -65,6 +68,7 @@ Form.propTypes = {
   title: string.isRequired,
   styles: object.isRequired,
   submitLabel: string,
+  pending: bool,
 };
 
 Form.defaultProps = {
@@ -74,6 +78,7 @@ Form.defaultProps = {
   title: "",
   styles: {},
   submitLabel: "שלח",
+  pending: false,
 };
 
 export default React.memo(Form);

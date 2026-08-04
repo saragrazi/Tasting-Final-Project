@@ -41,6 +41,7 @@ const LoginPage = () => {
         onChange={rest.validateForm}
         title="התחברות"
         submitLabel="התחבר"
+        pending={rest.pending}
         styles={{ maxWidth: "450px", direction: "rtl", textAlign: "right" }}
         to={ROUTES.CARDS}>
         <Input

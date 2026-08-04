@@ -1,30 +1,13 @@
 import { useState, useCallback, useMemo } from "react";
 import { object, func } from "prop-types";
 import Joi from "joi";
-
-const heMessages = {
-  "any.required": "{#label} הוא שדה חובה",
-  "any.only": "{#label} אינו תקין",
-  "string.base": "{#label} חייב להיות טקסט",
-  "string.empty": "{#label} הוא שדה חובה",
-  "string.min": "{#label} חייב להכיל לפחות {#limit} תווים",
-  "string.max": "{#label} יכול להכיל עד {#limit} תווים",
-  "number.base": "{#label} חייב להיות מספר",
-  "number.min": "{#label} חייב להיות לפחות {#limit}",
-  "boolean.base": "{#label} חייב להיות ערך בוליאני",
-  "array.base": "{#label} חייב להיות רשימה",
-  "array.min": "יש להוסיף לפחות {#limit} ל{#label}",
-};
-
-const validateOptions = {
-  messages: { he: heMessages },
-  errors: { language: "he", wrap: { label: false } },
-};
+import { validateOptions } from "../utils/joiValidationOptions";
 
 const useForm = (initialForm, schema, handleSubmit) => {
   const [data, setData] = useState(initialForm);
   const [uploadFile,setUploadFile] = useState(null)
   const [errors, setErrors] = useState({});
+  const [pending, setPending] = useState(false);
 
   const handleReset = useCallback(() => {
     setData(initialForm);
@@ -89,8 +72,13 @@ const useForm = (initialForm, schema, handleSubmit) => {
     return null;
   }, [schema, data]);
 
-  const onSubmit = useCallback(() => {
-    handleSubmit(data,uploadFile);
+  const onSubmit = useCallback(async () => {
+    setPending(true);
+    try {
+      await handleSubmit(data, uploadFile);
+    } finally {
+      setPending(false);
+    }
   }, [handleSubmit,uploadFile, data]);
 
   const value = useMemo(() => {
@@ -106,6 +94,7 @@ const useForm = (initialForm, schema, handleSubmit) => {
     validateForm,
     setData,
     handleFileUpload,
+    pending,
   };
 };
 

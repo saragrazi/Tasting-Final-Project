@@ -29,7 +29,7 @@ const useAxios = () => {
             typeof error.response?.data === 'string'
               ? error.response.data
               : error.response?.data?.message;
-          setSnack ('error', serverMessage || error.message);
+          setSnack ('error', serverMessage || 'משהו השתבש');
           return Promise.reject (error);
         }
       );

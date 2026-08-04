@@ -77,6 +77,7 @@ const EditCardPage = () => {
         onInputBlur={rest.handleBlur}
         handleFileUpload={rest.handleFileUpload}
         data={value.data}
+        pending={rest.pending}
       />
     </Container>
   );

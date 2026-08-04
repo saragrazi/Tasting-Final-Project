@@ -30,7 +30,7 @@ const ErrorPage = () => {
         sx={{ width: { xs: "60%", sm: 260 }, maxWidth: 320, mb: 2 }}
       />
       <Typography variant="h2" sx={{ color: "#d06b6b", fontWeight: 700 }}>
-        404
+        שגיאה 404
       </Typography>
       <Typography variant="h5">אופס, הדף הזה לא קיים</Typography>
       <Typography color="text.secondary" sx={{ maxWidth: 420 }}>

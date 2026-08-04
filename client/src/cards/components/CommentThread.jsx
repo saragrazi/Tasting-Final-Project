@@ -1,8 +1,18 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button, Chip, IconButton } from "@mui/material";
+import { Box, Typography, TextField, Button, Chip, IconButton, CircularProgress } from "@mui/material";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import { array, func, object } from "prop-types";
+import Joi from "joi";
 import { useTheme } from "../../providers/ThemeProvider";
+import { commentSchema } from "../models/joi-schema/commentSchema";
+import { validateOptions } from "../../forms/utils/joiValidationOptions";
+
+const commentTextSchema = Joi.object({ text: commentSchema.text });
+
+const validateCommentText = (text) => {
+  const { error } = commentTextSchema.validate({ text }, validateOptions);
+  return error ? error.details[0].message : null;
+};
 
 const AuthorLabel = ({ name, isOwner }) => (
   <Box display="flex" alignItems="center" gap={1}>
@@ -20,19 +30,29 @@ const AuthorLabel = ({ name, isOwner }) => (
 const CommentThread = ({ comment, replies, card, user, onReply, onDelete }) => {
   const [replyOpen, setReplyOpen] = useState(false);
   const [replyText, setReplyText] = useState("");
+  const [replyTouched, setReplyTouched] = useState(false);
+  const [isSubmittingReply, setIsSubmittingReply] = useState(false);
   const { isDark } = useTheme();
 
   const recipeOwnerId = String(card.user_id);
   const commentAuthorId = String(comment.user_id);
   const canReply = Boolean(user);
   const isAdmin = Boolean(user?.isAdmin);
+  const replyError = replyTouched ? validateCommentText(replyText) : null;
 
   const handleSubmitReply = async (event) => {
     event.preventDefault();
-    if (!replyText.trim()) return;
-    await onReply(comment._id, replyText.trim());
-    setReplyText("");
-    setReplyOpen(false);
+    setReplyTouched(true);
+    if (validateCommentText(replyText)) return;
+    setIsSubmittingReply(true);
+    try {
+      await onReply(comment._id, replyText.trim());
+      setReplyText("");
+      setReplyTouched(false);
+      setReplyOpen(false);
+    } finally {
+      setIsSubmittingReply(false);
+    }
   };
 
   return (
@@ -69,16 +89,20 @@ const CommentThread = ({ comment, replies, card, user, onReply, onDelete }) => {
                 minRows={2}
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
+                onBlur={() => setReplyTouched(true)}
                 placeholder="כתבו תגובה..."
+                error={Boolean(replyError)}
+                helperText={replyError}
                 sx={{ mb: 1, backgroundColor: isDark ? "rgba(255,255,255,0.05)" : "#fff" }}
               />
               <Button
                 type="submit"
                 size="small"
                 variant="contained"
+                disabled={isSubmittingReply || Boolean(validateCommentText(replyText))}
                 sx={{ backgroundColor: "#d06b6b", "&:hover": { backgroundColor: "#b5585a" } }}
               >
-                שלח
+                {isSubmittingReply ? <CircularProgress size={18} color="inherit" /> : "שלח"}
               </Button>
             </Box>
           )}

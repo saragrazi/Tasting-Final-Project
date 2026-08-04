@@ -235,8 +235,8 @@ router.post("/:id/comment", auth, async (req, res) => {
     const cardId = req.params.id;
     const { text, parentCommentId } = req.body;
 
-    if (!text || !text.trim()) {
-      return handleError(res, 400, "תגובה לא יכולה להיות ריקה");
+    if (!text || text.trim().length < 2) {
+      return handleError(res, 400, "תגובה חייבת להכיל לפחות 2 תווים");
     }
 
     const existingCard = await getCard(cardId);
