@@ -32,6 +32,18 @@ const MenuComponent = ({ isOpen, anchorEl, onClose }) => {
           navigateTo={ROUTES.ABOUT}
           onClick={onClose}
         ></MenuLink>
+        <MenuLink
+          text="המתכונים שלי"
+          navigateTo={ROUTES.MY_CARDS}
+          onClick={onClose}
+          styles={{ display: { xs: "block", md: "none" } }}
+        ></MenuLink>
+        <MenuLink
+          text="המועדפים שלי"
+          navigateTo={ROUTES.FAV_CARDS}
+          onClick={onClose}
+          styles={{ display: { xs: "block", md: "none" } }}
+        ></MenuLink>
         {!user && (
           <>
             <MenuLink
@@ -54,18 +66,6 @@ const MenuComponent = ({ isOpen, anchorEl, onClose }) => {
               text="פרופיל"
               navigateTo={ROUTES.USER_PROFILE}
               onClick={onClose}
-            ></MenuLink>
-            <MenuLink
-              text="המתכונים שלי"
-              navigateTo={ROUTES.MY_CARDS}
-              onClick={onClose}
-              styles={{ display: { xs: "block", md: "none" } }}
-            ></MenuLink>
-            <MenuLink
-              text="המועדפים שלי"
-              navigateTo={ROUTES.FAV_CARDS}
-              onClick={onClose}
-              styles={{ display: { xs: "block", md: "none" } }}
             ></MenuLink>
             {user.isAdmin && (
               <MenuLink

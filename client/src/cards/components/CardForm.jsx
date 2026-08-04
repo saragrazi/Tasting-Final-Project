@@ -43,6 +43,41 @@ const CardForm = ({
       styles={{ maxWidth: "400px", display: "flex", flexDirection: "column", direction: "rtl", textAlign: "right" }}
       title={title}
     >
+      <Box sx={{ width: "100%", mb: 2, p: 1.5, borderRadius: 1, backgroundColor: "rgba(208,107,107,0.08)" }}>
+        <FormControlLabel
+          sx={{ mr: 0 }}
+          control={
+            <Checkbox
+              checked={Boolean(data?.isPrivate)}
+              disabled={!isBusiness}
+              onChange={(e) => {
+                onInputChange({ target: { name: "isPrivate", value: e.target.checked } });
+              }}
+            />
+          }
+          label={<Typography variant="body2" sx={{ fontWeight: 600 }}>פרטי - לא לפרסום</Typography>}
+        />
+        {isBusiness ? (
+          <Typography variant="caption" color="text.secondary" display="block">
+            אם תסמנו, המתכון יופיע רק אצלכם ב"המתכונים שלי" ולא יוצג לאף אחד אחר. אם לא, כולם יוכלו לראות אותו.
+          </Typography>
+        ) : (
+          <>
+            <Typography variant="caption" color="text.secondary" display="block">
+              מתכונים של משתמשים רגילים תמיד נשארים פרטיים ונראים רק אצלכם. כדי לפרסם מתכון לכולם, צריך חשבון עסקי.
+            </Typography>
+            <Button
+              size="small"
+              variant="outlined"
+              color="primary"
+              sx={{ mt: 1 }}
+              onClick={handleBecomeBusiness}
+            >
+              הפוך לעסקי - ללא עלות
+            </Button>
+          </>
+        )}
+      </Box>
       <Input
         name="title"
         label="שם המתכון"
@@ -51,8 +86,6 @@ const CardForm = ({
         onBlur={onInputBlur}
         data={data}
       />
-
-
       <Input
         name="subtitle"
         label="תאור קצר"
@@ -61,39 +94,6 @@ const CardForm = ({
         onBlur={onInputBlur}
         data={data}
       />
-      <IngredientListInput
-        name="ingredients"
-        label="מרכיבים "
-        value={data.ingredients}
-        onChange={onInputChange}
-        error={errors.ingredients}
-      />
-      <DynamicListInput
-        name="cookingSteps"
-        label="אופן ההכנה"
-        addLabel="הוסף שלב"
-        value={data.cookingSteps}
-        onChange={onInputChange}
-        error={errors.cookingSteps}
-      />
-        <FormControl sx={{ marginLeft: "8px", marginTop: "15px" }} fullWidth>
-          <InputLabel sx={{ display: "flex" }}>קטגוריה</InputLabel>
-          <Select
-            label="קטגוריה"
-            onChange={onInputChange}
-            value={data?.category ? data?.category : ""}
-            name="category"
-          >
-            <MenuItem value={"ארוחות בשר"}>ארוחות בשר</MenuItem>
-            <MenuItem value={"ארוחות חלביות"}>ארוחות חלביות</MenuItem>
-            <MenuItem value={"דגים"}>דגים</MenuItem>
-            <MenuItem value={"סלטים"}>סלטים</MenuItem>
-            <MenuItem value={"קינוחים"}>קינוחים</MenuItem>
-            <MenuItem value={"עוגות ועוגיות"}>עוגות ועוגיות</MenuItem>
-            <MenuItem value={"פשטידות"}>פשטידות</MenuItem>
-            <MenuItem value={"לחמים"}>לחמים</MenuItem>
-          </Select>
-        </FormControl>
       <Input
         name="prepTime"
         label="זמן הכנה (בדקות)"
@@ -132,41 +132,39 @@ const CardForm = ({
         }
         label={<Typography variant="body2">לא השתמשתי בכוס מדידה במתכון זה</Typography>}
       />
-      <Box sx={{ width: "100%", mt: 2, p: 1.5, borderRadius: 1, backgroundColor: "rgba(208,107,107,0.08)" }}>
-        <FormControlLabel
-          sx={{ mr: 0 }}
-          control={
-            <Checkbox
-              checked={Boolean(data?.isPrivate)}
-              disabled={!isBusiness}
-              onChange={(e) => {
-                onInputChange({ target: { name: "isPrivate", value: e.target.checked } });
-              }}
-            />
-          }
-          label={<Typography variant="body2" sx={{ fontWeight: 600 }}>פרטי - לא לפרסום</Typography>}
-        />
-        {isBusiness ? (
-          <Typography variant="caption" color="text.secondary" display="block">
-            אם תסמנו, המתכון יופיע רק אצלכם ב"המתכונים שלי" ולא יוצג לאף אחד אחר. אם לא, כולם יוכלו לראות אותו.
-          </Typography>
-        ) : (
-          <>
-            <Typography variant="caption" color="text.secondary" display="block">
-              מתכונים של משתמשים רגילים תמיד נשארים פרטיים ונראים רק אצלכם. כדי לפרסם מתכון לכולם, צריך חשבון עסקי.
-            </Typography>
-            <Button
-              size="small"
-              variant="outlined"
-              color="primary"
-              sx={{ mt: 1 }}
-              onClick={handleBecomeBusiness}
-            >
-              הפוך לעסקי - ללא עלות
-            </Button>
-          </>
-        )}
-      </Box>
+      <FormControl sx={{ marginLeft: "8px", marginTop: "15px" }} fullWidth>
+        <InputLabel sx={{ display: "flex" }}>קטגוריה</InputLabel>
+        <Select
+          label="קטגוריה"
+          onChange={onInputChange}
+          value={data?.category ? data?.category : ""}
+          name="category"
+        >
+          <MenuItem value={"ארוחות בשר"}>ארוחות בשר</MenuItem>
+          <MenuItem value={"ארוחות חלביות"}>ארוחות חלביות</MenuItem>
+          <MenuItem value={"דגים"}>דגים</MenuItem>
+          <MenuItem value={"סלטים"}>סלטים</MenuItem>
+          <MenuItem value={"קינוחים"}>קינוחים</MenuItem>
+          <MenuItem value={"עוגות ועוגיות"}>עוגות ועוגיות</MenuItem>
+          <MenuItem value={"פשטידות"}>פשטידות</MenuItem>
+          <MenuItem value={"לחמים"}>לחמים</MenuItem>
+        </Select>
+      </FormControl>
+      <IngredientListInput
+        name="ingredients"
+        label="מרכיבים "
+        value={data.ingredients}
+        onChange={onInputChange}
+        error={errors.ingredients}
+      />
+      <DynamicListInput
+        name="cookingSteps"
+        label="אופן ההכנה"
+        addLabel="הוסף שלב"
+        value={data.cookingSteps}
+        onChange={onInputChange}
+        error={errors.cookingSteps}
+      />
       <Input
         name="tips"
         label="טיפים"
@@ -175,15 +173,6 @@ const CardForm = ({
         onBlur={onInputBlur}
         data={data}
         multiline={true}
-      />
-      <Input
-        name="videoLink"
-        label="קישור לסרטון הכנה"
-        error={errors.videoLink}
-        onChange={onInputChange}
-        onBlur={onInputBlur}
-        data={data}
-        required={false}
       />
       <FormControl sx={{ marginLeft: "8px", marginTop: "5px", width: "100%" }}>
         <FormLabel>
@@ -205,6 +194,15 @@ const CardForm = ({
             : "ניתן להעלות קובץ תמונה בלבד. אם לא תעלו תמונה, תוצג תמונת ברירת מחדל."}
         </Typography>
       </FormControl>
+      <Input
+        name="videoLink"
+        label="קישור לסרטון הכנה"
+        error={errors.videoLink}
+        onChange={onInputChange}
+        onBlur={onInputBlur}
+        data={data}
+        required={false}
+      />
     </Form>
   );
 };

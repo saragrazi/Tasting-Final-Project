@@ -94,15 +94,10 @@ const CardDetailsPage = () => {
         }}
       >
         <Box mt={2} display="flex" alignItems="center" flexDirection={{ xs: 'column', sm: 'column' }}>
-          {/* כותרת */}
+          {/* תמונת המתכון */}
           {card?.isPrivate && (
             <Chip label="פרטי - לא לפרסום" size="small" sx={{ mb: 1, backgroundColor: '#d06b6b', color: '#fff' }} />
           )}
-          <Typography color="#d06b6b" sx={{ textShadow: '1px 1px 1px black' }} mb={2} variant="h3">
-            {card?.title}
-          </Typography>
-
-          {/* תמונת המתכון */}
           <Box position="relative" display="flex" width={{ xs: '100%', sm: '50%' }} alignItems="center" justifyContent="center">
             <CardMedia
               sx={{
@@ -121,6 +116,11 @@ const CardDetailsPage = () => {
               onClick={() => setLightboxOpen(true)}
             />
           </Box>
+
+          {/* כותרת */}
+          <Typography color="#d06b6b" sx={{ textShadow: '1px 1px 1px black' }} mt={2} mb={2} variant="h3">
+            {card?.title}
+          </Typography>
 
           <Modal
             open={lightboxOpen}

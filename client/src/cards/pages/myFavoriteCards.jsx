@@ -5,7 +5,7 @@ import { getMyFavoriteCardsBrowse } from "../services/cardService";
 import PageHeader from "../../components/PageHeader";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/routesModel";
-import { Box, Button, Container, IconButton, Tooltip, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Button, Container, IconButton, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
 import CardsFeedback from "../components/CardsFeedback";
 import { searchContext } from "../../providers/SearchProvider";
 import FilterComp from "../../filters/FilterComp";
@@ -31,12 +31,6 @@ const MyFavoriteCards = () => {
   }, [isMobile, viewType]);
 
   useEffect(() => {
-    if (!user) {
-      navigate(ROUTES.CARDS);
-    }
-  }, [navigate, user]);
-
-  useEffect(() => {
     if (!user) return undefined;
     const timer = setTimeout(() => {
       reload({ search: searchQuery, category: sortBy });
@@ -44,6 +38,25 @@ const MyFavoriteCards = () => {
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, sortBy, user]);
+
+  if (!user) {
+    return (
+      <Container sx={{ minHeight: "90vh", direction: "rtl" }}>
+        <PageHeader title="המועדפים שלי" textAlign={"center"} />
+        <Box display="flex" flexDirection="column" alignItems="center" mt={4} gap={2}>
+          <Typography>יש להירשם או להתחבר כדי לראות את המועדפים שלך.</Typography>
+          <Box display="flex" gap={2}>
+            <Button variant="contained" color="primary" onClick={() => navigate(ROUTES.LOGIN)}>
+              התחברות
+            </Button>
+            <Button variant="outlined" color="primary" onClick={() => navigate(ROUTES.SIGNUP)}>
+              הרשמה
+            </Button>
+          </Box>
+        </Box>
+      </Container>
+    );
+  }
 
   return (
     <Container sx={{ position: "relative", minHeight: "90vh", direction: "rtl" }}>

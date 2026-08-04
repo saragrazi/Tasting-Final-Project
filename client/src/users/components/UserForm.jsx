@@ -3,7 +3,6 @@ import { func, object, string } from "prop-types";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
-import Alert from "@mui/material/Alert";
 import Typography from "@mui/material/Typography";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
@@ -30,11 +29,6 @@ const UserForm = ({
       submitLabel="הירשם"
       to={ROUTES.CARDS}
     >
-      <Grid item xs={12}>
-        <Alert severity="warning">
-          שימו לב! נכון לעכשיו, לא ניתן לשחזר את הסיסמה. אנא שמרו אותה במקום בטוח.
-        </Alert>
-      </Grid>
       <Input
         name="first"
         label="שם פרטי"
