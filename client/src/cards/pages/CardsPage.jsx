@@ -1,14 +1,15 @@
 import { Container } from '@mui/system';
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { Suspense, useCallback, useContext, useEffect, useState } from 'react'
 import PageHeader from '../../components/PageHeader';
 import CardsFeedback from '../components/CardsFeedback';
+import Spinner from '../../components/Spinner';
 import useCards from '../hooks/useCards';
 import usePaginatedCards from '../hooks/usePaginatedCards';
 import { getCardsBrowse } from '../services/cardService';
 import { searchContext } from '../../providers/SearchProvider';
 import FilterComp from '../../filters/FilterComp';
 import { Box, Button, IconButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
-import DataTable from '../../table/components/CardsTable';
+import DataTable, { preloadCardsTable } from '../../table/components/LazyCardsTable';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 
@@ -52,6 +53,8 @@ const CardsPage = () => {
               <IconButton
                 color="inherit"
                 aria-label="החלף לתצוגת טבלה"
+                onMouseEnter={preloadCardsTable}
+                onFocus={preloadCardsTable}
                 onClick={() => { setViewType('table') }}><TableRowsIcon /></IconButton>
             </Tooltip>
           ) : (
@@ -65,7 +68,9 @@ const CardsPage = () => {
         )}
       </Box>
       {viewType === 'table' && (
-        <DataTable cards={cards} />
+        <Suspense fallback={<Spinner height="20vh" />}>
+          <DataTable cards={cards} />
+        </Suspense>
       )}
       {viewType === 'cards' && (
         <Box mt={3}>
@@ -77,6 +82,11 @@ const CardsPage = () => {
             setCards={setCards}
             removeCard={removeCard}
             searchQuery={searchQuery}
+            emptyMessage={
+              searchQuery
+                ? `לא נמצאו מתכונים התואמים לחיפוש "${searchQuery}".`
+                : "עדיין אין מתכונים באתר."
+            }
           />
           {hasMore && !pending && (
             <Box display="flex" justifyContent="center" mt={3}>

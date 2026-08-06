@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { Suspense, useCallback, useContext, useEffect, useState } from "react";
 import { useUser } from "../../users/providers/UserProvider";
 import usePaginatedCards from "../hooks/usePaginatedCards";
 import { getMyCardsBrowse } from "../services/cardService";
@@ -8,11 +8,12 @@ import ROUTES from "../../routes/routesModel";
 import { Box, Button, Container, Fab, IconButton, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CardsFeedback from "../components/CardsFeedback";
+import Spinner from "../../components/Spinner";
 import { searchContext } from "../../providers/SearchProvider";
 import FilterComp from "../../filters/FilterComp";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableRowsIcon from '@mui/icons-material/TableRows';
-import CardsTable from "../../table/components/CardsTable";
+import CardsTable, { preloadCardsTable } from "../../table/components/LazyCardsTable";
 
 const MyCardsPage = () => {
   const { user } = useUser();
@@ -73,6 +74,8 @@ const MyCardsPage = () => {
               <IconButton
                 color="inherit"
                 aria-label="החלף לתצוגת טבלה"
+                onMouseEnter={preloadCardsTable}
+                onFocus={preloadCardsTable}
                 onClick={() => { setViewType('table') }}><TableRowsIcon /></IconButton>
             </Tooltip>
           ) : (
@@ -94,7 +97,9 @@ const MyCardsPage = () => {
         <AddIcon />
       </Fab>
       {viewType === 'table' && (
-        <CardsTable cards={cards} />
+        <Suspense fallback={<Spinner height="20vh" />}>
+          <CardsTable cards={cards} />
+        </Suspense>
       )}
       {viewType === 'cards' && (
         <Box mt={3}>
@@ -105,6 +110,11 @@ const MyCardsPage = () => {
           onDelete={() => { }}
           setCards={setCards}
           removeCard={removeCard}
+          emptyMessage={
+            searchQuery
+              ? `לא נמצאו מתכונים שלך התואמים לחיפוש "${searchQuery}".`
+              : "עדיין לא הוספת מתכונים. לחצו על + כדי להוסיף את המתכון הראשון שלכם!"
+          }
           />
           {hasMore && !pending && (
             <Box display="flex" justifyContent="center" mt={3}>

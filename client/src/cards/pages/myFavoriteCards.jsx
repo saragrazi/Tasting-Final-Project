@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { Suspense, useCallback, useContext, useEffect, useState } from "react";
 import { useUser } from "../../users/providers/UserProvider";
 import usePaginatedCards from "../hooks/usePaginatedCards";
 import { getMyFavoriteCardsBrowse } from "../services/cardService";
@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/routesModel";
 import { Box, Button, Container, IconButton, Tooltip, Typography, useMediaQuery, useTheme } from "@mui/material";
 import CardsFeedback from "../components/CardsFeedback";
+import Spinner from "../../components/Spinner";
 import { searchContext } from "../../providers/SearchProvider";
 import FilterComp from "../../filters/FilterComp";
-import CardsTable from "../../table/components/CardsTable";
+import CardsTable, { preloadCardsTable } from "../../table/components/LazyCardsTable";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 
@@ -72,6 +73,8 @@ const MyFavoriteCards = () => {
               <IconButton
                 color="inherit"
                 aria-label="החלף לתצוגת טבלה"
+                onMouseEnter={preloadCardsTable}
+                onFocus={preloadCardsTable}
                 onClick={() => { setViewType('table') }}><TableRowsIcon /></IconButton>
             </Tooltip>
           ) : (
@@ -85,7 +88,9 @@ const MyFavoriteCards = () => {
         )}
       </Box>
       {viewType === 'table' && (
-        <CardsTable cards={cards} />
+        <Suspense fallback={<Spinner height="20vh" />}>
+          <CardsTable cards={cards} />
+        </Suspense>
       )}
       {viewType === 'cards' && (
         <Box mt={3}>
@@ -97,6 +102,11 @@ const MyFavoriteCards = () => {
             setCards={setCards}
             removeCard={removeCard}
             showDelete={false}
+            emptyMessage={
+              searchQuery
+                ? `לא נמצאו מועדפים התואמים לחיפוש "${searchQuery}".`
+                : "עדיין אין לך מתכונים מועדפים. סמנו מתכונים שאהבתם כדי לראות אותם כאן."
+            }
           />
           {hasMore && !pending && (
             <Box display="flex" justifyContent="center" mt={3}>
