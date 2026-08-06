@@ -75,7 +75,7 @@ const UserForm = ({
       <Input
         name="password"
         label="סיסמה"
-        type="password"
+        type="text"
         error={errors.password}
         onChange={onInputChange}
         onBlur={onInputBlur}
