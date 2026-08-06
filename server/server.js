@@ -8,10 +8,7 @@ const cors = require("./middlewares/cors");
 const logger = require("./logger/loggerService");
 const connectToDb = require("./DB/dbService");
 const config = require("config");
-const {
-  generateInitialCards,
-  generateInitialUsers,
-} = require("./initialData/initialDataService");
+const { seedInitialData } = require("./initialData/initialDataService");
 
 app.use(cors);
 app.use(logger);
@@ -28,6 +25,5 @@ const PORT = config.get("PORT");
 app.listen(PORT, async () => {
   console.log(chalk.blueBright(`Listening on: https://my-tasting.onrender.com`));
   connectToDb();
-  await generateInitialUsers();
-  await generateInitialCards();
+  await seedInitialData();
 });

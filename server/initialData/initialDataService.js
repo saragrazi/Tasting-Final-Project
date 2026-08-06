@@ -9,6 +9,9 @@ const User = require("../users/models/mongodb/User");
 const data = require("./initialData.json");
 const normalizeUser = require("../users/helpers/normalizeUser");
 const { generateUserPassword } = require("../users/helpers/bcrypt");
+const SeedStatus = require("./models/mongodb/SeedStatus");
+
+const SEED_ID = "initialData";
 
 const generateInitialCards = async () => {
   const { cards } = data;
@@ -50,5 +53,16 @@ const generateInitialUsers = async () => {
   }
 };
 
+const seedInitialData = async () => {
+  const alreadySeeded = await SeedStatus.findOne({ _id: SEED_ID });
+  if (alreadySeeded) return;
+
+  await generateInitialUsers();
+  await generateInitialCards();
+
+  await SeedStatus.create({ _id: SEED_ID });
+};
+
 exports.generateInitialCards = generateInitialCards;
 exports.generateInitialUsers = generateInitialUsers;
+exports.seedInitialData = seedInitialData;

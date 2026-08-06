@@ -1,34 +1,6 @@
 {
   "users": [
     {
-      "name": { "first": "regular", "last": "user" },
-      "isBusiness": false,
-      "phone": "050-0000000",
-      "email": "regular@gmail.com",
-      "password": "Aa1234!",
-      "address": {
-        "country": "israel",
-        "city": "tel-aviv",
-        "street": "magnive",
-        "houseNumber": "5"
-      },
-      "profileImage": { "url": "https://my-tasting.onrender.com/profileimages/default_user.png", "alt": "" }
-    },
-    {
-      "name": { "first": "נועה", "last": "כהן" },
-      "isBusiness": true,
-      "phone": "050-0000000",
-      "email": "business@gmail.com",
-      "password": "Aa1234!",
-      "address": {
-        "country": "israel",
-        "city": "tel-aviv",
-        "street": "magnive",
-        "houseNumber": "5"
-      },
-      "profileImage": { "url": "https://my-tasting.onrender.com/profileimages/default_user.png", "alt": "" }
-    },
-    {
       "name": { "first": "admin", "last": "user" },
       "isBusiness": true,
       "isAdmin": true,
@@ -61,7 +33,7 @@
       "measuringCup": "כוס חד\"פ לשתייה קרה - 200 מ\"ל",
       "tips": "תנו לבשר להגיע לטמפרטורת החדר לפני הצלייה - כך הוא יתבשל באופן אחיד. אל תנקבו את הבשר במזלג בזמן הצלייה כדי לשמור על הנוזלים בפנים.",
       "videoLink": "",
-      "email": "business@gmail.com",
+      "email": "admin@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2016/01/22/02/13/meat-1155132_640.jpg",
         "alt": "סטייק על האש"
@@ -84,7 +56,7 @@
       "measuringCup": "כוס חד\"פ לשתייה חמה - 240 מ\"ל",
       "tips": "שמרו כוס ממי הבישול של הפסטה לפני הסינון - אם הרוטב סמיך מדי, אפשר לדלל אותו במעט ממי הבישול העמילניים.",
       "videoLink": "",
-      "email": "business@gmail.com",
+      "email": "admin@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2016/04/15/09/10/pasta-1330541_1280.jpg",
         "alt": "פסטה אלפרדו"
@@ -106,7 +78,7 @@
       "measuringCup": "כוס חד\"פ לשתייה קרה - 200 מ\"ל",
       "tips": "אל תאפו את הסלמון יותר מדי - ברגע שהוא מתחיל להתקלף בקלות עם מזלג, הוא מוכן ועדיין עסיסי.",
       "videoLink": "",
-      "email": "business@gmail.com",
+      "email": "admin@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2015/04/08/13/13/food-712665_640.jpg",
         "alt": "סלמון אפוי"
@@ -129,7 +101,7 @@
       "measuringCup": "כוס חד\"פ לשתייה קרה - 200 מ\"ל",
       "tips": "מלחו את הסלט רק ממש לפני ההגשה - ככה הירקות לא ישחררו נוזלים ויישארו פריכים.",
       "videoLink": "",
-      "email": "business@gmail.com",
+      "email": "admin@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2017/05/21/22/49/farmers-salad-2332580_640.jpg",
         "alt": "סלט יווני"
@@ -150,7 +122,7 @@
       "measuringCup": "כוס חד\"פ לשתייה קרה - 200 מ\"ל",
       "tips": "זמן ההכנה כולל כ-6 שעות הקפאה. לתוצאה קרמית יותר, ערבבו את הגלידה פעם אחת אחרי כשעתיים בפריזר לפני שהיא מתייצבת לגמרי.",
       "videoLink": "",
-      "email": "business@gmail.com",
+      "email": "admin@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2016/12/26/16/09/bowl-1932375_640.jpg",
         "alt": "גלידת וניל"
@@ -173,7 +145,7 @@
       "measuringCup": "כוס חד\"פ לשתייה חמה - 240 מ\"ל",
       "tips": "אל תאפו יותר מדי - הוציאו מהתנור כשהעוגיות עדיין נראות מעט לא אפויות במרכז, הן ימשיכו להתקשות תוך כדי הצינון.",
       "videoLink": "",
-      "email": "business@gmail.com",
+      "email": "admin@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2016/03/18/02/16/cookies-1264263_640.jpg",
         "alt": "עוגיות שוקולד"
@@ -196,7 +168,7 @@
       "measuringCup": "כוס חד\"פ לשתייה חמה - 240 מ\"ל",
       "tips": "אפשר להכין את הפשטידה מראש ולהקפיא לפני האפייה - כך תמיד יהיה משהו טרי מוכן להכנסה לתנור.",
       "videoLink": "",
-      "email": "business@gmail.com",
+      "email": "admin@gmail.com",
       "image": {
         "url": "https://cdn.pixabay.com/photo/2020/08/11/13/58/apple-pie-5479993_1280.jpg",
         "alt": "פאי תפוחים"
