@@ -1,9 +1,11 @@
 import React from "react";
 import { func, object, string, bool } from "prop-types";
+import { Link as RouterLink } from "react-router-dom";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
 import ROUTES from "../../routes/routesModel";
@@ -156,6 +158,14 @@ const UserForm = ({
         />
         <Typography variant="caption" color="text.secondary" display="block">
           במידה ואפשרות זו תיבחר, לא תצטרך להתחבר מחדש
+        </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <Typography variant="body2" align="center">
+          כבר רשומים?{" "}
+          <Link component={RouterLink} to={ROUTES.LOGIN}>
+            להתחברות
+          </Link>
         </Typography>
       </Grid>
     </Form>

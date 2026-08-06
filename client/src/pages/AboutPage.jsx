@@ -2,11 +2,13 @@ import React from "react";
 import Container from "@mui/material/Container";
 import PageHeader from "./../components/PageHeader";
 import Grid from "@mui/material/Grid";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import StarRateIcon from "@mui/icons-material/StarRate";
-import ViewModuleIcon from "@mui/icons-material/ViewModule";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import ROUTES from "../routes/routesModel";
 
 const SectionTitle = ({ icon, children }) => (
   <Box sx={{ mt: 3, mb: 1, display: "flex", alignItems: "center", gap: 1, fontWeight: "bold" }}>
@@ -16,6 +18,7 @@ const SectionTitle = ({ icon, children }) => (
 );
 
 const AboutPage = () => {
+  const navigate = useNavigate();
   return (
     <Container maxWidth="lg" sx={{ direction: "rtl", textAlign: "right" }}>
       <PageHeader
@@ -37,7 +40,7 @@ const AboutPage = () => {
           <Typography align="right" paragraph>
             בכל מתכון תמצאו רשימת מרכיבים עם כמויות, שלבי הכנה ממוספרים, וזמן הכנה משוער כדי
             שתדעו לתכנן קדימה. יש גם טיפ קטן מהיוצר, ולפעמים גם קישור לסרטון הכנה - למי שאוהב
-            לראות ולא רק לקרוא.
+            לראות ולא רק לקרוא. חיפוש מהיר וסינון לפי קטגוריה עוזרים למצוא בדיוק את מה שמתחשק לכם.
           </Typography>
 
           <SectionTitle icon={<StarRateIcon sx={{ color: "#d06b6b" }} />}>
@@ -45,15 +48,16 @@ const AboutPage = () => {
           </SectionTitle>
           <Typography align="right" paragraph>
             אהבתם מתכון? תנו לו כוכב. בא לכם להגיד משהו? תכתבו תגובה - ואפשר גם להגיב לתגובה של
-            מישהו אחר, כמו שיחה קטנה סביב האוכל. כל אחד יכול לדרג ולהגיב, פעם אחת לכל מתכון.
+            מישהו אחר, כמו שיחה קטנה סביב האוכל.
           </Typography>
 
-          <SectionTitle icon={<ViewModuleIcon sx={{ color: "#d06b6b" }} />}>
-            איך שנוח לכם
+          <SectionTitle icon={<AddCircleOutlineIcon sx={{ color: "#d06b6b" }} />}>
+            יוצרים מתכון משלכם
           </SectionTitle>
           <Typography align="right" paragraph>
-            חיפוש מהיר, סינון לפי קטגוריה, ומצב כהה לשעות הערב. אפשר גם לבחור בין תצוגת כרטיסים
-            נעימה לגלישה, לבין תצוגת טבלה מסודרת אם בא לכם להשוות כמה מתכונים במבט אחד.
+            יש לכם מתכון שאתם גאים בו? בואו תספרו עליו לעולם. אחרי הרשמה או התחברות תוכלו ליצור
+            אותו בעצמכם, בלחיצת כפתור. הוא יתחיל פרטי, רק אצלכם - ובכל רגע שתרגישו מוכנים, אפשר
+            לשדרג בחינם לחשבון עסקי ולתת לכולם ליהנות ממנו.
           </Typography>
 
           <SectionTitle icon={<FavoriteIcon sx={{ color: "#d06b6b" }} />}>
@@ -71,6 +75,36 @@ const AboutPage = () => {
           <Typography className="welcome1" align="right" sx={{ mt: 2, fontWeight: "bold" }}>
             בתיאבון!
           </Typography>
+
+          <Box
+            sx={{
+              mt: 3,
+              p: 2,
+              borderRadius: 1,
+              backgroundColor: "rgba(208,107,107,0.08)",
+              textAlign: "center",
+            }}
+          >
+            <Typography sx={{ mb: 2 }}>
+              עדיין לא איתנו? מחכים לכם!
+            </Typography>
+            <Box display="flex" justifyContent="center" gap={2}>
+              <Button
+                variant="contained"
+                sx={{ backgroundColor: "#d06b6b", "&:hover": { backgroundColor: "#b5585a" } }}
+                onClick={() => navigate(ROUTES.LOGIN)}
+              >
+                התחברות
+              </Button>
+              <Button
+                variant="outlined"
+                sx={{ color: "#d06b6b", borderColor: "#d06b6b" }}
+                onClick={() => navigate(ROUTES.SIGNUP)}
+              >
+                הרשמה
+              </Button>
+            </Box>
+          </Box>
         </Grid>
         <Grid
           item

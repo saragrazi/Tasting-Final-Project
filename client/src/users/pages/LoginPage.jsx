@@ -1,5 +1,5 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link as RouterLink } from "react-router-dom";
 import ROUTES from "../../routes/routesModel";
 import { useUser } from "../providers/UserProvider";
 import useUsers from "../hooks/useUsers";
@@ -13,6 +13,7 @@ import Grid from "@mui/material/Grid";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 
 const LoginPage = () => {
   const { user } = useUser();
@@ -76,6 +77,14 @@ const LoginPage = () => {
           />
           <Typography variant="caption" color="text.secondary" display="block">
             במידה ואפשרות זו תיבחר, לא תצטרך להתחבר מחדש
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Typography variant="body2" align="center">
+            עוד לא נרשמתם?{" "}
+            <Link component={RouterLink} to={ROUTES.SIGNUP}>
+              להרשמה
+            </Link>
           </Typography>
         </Grid>
       </Form>

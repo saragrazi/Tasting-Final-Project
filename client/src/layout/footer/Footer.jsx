@@ -5,6 +5,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 import InfoIcon from "@mui/icons-material/Info";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/routesModel";
@@ -46,7 +47,10 @@ const Footer = () => {
       </BottomNavigation>
       <Box sx={{ textAlign: "center", py: 0.5, backgroundColor: "rgba(0,0,0,0.06)" }}>
         <Typography variant="caption" color="text.secondary">
-          נבנה ע"י שרה מישאלי · saragr328@gmail.com
+          © Built by{" "}
+          <Link href="mailto:saragr328@gmail.com" color="inherit" underline="hover">
+            Sara M
+          </Link>
         </Typography>
       </Box>
     </Paper>
