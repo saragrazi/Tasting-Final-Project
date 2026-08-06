@@ -10,6 +10,7 @@ import {
   Link as MuiLink,
 } from "@mui/material";
 import PageHeader from "../../components/PageHeader";
+import Spinner from "../../components/Spinner";
 import { useUser } from "../providers/UserProvider";
 import { useTheme } from "../../providers/ThemeProvider";
 import useUsers from "../hooks/useUsers";
@@ -20,7 +21,7 @@ import DeleteModal from "../../cards/components/DeleteModal";
 const UsersManagementPage = () => {
   const { user } = useUser();
   const { isDark } = useTheme();
-  const { users, handleGetUsers, handleBlockUser, handleDeleteUser } = useUsers();
+  const { users, pending, handleGetUsers, handleBlockUser, handleDeleteUser } = useUsers();
   const [cards, setCards] = useState([]);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
   const navigate = useNavigate();
@@ -42,7 +43,9 @@ const UsersManagementPage = () => {
         subtitle={`צפייה בכל המשתמשים, המתכונים שלהם, וחסימת משתמשים${users ? ` (סה"כ ${users.length} משתמשים)` : ""}`}
       />
 
-      {users?.map((u) => {
+      {pending && <Spinner />}
+
+      {!pending && users?.map((u) => {
         const userCards = cardsByUser(u._id);
         const isSelf = String(u._id) === String(user._id);
 

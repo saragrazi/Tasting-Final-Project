@@ -31,11 +31,8 @@ const CardDetailsPage = () => {
   const { user } = useUser();
   const [rating, setRating] = useState(0);
   const [commentText, setCommentText] = useState('');
-  const [commentTouched, setCommentTouched] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
-
-  const commentError = commentTouched ? validateCommentText(commentText) : null;
 
   useEffect(() => {
     handleGetCard(id);
@@ -59,13 +56,11 @@ const CardDetailsPage = () => {
 
   const handleSubmitComment = async (event) => {
     event.preventDefault();
-    setCommentTouched(true);
     if (!user || validateCommentText(commentText)) return;
     setIsSubmittingComment(true);
     try {
       await handleAddComment(id, { text: commentText.trim(), parentCommentId: null });
       setCommentText('');
-      setCommentTouched(false);
     } finally {
       setIsSubmittingComment(false);
     }
@@ -363,10 +358,7 @@ const CardDetailsPage = () => {
                       minRows={3}
                       value={commentText}
                       onChange={(e) => setCommentText(e.target.value)}
-                      onBlur={() => setCommentTouched(true)}
                       placeholder="כתבו את התגובה שלכם..."
-                      error={Boolean(commentError)}
-                      helperText={commentError}
                       sx={{ mb: 2 }}
                     />
                     <Button

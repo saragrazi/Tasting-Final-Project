@@ -30,7 +30,6 @@ const AuthorLabel = ({ name, isOwner }) => (
 const CommentThread = ({ comment, replies, card, user, onReply, onDelete }) => {
   const [replyOpen, setReplyOpen] = useState(false);
   const [replyText, setReplyText] = useState("");
-  const [replyTouched, setReplyTouched] = useState(false);
   const [isSubmittingReply, setIsSubmittingReply] = useState(false);
   const { isDark } = useTheme();
 
@@ -38,17 +37,14 @@ const CommentThread = ({ comment, replies, card, user, onReply, onDelete }) => {
   const commentAuthorId = String(comment.user_id);
   const canReply = Boolean(user);
   const isAdmin = Boolean(user?.isAdmin);
-  const replyError = replyTouched ? validateCommentText(replyText) : null;
 
   const handleSubmitReply = async (event) => {
     event.preventDefault();
-    setReplyTouched(true);
     if (validateCommentText(replyText)) return;
     setIsSubmittingReply(true);
     try {
       await onReply(comment._id, replyText.trim());
       setReplyText("");
-      setReplyTouched(false);
       setReplyOpen(false);
     } finally {
       setIsSubmittingReply(false);
@@ -89,10 +85,7 @@ const CommentThread = ({ comment, replies, card, user, onReply, onDelete }) => {
                 minRows={2}
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
-                onBlur={() => setReplyTouched(true)}
                 placeholder="כתבו תגובה..."
-                error={Boolean(replyError)}
-                helperText={replyError}
                 sx={{ mb: 1, backgroundColor: isDark ? "rgba(255,255,255,0.05)" : "#fff" }}
               />
               <Button
