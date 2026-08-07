@@ -5,15 +5,21 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import SearchIcon from "@mui/icons-material/Search";
 import IconButton from "@mui/material/IconButton";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme as useMuiTheme } from "@mui/material/styles";
 import { useTheme } from "../../../../providers/ThemeProvider";
 import { searchContext } from "../../../../providers/SearchProvider";
+import { useUser } from "../../../../users/providers/UserProvider";
 import { useLocation } from "react-router-dom";
 
 const SearchBar = () => {
   const location = useLocation();
   const [path, setPath] = useState(location);
   const { isDark } = useTheme();
-  const { handleChange, handleCleanUp, SearchQuery } =
+  const { user } = useUser();
+  const muiTheme = useMuiTheme();
+  const isMobile = useMediaQuery(muiTheme.breakpoints.down("sm"));
+  const { handleChange, handleCleanUp, SearchQuery, category } =
     useContext(searchContext);
   const refy = useRef();
 
@@ -24,22 +30,25 @@ const SearchBar = () => {
     }
   }, [location, handleCleanUp, path]);
 
+  // Only these pages have anything to search - everywhere else (login,
+  // signup, about, profile, admin, create/edit-card, card details...)
+  // hides the search bar.
+  const SEARCHABLE_PATHS = ["/", "/cards", "/my-cards", "/favorites"];
+  const isSearchablePage = SEARCHABLE_PATHS.includes(location.pathname);
+  const isMyContentPage =
+    location.pathname === "/my-cards" || location.pathname === "/favorites";
+  const shouldHide = !isSearchablePage || (isMyContentPage && !user);
+
+  const getPlaceholder = (pathname) => {
+    if (isMobile) return "חפש";
+    if (category) return `חפש בקטגוריית "${category}"`;
+    if (pathname === "/my-cards") return "חפש במתכונים שלי";
+    if (pathname === "/favorites") return "חפש במועדפים שלי";
+    return "חפש מתכונים";
+  };
+
   return (
-    <Box
-      display={
-        location.pathname === "/about" ||
-        location.pathname === "/about" ||
-        location.pathname === "/user-profile" ||
-        location.pathname === "/admin-panel" ||
-        location.pathname.match("/card-info") ||
-        location.pathname.match("/create-card") ||
-        location.pathname.match("/edit-card") ||
-        location.pathname.match("/my-cards") ||
-        location.pathname.match("/favorites")
-          ? "none"
-          : "inline-flex"
-      }
-    >
+    <Box display={shouldHide ? "none" : "inline-flex"}>
       <FormControl variant="standard" sx={{ width: { xs: 110, sm: 160, md: 200 } }}>
         <OutlinedInput
           onInput={(e) => {
@@ -47,7 +56,7 @@ const SearchBar = () => {
           }}
           ref={refy}
           sx={{ backgroundColor: isDark ? "#333333" : "#e3f2fd", width: "100%" }}
-          placeholder="חפש"
+          placeholder={getPlaceholder(location.pathname)}
           size="small"
           value={SearchQuery}
           endAdornment={

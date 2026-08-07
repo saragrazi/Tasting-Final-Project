@@ -18,7 +18,7 @@ const MyFavoriteCards = () => {
   const { user } = useUser();
   const { cards, pending, error, hasMore, reload, loadMore, setCards, removeCard } = usePaginatedCards(getMyFavoriteCardsBrowse);
   const navigate = useNavigate();
-  const { searchQuery } = useContext(searchContext)
+  const { searchQuery, setCategory } = useContext(searchContext)
   const [sortBy, setSortBy] = useState("")
   const [viewType, setViewType] = useState("cards")
   const muiTheme = useTheme();
@@ -32,6 +32,12 @@ const MyFavoriteCards = () => {
   }, [isMobile, viewType]);
 
   useEffect(() => {
+    setCategory(sortBy);
+    return () => setCategory("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortBy]);
+
+  useEffect(() => {
     if (!user) return undefined;
     const timer = setTimeout(() => {
       reload({ search: searchQuery, category: sortBy });
@@ -39,6 +45,16 @@ const MyFavoriteCards = () => {
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery, sortBy, user]);
+
+  const getEmptyMessage = () => {
+    if (searchQuery) {
+      return sortBy
+        ? `לא נמצאו מועדפים בקטגוריית "${sortBy}" התואמים לחיפוש "${searchQuery}".`
+        : `לא נמצאו מועדפים התואמים לחיפוש "${searchQuery}".`;
+    }
+    if (sortBy) return `אין לך מועדפים בקטגוריית "${sortBy}".`;
+    return "עדיין אין לך מתכונים מועדפים. סמנו מתכונים שאהבתם כדי לראות אותם כאן.";
+  };
 
   if (!user) {
     return (
@@ -102,11 +118,7 @@ const MyFavoriteCards = () => {
             setCards={setCards}
             removeCard={removeCard}
             showDelete={false}
-            emptyMessage={
-              searchQuery
-                ? `לא נמצאו מועדפים התואמים לחיפוש "${searchQuery}".`
-                : "עדיין אין לך מתכונים מועדפים. סמנו מתכונים שאהבתם כדי לראות אותם כאן."
-            }
+            emptyMessage={getEmptyMessage()}
           />
           {hasMore && !pending && (
             <Box display="flex" justifyContent="center" mt={3}>

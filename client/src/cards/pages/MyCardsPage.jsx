@@ -18,7 +18,7 @@ import CardsTable, { preloadCardsTable } from "../../table/components/LazyCardsT
 const MyCardsPage = () => {
   const { user } = useUser();
   const { cards, pending, error, hasMore, reload, loadMore, setCards, removeCard } = usePaginatedCards(getMyCardsBrowse);
-  const { searchQuery } = useContext(searchContext)
+  const { searchQuery, setCategory } = useContext(searchContext)
   const navigate = useNavigate();
   const [viewType, setViewType] = useState("cards")
   const [sortBy, setSortBy] = useState("")
@@ -40,6 +40,22 @@ const MyCardsPage = () => {
   useEffect(() => {
     if (isMobile && viewType === 'table') setViewType('cards');
   }, [isMobile, viewType]);
+
+  useEffect(() => {
+    setCategory(sortBy);
+    return () => setCategory("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortBy]);
+
+  const getEmptyMessage = () => {
+    if (searchQuery) {
+      return sortBy
+        ? `לא נמצאו מתכונים שלך בקטגוריית "${sortBy}" התואמים לחיפוש "${searchQuery}".`
+        : `לא נמצאו מתכונים שלך התואמים לחיפוש "${searchQuery}".`;
+    }
+    if (sortBy) return `אין לך עדיין מתכונים בקטגוריית "${sortBy}".`;
+    return "עדיין לא הוספת מתכונים. לחצו על + כדי להוסיף את המתכון הראשון שלכם!";
+  };
 
   if (!user) {
     return (
@@ -110,11 +126,7 @@ const MyCardsPage = () => {
           onDelete={() => { }}
           setCards={setCards}
           removeCard={removeCard}
-          emptyMessage={
-            searchQuery
-              ? `לא נמצאו מתכונים שלך התואמים לחיפוש "${searchQuery}".`
-              : "עדיין לא הוספת מתכונים. לחצו על + כדי להוסיף את המתכון הראשון שלכם!"
-          }
+          emptyMessage={getEmptyMessage()}
           />
           {hasMore && !pending && (
             <Box display="flex" justifyContent="center" mt={3}>

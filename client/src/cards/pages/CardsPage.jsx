@@ -14,7 +14,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 
 const CardsPage = () => {
-  const { searchQuery } = useContext(searchContext)
+  const { searchQuery, setCategory } = useContext(searchContext)
   const { handleDeleteCard } = useCards();
   const { cards, pending, error, hasMore, reload, loadMore, setCards, removeCard } = usePaginatedCards(getCardsBrowse);
   const [viewType, setViewType] = useState("cards")
@@ -37,9 +37,25 @@ const CardsPage = () => {
     if (isMobile && viewType === 'table') setViewType('cards');
   }, [isMobile, viewType]);
 
+  useEffect(() => {
+    setCategory(sortBy);
+    return () => setCategory("");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sortBy]);
+
   const onDeleteCard = (cardId) => {
     handleDeleteCard(cardId);
     removeCard(cardId);
+  };
+
+  const getEmptyMessage = () => {
+    if (searchQuery) {
+      return sortBy
+        ? `לא נמצאו מתכונים בקטגוריית "${sortBy}" התואמים לחיפוש "${searchQuery}".`
+        : `לא נמצאו מתכונים התואמים לחיפוש "${searchQuery}".`;
+    }
+    if (sortBy) return `אין עדיין מתכונים בקטגוריית "${sortBy}".`;
+    return "עדיין אין מתכונים באתר.";
   };
 
   return (
@@ -82,11 +98,7 @@ const CardsPage = () => {
             setCards={setCards}
             removeCard={removeCard}
             searchQuery={searchQuery}
-            emptyMessage={
-              searchQuery
-                ? `לא נמצאו מתכונים התואמים לחיפוש "${searchQuery}".`
-                : "עדיין אין מתכונים באתר."
-            }
+            emptyMessage={getEmptyMessage()}
           />
           {hasMore && !pending && (
             <Box display="flex" justifyContent="center" mt={3}>
