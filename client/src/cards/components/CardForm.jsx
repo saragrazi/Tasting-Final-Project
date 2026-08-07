@@ -198,7 +198,7 @@ const CardForm = ({
       </FormControl>
       <Input
         name="videoLink"
-        label="קישור לסרטון הכנה"
+        label="קישור לסרטון הכנה (רשות)"
         error={errors.videoLink}
         onChange={onInputChange}
         onBlur={onInputBlur}
