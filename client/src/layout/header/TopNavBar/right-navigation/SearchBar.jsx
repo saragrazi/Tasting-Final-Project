@@ -55,7 +55,14 @@ const SearchBar = () => {
             handleChange(e);
           }}
           ref={refy}
-          sx={{ backgroundColor: isDark ? "#333333" : "#e3f2fd", width: "100%" }}
+          sx={{
+            backgroundColor: isDark ? "#333333" : "#e3f2fd",
+            width: "100%",
+            "& input": {
+              fontSize: { xs: "0.75rem", sm: "0.8rem" },
+              textOverflow: "ellipsis",
+            },
+          }}
           placeholder={getPlaceholder(location.pathname)}
           size="small"
           value={SearchQuery}
