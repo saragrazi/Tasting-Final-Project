@@ -14,6 +14,9 @@ app.use(cors);
 app.use(logger);
 app.use(express.json());
 app.use(express.static("./public"));
+
+app.get("/health", (req, res) => res.status(200).send("OK"));
+
 app.use(router);
 
 app.use((err, req, res, next) => {
