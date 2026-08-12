@@ -6,17 +6,20 @@ import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import PersonIcon from '@mui/icons-material/Person';
 import EventIcon from '@mui/icons-material/Event';
 import CloseIcon from '@mui/icons-material/Close';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import CircularProgress from '@mui/material/CircularProgress';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Joi from 'joi';
 
 import useCards from '../hooks/useCards';
 import { useUser } from '../../users/providers/UserProvider';
+import { useSnack } from '../../providers/SnackbarProvider';
 import formatPrepTime from '../helpers/formatPrepTime';
 import CommentThread from '../components/CommentThread';
 import { commentSchema } from '../models/joi-schema/commentSchema';
 import { validateOptions } from '../../forms/utils/joiValidationOptions';
+import ROUTES from '../../routes/routesModel';
 
 const commentTextSchema = Joi.object({ text: commentSchema.text });
 
@@ -27,15 +30,22 @@ const validateCommentText = (text) => {
 
 const CardDetailsPage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const { card, handleGetCard, handleAddRating, handleAddComment, handleDeleteComment } = useCards();
   const { user } = useUser();
+  const { setSnack } = useSnack();
   const [rating, setRating] = useState(0);
   const [commentText, setCommentText] = useState('');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+  const [initializing, setInitializing] = useState(true);
 
   useEffect(() => {
-    handleGetCard(id);
+    if (id) {
+      handleGetCard(id).finally(() => setInitializing(false));
+    } else {
+      setInitializing(false);
+    }
     // eslint-disable-next-line
   }, [id]);
 
@@ -74,6 +84,15 @@ const CardDetailsPage = () => {
     await handleDeleteComment(id, commentId);
   };
 
+  const handleCopyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setSnack('success', 'הקישור למתכון הועתק!');
+    } catch (err) {
+      setSnack('error', 'העתקת הקישור נכשלה');
+    }
+  };
+
   const topLevelComments = card?.comments?.filter((c) => !c.parentCommentId) || [];
   const repliesFor = (commentId) =>
     card?.comments?.filter((c) => String(c.parentCommentId) === String(commentId)) || [];
@@ -97,6 +116,26 @@ const CardDetailsPage = () => {
       fullWidth: true,
     },
   ].filter(Boolean);
+
+  if (!initializing && !card) {
+    return (
+      <Container maxWidth="sm" sx={{ direction: 'rtl', textAlign: 'center', mt: 6 }}>
+        <Typography variant="h5" sx={{ color: '#d06b6b', mb: 2 }}>
+          המתכון הזה פרטי
+        </Typography>
+        <Typography color="text.secondary" mb={3}>
+          רק מי שיצר את המתכון יכול לצפות בו. ייתכן גם שהמתכון הוסר או שהקישור אינו תקין.
+        </Typography>
+        <Button
+          variant="contained"
+          onClick={() => navigate(ROUTES.CARDS)}
+          sx={{ backgroundColor: '#d06b6b', '&:hover': { backgroundColor: '#b5585a' } }}
+        >
+          למתכונים אחרים
+        </Button>
+      </Container>
+    );
+  }
 
   return (
     <Container maxWidth="lg" sx={{ direction: 'rtl', textAlign: 'right' }}>
@@ -135,7 +174,7 @@ const CardDetailsPage = () => {
           </Box>
 
           {/* כותרת */}
-          <Typography color="#d06b6b" sx={{ textShadow: '1px 1px 1px black' }} mt={2} mb={2} variant="h3">
+          <Typography color="#d06b6b" sx={{ textShadow: '1px 1px 1px black' }} mt={2} mb={1} variant="h3">
             {card?.title}
           </Typography>
 
@@ -186,11 +225,42 @@ const CardDetailsPage = () => {
             </Box>
           </Modal>
 
-          <Box flexDirection="column" width={{ xs: '100%', sm: '50%' }} m={{ xs: 3, sm: 5 }} ml={{ xs: 0, sm: 5 }} display="flex" justifyContent="flex-start" alignItems="flex-start">
+          <Box
+            flexDirection="column"
+            width={{ xs: '100%', sm: '50%' }}
+            mt={{ xs: 1, sm: 1 }}
+            mb={{ xs: 3, sm: 5 }}
+            mr={{ xs: 3, sm: 5 }}
+            ml={{ xs: 0, sm: 5 }}
+            display="flex"
+            justifyContent="flex-start"
+            alignItems="flex-start"
+          >
             {/* תאור קצר */}
-            <Typography sx={{ textShadow: '1px 1px 1px black' }} mb={3} variant="h5">
+            <Typography sx={{ textShadow: '1px 1px 1px black' }} mb={1} variant="h5">
               {card?.subtitle}
             </Typography>
+
+            {/* העתקת קישור למתכון */}
+            <Box
+              onClick={handleCopyLink}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleCopyLink(); }}
+              sx={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 0.5,
+                mb: 3,
+                cursor: 'pointer',
+                color: 'text.secondary',
+                userSelect: 'none',
+                '&:hover': { color: '#d06b6b' },
+              }}
+            >
+              <ContentCopyIcon sx={{ fontSize: 15 }} />
+              <Typography variant="caption">העתקת קישור למתכון</Typography>
+            </Box>
 
             {/* שורת הדירוגים הקיימים - ללא כותרת */}
             <Box display="flex" alignItems="center" gap={1} mb={3}>

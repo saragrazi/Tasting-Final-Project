@@ -16,7 +16,7 @@ import TableRowsIcon from '@mui/icons-material/TableRows';
 const CardsPage = () => {
   const { searchQuery, setCategory } = useContext(searchContext)
   const { handleDeleteCard } = useCards();
-  const { cards, pending, error, hasMore, reload, loadMore, setCards, removeCard } = usePaginatedCards(getCardsBrowse);
+  const { cards, pending, setPending, error, hasMore, reload, loadMore, setCards, removeCard } = usePaginatedCards(getCardsBrowse);
   const [viewType, setViewType] = useState("cards")
   const [sortBy, setSortBy] = useState("")
   const muiTheme = useTheme();
@@ -26,6 +26,7 @@ const CardsPage = () => {
   }, [])
 
   useEffect(() => {
+    setPending(true);
     const timer = setTimeout(() => {
       reload({ search: searchQuery, category: sortBy });
     }, 350);

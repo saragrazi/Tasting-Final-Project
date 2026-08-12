@@ -17,7 +17,7 @@ import CardsTable, { preloadCardsTable } from "../../table/components/LazyCardsT
 
 const MyCardsPage = () => {
   const { user } = useUser();
-  const { cards, pending, error, hasMore, reload, loadMore, setCards, removeCard } = usePaginatedCards(getMyCardsBrowse);
+  const { cards, pending, setPending, error, hasMore, reload, loadMore, setCards, removeCard } = usePaginatedCards(getMyCardsBrowse);
   const { searchQuery, setCategory } = useContext(searchContext)
   const navigate = useNavigate();
   const [viewType, setViewType] = useState("cards")
@@ -30,6 +30,7 @@ const MyCardsPage = () => {
 
   useEffect(() => {
     if (!user) return undefined;
+    setPending(true);
     const timer = setTimeout(() => {
       reload({ search: searchQuery, category: sortBy });
     }, 350);

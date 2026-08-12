@@ -55,7 +55,7 @@ const usePaginatedCards = (fetchFn) => {
 
   const hasMore = cards.length < total;
 
-  return { cards, total, pending, error, hasMore, reload, loadMore, setCards, removeCard };
+  return { cards, total, pending, setPending, error, hasMore, reload, loadMore, setCards, removeCard };
 };
 
 export default usePaginatedCards;
