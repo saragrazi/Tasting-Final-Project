@@ -17,6 +17,7 @@ import useUsers from "../hooks/useUsers";
 import { getCards } from "../../cards/services/cardService";
 import ROUTES from "../../routes/routesModel";
 import DeleteModal from "../../cards/components/DeleteModal";
+import { getCardPath } from "../../cards/helpers/cardUrl";
 
 const UsersManagementPage = () => {
   const { user } = useUser();
@@ -117,11 +118,7 @@ const UsersManagementPage = () => {
                     component="button"
                     underline="hover"
                     sx={{ textAlign: "right" }}
-                    onClick={() =>
-                      navigate(
-                        `${ROUTES.CARD_INFO}/${card._id}/${card.title}/${card.image?.url?.split("/")[2]}`
-                      )
-                    }
+                    onClick={() => navigate(getCardPath(card))}
                   >
                     {card.title}
                   </MuiLink>

@@ -6,7 +6,7 @@ import CardActionBar from "./CardActionBar";
 
 import { Card, CardActionArea } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import ROUTES from "../../../routes/routesModel";
+import { getCardPath } from "../../helpers/cardUrl";
 import { array, func } from "prop-types";
 
 const CardComponent = ({ cards, card, onLike, onDelete, onEdit, setCards, removeCard }) => {
@@ -30,13 +30,7 @@ const CardComponent = ({ cards, card, onLike, onDelete, onEdit, setCards, remove
     >
       <CardActionArea
         sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
-        onClick={() =>
-          navigate(
-            `${ROUTES.CARD_INFO}/${card._id}/${card.title}/${
-              card.image.url.split("/")[2]
-            }`
-          )
-        }
+        onClick={() => navigate(getCardPath(card))}
       >
         <CardHead image={card.image} />
         <CardBody card={card} />

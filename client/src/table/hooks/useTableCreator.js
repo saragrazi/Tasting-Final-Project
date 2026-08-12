@@ -1,8 +1,8 @@
 import { Rating, Typography } from "@mui/material";
-import ROUTES from "../../routes/routesModel";
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import formatPrepTime from "../../cards/helpers/formatPrepTime";
+import { getCardPath } from "../../cards/helpers/cardUrl";
 
 const columnAlign = { headerAlign: "center", align: "right" };
 
@@ -77,12 +77,11 @@ const useTableCreator = (cards) => {
       rating: card.averageRating || 0,
       prepTime: card.prepTime,
       authorName: card.authorName,
-      urlSegment: card.image?.url?.split("/")[2],
     }));
   }, [cards]);
 
   const onRowClick = (params) => {
-    navigate(`${ROUTES.CARD_INFO}/${params.row.id}/${params.row.title}/${params.row.urlSegment}`);
+    navigate(getCardPath({ _id: params.row.id, title: params.row.title }));
   };
 
   return {
