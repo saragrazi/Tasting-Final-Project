@@ -15,12 +15,9 @@ const signupSchema = {
     .required(),
   password: Joi.string()
     .label("סיסמה")
-    .ruleset.regex(
-      /((?=.*\d{1})(?=.*[A-Z]{1})(?=.*[a-z]{1})(?=.*[!@#$%^&*-]{1}).{7,20})/
-    )
+    .ruleset.regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*-]{8,}$/)
     .rule({
-      message:
-        'הסיסמה חייבת להכיל לפחות תשעה תווים, אות גדולה, אות קטנה, מספר ואחד מהתווים הבאים: !@#$%^&*-',
+      message: 'יש להקליד 8 תווים לפחות המכילים אותיות באנגלית וספרות',
     })
     .required(),
   country: Joi.string().label("ארץ").min(2).max(256).required(),

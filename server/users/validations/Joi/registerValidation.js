@@ -45,12 +45,9 @@ const registerValidation = (user) => {
       .rule({ message: 'יש להזין כתובת אימייל תקינה' })
       .required(),
     password: Joi.string()
-      .ruleset.regex(
-        /((?=.*\d{1})(?=.*[A-Z]{1})(?=.*[a-z]{1})(?=.*[!@#$%^&*-]{1}).{7,20})/
-      )
+      .ruleset.regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*-]{8,}$/)
       .rule({
-        message:
-          'הסיסמה חייבת להכיל לפחות שבעה תווים, אות גדולה, אות קטנה, מספר ואחד מהתווים הבאים: !@#$%^&*-',
+        message: 'יש להקליד 8 תווים לפחות המכילים אותיות באנגלית וספרות',
       })
       .required(),
     image: Joi.object()
