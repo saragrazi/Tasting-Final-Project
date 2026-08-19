@@ -35,6 +35,8 @@ const {
   addRating,
   addComment,
   likeCard,
+  reportCard,
+  deleteReport,
   deleteCard,
   deleteComment,
   getCardByTitle,
@@ -44,8 +46,11 @@ const validateCard = require("../validations/cardValidationService");
 const normalizeEditCard = require("../helpers/normalizeEditCard");
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
+    if (!req.user.isAdmin) {
+      return handleError(res, 403, "Authorization Error: רק מנהל יכול לצפות בכל המתכונים");
+    }
     const cards = await getCards();
     return res.send(cards);
   } catch (error) {
@@ -102,8 +107,7 @@ router.get("/:id", async (req, res) => {
       const tokenFromClient = req.header("x-auth-token");
       const requester = tokenFromClient ? verifyToken(tokenFromClient) : null;
       const isOwner = requester && String(requester._id) === String(card.user_id);
-      const isAdmin = requester && requester.isAdmin;
-      if (!isOwner && !isAdmin) {
+      if (!isOwner) {
         return handleError(res, 404, "המתכון לא נמצא");
       }
     }
@@ -268,6 +272,49 @@ router.post("/:id/comment", auth, async (req, res) => {
     };
 
     const card = await addComment(cardId, comment);
+    return res.send(card);
+  } catch (error) {
+    return handleError(res, error.status || 500, error.message);
+  }
+});
+
+router.post("/:id/report", auth, async (req, res) => {
+  try {
+    const cardId = req.params.id;
+    const { reason } = req.body;
+
+    const existingCard = await getCard(cardId);
+    if (String(existingCard.user_id) === String(req.user._id)) {
+      return handleError(res, 403, "לא ניתן לדווח על המתכון שלך");
+    }
+
+    const alreadyReported = existingCard.reports.some(
+      (r) => String(r.user_id) === String(req.user._id)
+    );
+    if (alreadyReported) {
+      return handleError(res, 400, "כבר דיווחת על המתכון הזה");
+    }
+
+    const reporter = await getUser(req.user._id);
+    const card = await reportCard(cardId, {
+      user_id: req.user._id,
+      reporterName: `${reporter.name.first} ${reporter.name.last}`,
+      reporterEmail: reporter.email,
+      reason: (reason || "").trim(),
+    });
+    return res.send(card);
+  } catch (error) {
+    return handleError(res, error.status || 500, error.message);
+  }
+});
+
+router.delete("/:id/report/:reportId", auth, async (req, res) => {
+  try {
+    if (!req.user.isAdmin) {
+      return handleError(res, 403, "Authorization Error: רק מנהל יכול לסמן דיווח כמטופל");
+    }
+    const { id, reportId } = req.params;
+    const card = await deleteReport(id, reportId);
     return res.send(card);
   } catch (error) {
     return handleError(res, error.status || 500, error.message);

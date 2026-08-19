@@ -11,6 +11,7 @@ const ROUTES = {
     CREATE_CARD: "/create-card",
     EDIT_CARD: "/edit-card",
     USERS_MANAGEMENT: "/users-management",
+    TERMS: "/terms",
 };
 
 export default ROUTES;

@@ -90,11 +90,13 @@ const CardForm = ({
       />
       <Input
         name="subtitle"
-        label="תאור קצר"
+        label="תאור קצר (רשות)"
         error={errors.subtitle}
         onChange={onInputChange}
         onBlur={onInputBlur}
         data={data}
+        required={false}
+        multiline={true}
       />
       <Input
         name="prepTime"
@@ -205,6 +207,28 @@ const CardForm = ({
         data={data}
         required={false}
       />
+      <Box sx={{ width: "100%", mt: 4 }}>
+        <FormControlLabel
+          sx={{ mr: 0 }}
+          control={
+            <Checkbox
+              checked={Boolean(data?.contentPolicyAccepted)}
+              onChange={(e) => {
+                onInputChange({ target: { name: "contentPolicyAccepted", value: e.target.checked } });
+              }}
+            />
+          }
+          label={<Typography variant="body2">אני מאשר/ת כי התוכן והתמונות שהעליתי הם שלי, או שיש לי רשות להשתמש בהם, וכי העלאת התוכן אינה מפרה זכויות של צד שלישי.</Typography>}
+        />
+        <Typography variant="caption" color="text.secondary" display="block">
+          ניתן להתבסס על מתכון קיים ולהיעזר בו כהשראה — רק חשוב שהניסוח והתמונה יהיו מקוריים.
+        </Typography>
+        {errors.contentPolicyAccepted && (
+          <Typography variant="caption" color="error" display="block">
+            {errors.contentPolicyAccepted}
+          </Typography>
+        )}
+      </Box>
     </Form>
   );
 };

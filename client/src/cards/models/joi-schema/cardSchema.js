@@ -6,7 +6,7 @@ const urlRegex =
 
 export const cardSchema = {
   title: Joi.string().label("שם המתכון").min(2).max(256).required(),
-  subtitle: Joi.string().label("תאור קצר").min(2).max(256).required(),
+  subtitle: Joi.string().label("תאור קצר").max(256).allow(""),
   ingredients: Joi.array()
     .label("מרכיבים")
     .items(
@@ -30,10 +30,13 @@ export const cardSchema = {
   dishImage: Joi.string().label("תמונת מנה").allow(""),
   user_id: Joi.string().min(2).max(256),
   isPrivate: Joi.boolean(),
+  contentPolicyAccepted: Joi.boolean().valid(true).required().messages({
+    "any.only": "יש לאשר שהתמונה וההסבר מקוריים לפני שליחת המתכון",
+  }),
 };
 export const EditcardSchema = {
   title: Joi.string().label("שם המתכון").min(2).max(256).required(),
-  subtitle: Joi.string().label("תאור קצר").min(2).max(256).required(),
+  subtitle: Joi.string().label("תאור קצר").max(256).allow(""),
   ingredients: Joi.array()
     .label("מרכיבים")
     .items(
@@ -57,6 +60,9 @@ export const EditcardSchema = {
   dishImage: Joi.string().label("תמונת מנה").allow(""),
   user_id: Joi.string().min(2).max(256),
   isPrivate: Joi.boolean(),
+  contentPolicyAccepted: Joi.boolean().valid(true).required().messages({
+    "any.only": "יש לאשר שהתמונה וההסבר מקוריים לפני שליחת המתכון",
+  }),
 };
 
 

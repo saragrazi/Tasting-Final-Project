@@ -8,6 +8,7 @@ const initialCardForm = {
     tips: '',
     videoLink: '',
     isPrivate: false,
+    contentPolicyAccepted: false,
   };
   
   export default initialCardForm;

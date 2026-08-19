@@ -5,6 +5,7 @@ import Spinner from "../components/Spinner";
 
 const CardsPage = lazy(() => import("../cards/pages/CardsPage"));
 const AboutPage = lazy(() => import("../pages/AboutPage"));
+const TermsPage = lazy(() => import("../pages/TermsPage"));
 const ErrorPage = lazy(() => import("../pages/ErrorPage"));
 const SignUpPage = lazy(() => import("../users/pages/SignUpPage"));
 const LoginPage = lazy(() => import("../users/pages/LoginPage"));
@@ -30,6 +31,7 @@ const Router = () => {
         <Route path={ROUTES.USERS_MANAGEMENT} element={<UsersManagementPage />} />
         <Route path={`${ROUTES.EDIT_CARD}/:id`} element={<EditCardPage />} />
         <Route path={ROUTES.ABOUT} element={<AboutPage />} />
+        <Route path={ROUTES.TERMS} element={<TermsPage />} />
         <Route path={ROUTES.SIGNUP} element={<SignUpPage />} />
         <Route path={ROUTES.LOGIN} element={<LoginPage />} />
         <Route

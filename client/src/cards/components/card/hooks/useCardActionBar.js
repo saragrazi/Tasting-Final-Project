@@ -53,7 +53,7 @@ const useCardActionBar = (handleDeleteCard, handleLikeCard, setCards, cards, rem
     setLocalLike,
     cardIdToDelete,
     onCancelDelete,
-    onConfirmDelete
+    onConfirmDelete,
   }
 }
 

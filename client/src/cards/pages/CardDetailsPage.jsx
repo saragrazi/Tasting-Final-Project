@@ -7,6 +7,7 @@ import PersonIcon from '@mui/icons-material/Person';
 import EventIcon from '@mui/icons-material/Event';
 import CloseIcon from '@mui/icons-material/Close';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import CircularProgress from '@mui/material/CircularProgress';
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
@@ -17,6 +18,8 @@ import { useUser } from '../../users/providers/UserProvider';
 import { useSnack } from '../../providers/SnackbarProvider';
 import formatPrepTime from '../helpers/formatPrepTime';
 import CommentThread from '../components/CommentThread';
+import Spinner from '../../components/Spinner';
+import DeleteModal from '../components/DeleteModal';
 import { commentSchema } from '../models/joi-schema/commentSchema';
 import { validateOptions } from '../../forms/utils/joiValidationOptions';
 import ROUTES from '../../routes/routesModel';
@@ -31,7 +34,7 @@ const validateCommentText = (text) => {
 const CardDetailsPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { card, handleGetCard, handleAddRating, handleAddComment, handleDeleteComment } = useCards();
+  const { card, handleGetCard, handleAddRating, handleAddComment, handleDeleteComment, handleReportCard } = useCards();
   const { user } = useUser();
   const { setSnack } = useSnack();
   const [rating, setRating] = useState(0);
@@ -39,8 +42,10 @@ const CardDetailsPage = () => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [initializing, setInitializing] = useState(true);
+  const [reportConfirmOpen, setReportConfirmOpen] = useState(false);
 
   useEffect(() => {
+    setInitializing(true);
     if (id) {
       handleGetCard(id).finally(() => setInitializing(false));
     } else {
@@ -93,6 +98,11 @@ const CardDetailsPage = () => {
     }
   };
 
+  const handleReportConfirm = async () => {
+    setReportConfirmOpen(false);
+    await handleReportCard(id, 'דיווח על תוכן מועתק (מתכון/תמונה) ללא רשות');
+  };
+
   const topLevelComments = card?.comments?.filter((c) => !c.parentCommentId) || [];
   const repliesFor = (commentId) =>
     card?.comments?.filter((c) => String(c.parentCommentId) === String(commentId)) || [];
@@ -117,7 +127,11 @@ const CardDetailsPage = () => {
     },
   ].filter(Boolean);
 
-  if (!initializing && !card) {
+  if (initializing) {
+    return <Spinner />;
+  }
+
+  if (!card) {
     return (
       <Container maxWidth="sm" sx={{ direction: 'rtl', textAlign: 'center', mt: 6 }}>
         <Typography variant="h5" sx={{ color: '#d06b6b', mb: 2 }}>
@@ -241,26 +255,57 @@ const CardDetailsPage = () => {
               {card?.subtitle}
             </Typography>
 
-            {/* העתקת קישור למתכון */}
-            <Box
-              onClick={handleCopyLink}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleCopyLink(); }}
-              sx={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 0.5,
-                mb: 3,
-                cursor: 'pointer',
-                color: 'text.secondary',
-                userSelect: 'none',
-                '&:hover': { color: '#d06b6b' },
-              }}
-            >
-              <ContentCopyIcon sx={{ fontSize: 15 }} />
-              <Typography variant="caption">העתקת קישור למתכון</Typography>
+            {/* העתקת קישור למתכון + דיווח */}
+            <Box display="flex" alignItems="center" gap={2} flexWrap="wrap" mb={3}>
+              <Box
+                onClick={handleCopyLink}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') handleCopyLink(); }}
+                sx={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 0.5,
+                  cursor: 'pointer',
+                  color: 'text.secondary',
+                  userSelect: 'none',
+                  '&:hover': { color: '#d06b6b' },
+                }}
+              >
+                <ContentCopyIcon sx={{ fontSize: 15 }} />
+                <Typography variant="caption">העתקת קישור למתכון</Typography>
+              </Box>
+
+              {user && !isOwner && (
+                <Box
+                  onClick={() => setReportConfirmOpen(true)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setReportConfirmOpen(true); }}
+                  sx={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 0.5,
+                    cursor: 'pointer',
+                    color: '#e53e3e',
+                    userSelect: 'none',
+                    '&:hover': { color: '#c53030' },
+                  }}
+                >
+                  <FlagOutlinedIcon sx={{ fontSize: 15 }} />
+                  <Typography variant="caption">דיווח על המתכון</Typography>
+                </Box>
+              )}
             </Box>
+
+            <DeleteModal
+              isOpen={reportConfirmOpen}
+              onClose={() => setReportConfirmOpen(false)}
+              onConfirm={handleReportConfirm}
+              title="דיווח על מתכון"
+              message="לדווח על המתכון הזה כתוכן מועתק ללא רשות? הצוות שלנו יבדוק את הדיווח."
+              confirmLabel="דיווח"
+            />
 
             {/* שורת הדירוגים הקיימים - ללא כותרת */}
             <Box display="flex" alignItems="center" gap={1} mb={3}>

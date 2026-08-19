@@ -3,10 +3,12 @@ const auth = require("../../auth/authService");
 const { handleError } = require("../../utils/handleErrors");
 const { generateUserPassword } = require("../helpers/bcrypt");
 const { generateAuthToken } = require("../../auth/Providers/jwt");
+const { verifyGoogleToken } = require("../../auth/Providers/google");
 const normalizeUser = require("../helpers/normalizeUser");
 const {
     registerUser,
     loginUser,
+    loginWithGoogle,
     getUsers,
     getUser,
     updateUser,
@@ -51,6 +53,20 @@ router.post("/login", async(req, res) => {
         return res.send(token);
     } catch (error) {
         return handleError(res, error.status || 500, error.message);
+    }
+});
+
+router.post("/google", async(req, res) => {
+    try {
+        const { credential } = req.body;
+        if (!credential)
+            return handleError(res, 400, "לא התקבל טוקן התחברות מגוגל");
+
+        const googlePayload = await verifyGoogleToken(credential);
+        const token = await loginWithGoogle(googlePayload);
+        return res.send(token);
+    } catch (error) {
+        return handleError(res, error.status || 401, "ההתחברות עם גוגל נכשלה");
     }
 });
 

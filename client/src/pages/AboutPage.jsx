@@ -2,8 +2,8 @@ import React from "react";
 import Container from "@mui/material/Container";
 import PageHeader from "./../components/PageHeader";
 import Grid from "@mui/material/Grid";
-import { Typography, Box, Button } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Typography, Box, Button, Link } from "@mui/material";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -75,6 +75,14 @@ const AboutPage = () => {
 
           <Typography className="welcome1" align="right" sx={{ mt: 2, fontWeight: "bold" }}>
             בתיאבון!
+          </Typography>
+
+          <Typography variant="caption" color="text.secondary" align="right" display="block" sx={{ mt: 2 }}>
+            השימוש באתר מהווה אישור כי המשתמש קרא את{" "}
+            <Link component={RouterLink} to={ROUTES.TERMS}>
+              תנאי השימוש
+            </Link>{" "}
+            והסכים להם.
           </Typography>
 
           <Box

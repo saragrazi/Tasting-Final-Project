@@ -19,7 +19,7 @@ const getCardByTitle = async (title) => {
 const getCards = async () => {
   if (DB === "MONGODB") {
     try {
-      const cards = await Card.find();
+      const cards = await Card.find({ isPrivate: { $ne: true } });
       return Promise.resolve(cards);
     } catch (error) {
       error.status = 404;
@@ -169,6 +169,46 @@ const addComment = async (cardId, comment) => {
   return Promise.resolve("addComment card not in mongodb");
 };
 
+const reportCard = async (cardId, report) => {
+  if (DB === "MONGODB") {
+    try {
+      const card = await Card.findByIdAndUpdate(
+        cardId,
+        { $push: { reports: report } },
+        { new: true }
+      );
+      if (!card)
+        throw new Error("A card with this ID cannot be found in the database");
+
+      return Promise.resolve(card);
+    } catch (error) {
+      error.status = 400;
+      return handleBadRequest("Mongoose", error);
+    }
+  }
+  return Promise.resolve("reportCard card not in mongodb");
+};
+
+const deleteReport = async (cardId, reportId) => {
+  if (DB === "MONGODB") {
+    try {
+      const card = await Card.findByIdAndUpdate(
+        cardId,
+        { $pull: { reports: { _id: reportId } } },
+        { new: true }
+      );
+      if (!card)
+        throw new Error("A card with this ID cannot be found in the database");
+
+      return Promise.resolve(card);
+    } catch (error) {
+      error.status = 400;
+      return handleBadRequest("Mongoose", error);
+    }
+  }
+  return Promise.resolve("deleteReport card not in mongodb");
+};
+
 const deleteComment = async (cardId, commentId) => {
   if (DB === "MONGODB") {
     try {
@@ -273,6 +313,8 @@ exports.getCard = getCard;
 exports.createCard = createCard;
 exports.addRating = addRating;
 exports.addComment = addComment;
+exports.reportCard = reportCard;
+exports.deleteReport = deleteReport;
 exports.deleteComment = deleteComment;
 exports.updateCard = updateCard;
 exports.likeCard = likeCard;

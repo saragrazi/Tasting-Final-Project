@@ -11,6 +11,15 @@ export const login = async user => {
     }
 };
 
+export const googleLogin = async credential => {
+    try {
+        const { data } = await axios.post(`${apiUrl}/users/google`, { credential });
+        return data;
+    } catch (error) {
+        return Promise.reject(error.response?.data || error.message);
+    }
+};
+
 export const signUp = async user => {
     try {
         const { data } = await axios.post(`${apiUrl}/users`, user);

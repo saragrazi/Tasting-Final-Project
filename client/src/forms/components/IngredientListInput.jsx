@@ -95,8 +95,11 @@ const IngredientListInput = ({ name, label, value, onChange, error }) => {
             label="מרכיב"
             value={item.name}
             onChange={(e) => handleNameChange(index, e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") e.preventDefault(); }}
             autoComplete="off"
             dir="rtl"
+            multiline
+            minRows={1}
             sx={{ flex: 2, minWidth: 140 }}
             inputProps={{ style: { textAlign: "right" } }}
           />

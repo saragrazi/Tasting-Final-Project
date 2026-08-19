@@ -12,6 +12,9 @@ body,
     text-align: right;
     min-height: 100%;
     max-width: 100%;
+}
+
+body {
     overflow-x: hidden;
 }
 

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../providers/UserProvider';
 import { useSnack } from '../../providers/SnackbarProvider';
 import useAxios from '../../hooks/useAxios';
-import { login, signUp, getUsers, setUserBlockedStatus, deleteUser, editBusinessStatus } from '../services/usersApiService';
+import { login, googleLogin, signUp, getUsers, setUserBlockedStatus, deleteUser, editBusinessStatus } from '../services/usersApiService';
 import {
     getUser,
     removeToken,
@@ -54,6 +54,28 @@ const useUsers = () => {
                 requestStatus(false, error, null);
             }
         }, [navigate, requestStatus, setToken, setWelcomeUser]
+    );
+
+    const handleGoogleLogin = useCallback(
+        async credential => {
+            try {
+                const token = await googleLogin(credential);
+                setToken(token);
+                setTokenInLocalStorage(token, true);
+                const userFromLocalStorage = getUser();
+                requestStatus(false, null, null, userFromLocalStorage);
+                if (userFromLocalStorage?.name?.first) {
+                    setWelcomeUser({
+                        first: userFromLocalStorage.name.first,
+                        last: userFromLocalStorage.name.last,
+                    });
+                }
+                navigate(ROUTES.CARDS);
+            } catch (error) {
+                requestStatus(false, error, null);
+                setSnack('error', error?.message || error || 'ההתחברות עם גוגל נכשלה');
+            }
+        }, [navigate, requestStatus, setToken, setWelcomeUser, setSnack]
     );
 
     const handleLogout = useCallback(
@@ -136,6 +158,7 @@ const useUsers = () => {
         user,
         users,
         handleLogin,
+        handleGoogleLogin,
         handleLogout,
         handleSignup,
         handleGetUsers,

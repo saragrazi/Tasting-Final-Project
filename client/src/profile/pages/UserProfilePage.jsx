@@ -93,21 +93,6 @@ const UserProfilePage = () => {
                     ? "משתמש רגיל"
                     : ""}
                 </Typography>
-                {!user?.isBusiness && (
-                  <Box mt={1}>
-                    <Button
-                      size="small"
-                      variant="contained"
-                      color="primary"
-                      onClick={handleBecomeBusiness}
-                    >
-                      הפוך לעסקי - ללא עלות
-                    </Button>
-                    <Typography variant="caption" color="text.secondary" display="block" mt={0.5}>
-                      עם חשבון עסקי אפשר להעלות ולפרסם מתכונים משלך
-                    </Typography>
-                  </Box>
-                )}
               </Box>
               <Box>
                 <img
@@ -138,6 +123,8 @@ const UserProfilePage = () => {
               data={value.data}
               errors={value.errors}
               setData={rest.setData}
+              isBusiness={user?.isBusiness}
+              onBecomeBusiness={handleBecomeBusiness}
             />
           )}
         </Grid>

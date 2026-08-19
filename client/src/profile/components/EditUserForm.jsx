@@ -1,5 +1,7 @@
 import React from "react";
-import { func, object, string } from "prop-types";
+import { func, object, string, bool } from "prop-types";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
 import ROUTES from "../../routes/routesModel";
@@ -14,6 +16,8 @@ const EditUserForm = ({
   onInputChange,
   onInputBlur,
   setData,
+  isBusiness,
+  onBecomeBusiness,
 }) => {
   return (
     <Form
@@ -111,6 +115,18 @@ const EditUserForm = ({
         sm={6}
         required={false}
       />
+      {!isBusiness && (
+        <Grid item xs={12}>
+          <Button
+            size="small"
+            variant="contained"
+            color="primary"
+            onClick={onBecomeBusiness}
+          >
+            הפוך למשתמש עסקי
+          </Button>
+        </Grid>
+      )}
     </Form>
   );
 };
@@ -125,6 +141,8 @@ EditUserForm.propTypes = {
   onInputChange: func.isRequired,
   onInputBlur: func,
   setData: func.isRequired,
+  isBusiness: bool,
+  onBecomeBusiness: func,
 };
 
 export default React.memo(EditUserForm);

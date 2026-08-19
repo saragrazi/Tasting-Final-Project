@@ -3,11 +3,13 @@ import { func, object, string, bool } from "prop-types";
 import { Link as RouterLink } from "react-router-dom";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
+import GoogleAuthButton from "./GoogleAuthButton";
 import ROUTES from "../../routes/routesModel";
 
 const UserForm = ({
@@ -21,6 +23,7 @@ const UserForm = ({
   onInputBlur,
   setData,
   pending,
+  onGoogleLogin,
 }) => {
   return (
     <Form
@@ -119,6 +122,7 @@ const UserForm = ({
         onBlur={onInputBlur}
         data={data}
         sm={6}
+        required={false}
       />
       <Input
         name="zip"
@@ -161,12 +165,46 @@ const UserForm = ({
         </Typography>
       </Grid>
       <Grid item xs={12}>
+        <Box sx={{ p: 1.5, borderRadius: 1, backgroundColor: "rgba(208,107,107,0.08)" }}>
+          <FormControlLabel
+            sx={{ mr: 0 }}
+            control={
+              <Checkbox
+                checked={Boolean(data.termsAccepted)}
+                onChange={(e) =>
+                  setData({ ...data, termsAccepted: e.target.checked })
+                }
+                color="primary"
+              />
+            }
+            label={
+              <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                אני מאשר/ת את{" "}
+                <Link component={RouterLink} to={ROUTES.TERMS} target="_blank" rel="noreferrer">
+                  תנאי השימוש באתר
+                </Link>
+                {" "}
+                <Typography component="span" color="error">*</Typography>
+              </Typography>
+            }
+          />
+          {errors.termsAccepted && (
+            <Typography variant="caption" color="error" display="block">
+              {errors.termsAccepted}
+            </Typography>
+          )}
+        </Box>
+      </Grid>
+      <Grid item xs={12}>
         <Typography variant="body2" align="center">
           כבר רשומים?{" "}
           <Link component={RouterLink} to={ROUTES.LOGIN}>
             להתחברות
           </Link>
         </Typography>
+      </Grid>
+      <Grid item xs={12}>
+        <GoogleAuthButton onLogin={onGoogleLogin} />
       </Grid>
     </Form>
   );
@@ -183,6 +221,7 @@ UserForm.propTypes = {
   onInputBlur: func,
   setData: func.isRequired,
   pending: bool,
+  onGoogleLogin: func.isRequired,
 };
 
 UserForm.defaultProps = {

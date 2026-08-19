@@ -23,6 +23,11 @@ const schema = new mongoose.Schema({
         required: true,
         trim: true,
     },
+    googleId: {
+        type: String,
+        unique: true,
+        sparse: true,
+    },
     image: Image,
     address: Address,
     isAdmin: { type: Boolean, default: false },

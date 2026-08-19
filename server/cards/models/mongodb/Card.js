@@ -5,7 +5,12 @@ const { MEASURING_CUP_OPTIONS } = require("../../helpers/measuringCupOptions");
 
 const cardSchema = new mongoose.Schema({
     title: DEFAULT_VALIDATION,
-  subtitle: DEFAULT_VALIDATION,
+  subtitle: {
+    type: String,
+    trim: true,
+    maxLength: 256,
+    default: "",
+  },
   category: DEFAULT_VALIDATION,
   ingredients: [
     {
@@ -65,6 +70,31 @@ const cardSchema = new mongoose.Schema({
     default: false,
   },
   likes: [String],
+  reports: [
+    {
+      user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+      },
+      reporterName: {
+        type: String,
+        trim: true,
+      },
+      reporterEmail: {
+        type: String,
+        trim: true,
+      },
+      reason: {
+        type: String,
+        trim: true,
+        maxLength: 500,
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
   ratings: [
     {
       user_id: {

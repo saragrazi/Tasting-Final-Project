@@ -12,6 +12,7 @@ import {
   addRating,
   addComment,
   deleteComment,
+  reportCard,
 } from "../services/cardService";
 import useAxios from "../../hooks/useAxios";
 
@@ -122,6 +123,18 @@ const useCards = () => {
     }
   };
 
+  const handleReportCard = async (cardId, reason) => {
+    try {
+      setPending(true);
+      await reportCard(cardId, reason);
+      setPending(false);
+      setSnack('success', 'תודה, הדיווח נשלח ויטופל בהקדם.');
+    } catch (error) {
+      setPending(false);
+      setSnack('error', error || 'לא ניתן היה לשלוח את הדיווח כרגע');
+    }
+  };
+
   const handleDeleteCard = async cardId => {
     try {
       setPending(true);
@@ -148,6 +161,7 @@ const useCards = () => {
     handleCreateCard,
     handleUpdateCard,
     handleDeleteCard,
+    handleReportCard,
     handleLikeCard,
     handleAddRating,
     handleAddComment,

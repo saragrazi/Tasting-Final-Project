@@ -9,13 +9,13 @@ import Link from "@mui/material/Link";
 import InfoIcon from "@mui/icons-material/Info";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/routesModel";
-import { useUser } from "../../users/providers/UserProvider";
+import { useContactModal } from "../../contact/providers/ContactModalProvider";
 
 import DescriptionIcon from '@mui/icons-material/Description';
 const Footer = () => {
   const navigate = useNavigate();
   const navigateTo = (to) => navigate(to);
-  const { user } = useUser();
+  const { openContactModal } = useContactModal();
   return (
     <Paper
       sx={{ zIndex: 100, position: "sticky", bottom: 0, left: 0, right: 0 }}
@@ -30,27 +30,31 @@ const Footer = () => {
           label="אודות"
           icon={<InfoIcon />}
         />
-        {user && (
-          <BottomNavigationAction
-            onClick={() => navigateTo(ROUTES.FAV_CARDS)}
-            label="מועדפים"
-            icon={<FavoriteIcon />}
-          />
-        )}
-        {user && user.isBusiness && (
-          <BottomNavigationAction
-            onClick={() => navigateTo(ROUTES.MY_CARDS)}
-            label="המתכונים שלי"
-            icon={<DescriptionIcon />}
-          />
-        )}
+        <BottomNavigationAction
+          onClick={() => navigateTo(ROUTES.FAV_CARDS)}
+          label="מועדפים"
+          icon={<FavoriteIcon />}
+        />
+        <BottomNavigationAction
+          onClick={() => navigateTo(ROUTES.MY_CARDS)}
+          label="המתכונים שלי"
+          icon={<DescriptionIcon />}
+        />
       </BottomNavigation>
       <Box sx={{ textAlign: "center", py: 0.5, backgroundColor: "rgba(0,0,0,0.06)" }}>
-        <Typography variant="caption" color="text.secondary">
-          © Built by{" "}
-          <Link href="mailto:saragr328@gmail.com" color="inherit" underline="hover">
+        <Typography variant="caption" color="text.secondary" dir="ltr" sx={{ display: "inline-block" }}>
+          Built by{" "}
+          <Link
+            component="button"
+            type="button"
+            onClick={openContactModal}
+            color="inherit"
+            underline="hover"
+            sx={{ font: "inherit", verticalAlign: "baseline" }}
+          >
             Sara M
           </Link>
+          {" "}©
         </Typography>
       </Box>
     </Paper>

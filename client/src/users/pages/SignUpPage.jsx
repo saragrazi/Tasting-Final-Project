@@ -10,7 +10,7 @@ import UserForm from "../components/UserForm";
 import initialSignUpForm from "../helpers/initial-forms/initialSignUpForm";
 
 const SignUpPage = () => {
-  const { handleSignup } = useUsers();
+  const { handleSignup, handleGoogleLogin } = useUsers();
 
   const { value, ...rest } = useForm(
     initialSignUpForm,
@@ -35,7 +35,7 @@ const SignUpPage = () => {
       }}
     >
       <UserForm
-        title="הרשמת משתמש"
+        title="הרשמה"
         onSubmit={rest.onSubmit}
         onReset={rest.handleReset}
         onFormChange={rest.validateForm}
@@ -45,6 +45,7 @@ const SignUpPage = () => {
         errors={value.errors}
         setData={rest.setData}
         pending={rest.pending}
+        onGoogleLogin={handleGoogleLogin}
       />
     </Container>
   );

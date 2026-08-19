@@ -8,6 +8,8 @@ import {
   Button,
   Divider,
   Link as MuiLink,
+  Tabs,
+  Tab,
 } from "@mui/material";
 import PageHeader from "../../components/PageHeader";
 import Spinner from "../../components/Spinner";
@@ -18,6 +20,8 @@ import { getCards } from "../../cards/services/cardService";
 import ROUTES from "../../routes/routesModel";
 import DeleteModal from "../../cards/components/DeleteModal";
 import { getCardPath } from "../../cards/helpers/cardUrl";
+import ContactMessagesAdminPanel from "../../contact/components/ContactMessagesAdminPanel";
+import ReportsAdminPanel from "../../cards/components/ReportsAdminPanel";
 
 const UsersManagementPage = () => {
   const { user } = useUser();
@@ -25,6 +29,7 @@ const UsersManagementPage = () => {
   const { users, pending, handleGetUsers, handleBlockUser, handleDeleteUser } = useUsers();
   const [cards, setCards] = useState([]);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
+  const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -44,6 +49,23 @@ const UsersManagementPage = () => {
         subtitle={`צפייה בכל המשתמשים, המתכונים שלהם, וחסימת משתמשים${users ? ` (סה"כ ${users.length} משתמשים)` : ""}`}
       />
 
+      <Tabs
+        value={activeTab}
+        onChange={(e, newValue) => setActiveTab(newValue)}
+        sx={{ mb: 2 }}
+        textColor="inherit"
+        TabIndicatorProps={{ style: { backgroundColor: "#d06b6b" } }}
+      >
+        <Tab label="משתמשים" />
+        <Tab label="פניות" />
+        <Tab label="דיווחים" />
+      </Tabs>
+
+      {activeTab === 1 && <ContactMessagesAdminPanel />}
+      {activeTab === 2 && <ReportsAdminPanel cards={cards} setCards={setCards} />}
+
+      {activeTab === 0 && (
+        <>
       {pending && <Spinner />}
 
       {!pending && users?.map((u) => {
@@ -143,6 +165,8 @@ const UsersManagementPage = () => {
         title="מחיקת משתמש"
         message="האם אתה בטוח שברצונך למחוק את המשתמש הזה? הפעולה אינה הפיכה."
       />
+        </>
+      )}
     </Container>
   );
 };

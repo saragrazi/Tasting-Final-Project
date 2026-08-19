@@ -15,9 +15,9 @@ const Address = new mongoose.Schema({
   street: DEFAULT_VALIDATION,
   houseNumber: {
     type: Number,
-    required: true,
     trim: true,
     minLength: 1,
+    default: 0,
   },
   zip: {
     type: Number,

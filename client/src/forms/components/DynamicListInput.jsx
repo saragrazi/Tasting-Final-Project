@@ -57,8 +57,11 @@ const DynamicListInput = ({ name, label, addLabel, value, onChange, error }) => 
             variant="outlined"
             value={item}
             onChange={(e) => handleItemChange(index, e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") e.preventDefault(); }}
             autoComplete="off"
             dir="rtl"
+            multiline
+            minRows={1}
             inputProps={{ style: { textAlign: "right" } }}
           />
           <IconButton

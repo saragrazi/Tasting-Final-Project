@@ -14,10 +14,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import GoogleAuthButton from "../components/GoogleAuthButton";
 
 const LoginPage = () => {
   const { user } = useUser();
-  const { handleLogin } = useUsers();
+  const { handleLogin, handleGoogleLogin } = useUsers();
 
   const { value, ...rest } = useForm(
     initialLoginForm,
@@ -86,6 +87,9 @@ const LoginPage = () => {
               להרשמה
             </Link>
           </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <GoogleAuthButton onLogin={handleGoogleLogin} />
         </Grid>
       </Form>
     </Container>

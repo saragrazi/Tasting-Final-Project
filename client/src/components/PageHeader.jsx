@@ -5,10 +5,10 @@ import React from "react";
 const PageHeader = ({ title, subtitle }) => {
   return (
     <>
-      <Typography variant="h2" component="h1">
+      <Typography variant="h4" component="h1" sx={{ mt: 3, fontWeight: "bold" }}>
         {title}
       </Typography>
-      <Typography variant="h5" component="h2">
+      <Typography variant="subtitle1" component="h2" color="text.secondary">
         {subtitle}
       </Typography>
       <Divider sx={{ my: 2 }} />

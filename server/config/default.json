@@ -1,3 +1,4 @@
 {
-  "JWT_KEY": "local_development_only_do_not_use_in_production"
+  "JWT_KEY": "local_development_only_do_not_use_in_production",
+  "GOOGLE_CLIENT_ID": "209983866869-4l16eend2h5el3qqckkld12lj0e07tiu.apps.googleusercontent.com"
 }

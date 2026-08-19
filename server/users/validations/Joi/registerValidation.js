@@ -79,8 +79,7 @@ const registerValidation = (user) => {
           "any.required": "רחוב הוא שדה חובה",
           "string.empty": "רחוב הוא שדה חובה",
         }),
-        houseNumber: Joi.number().required().messages({
-          "any.required": "מספר בית הוא שדה חובה",
+        houseNumber: Joi.number().allow("").messages({
           "number.base": "מספר בית חייב להיות מספר",
         }),
         zip: Joi.number().messages({ "number.base": "מיקוד חייב להיות מספר" }),

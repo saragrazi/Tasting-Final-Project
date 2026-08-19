@@ -1,7 +1,8 @@
 const DB = process.env.DB || "MONGODB";
+const crypto = require("crypto");
 const User = require("./mongodb/User");
 const lodash = require("lodash");
-const { comparePassword } = require("../helpers/bcrypt");
+const { comparePassword, generateUserPassword } = require("../helpers/bcrypt");
 const { generateAuthToken } = require("../../auth/Providers/jwt");
 const { handleBadRequest } = require("../../utils/handleErrors");
 
@@ -53,7 +54,58 @@ const loginUser = async({ email, password }) => {
     return Promise.resolve("loginUser user not in mongodb");
 };
 
+const loginWithGoogle = async(googlePayload) => {
+    if (DB === "MONGODB") {
+        try {
+            const { sub, email, given_name, family_name } = googlePayload;
 
+            let user = await User.findOne({ googleId: sub });
+
+            if (!user) {
+                user = await User.findOne({ email });
+                if (user) {
+                    user.googleId = sub;
+                    user = await user.save();
+                } else {
+                    const randomPassword = crypto.randomBytes(32).toString("hex");
+                    user = new User({
+                        googleId: sub,
+                        email,
+                        password: generateUserPassword(randomPassword),
+                        name: {
+                            first: given_name || "משתמש",
+                            last: family_name || "גוגל",
+                        },
+                        phone: "0500000000",
+                        image: {
+                            url: "https://cdn.pixabay.com/photo/2016/04/01/10/11/avatar-1299805_960_720.png",
+                            alt: "תמונת פרופיל",
+                        },
+                        address: {
+                            state: "not defined",
+                            country: "לא צוין",
+                            city: "לא צוין",
+                            street: "לא צוין",
+                            houseNumber: 0,
+                        },
+                    });
+                    user = await user.save();
+                }
+            }
+
+            if (user.isBlocked) {
+                throw new Error("Authentication Error: חשבון זה נחסם על ידי מנהל המערכת");
+            }
+
+            const token = generateAuthToken(user);
+            return Promise.resolve(token);
+        } catch (error) {
+            error.status = 400;
+            return Promise.reject(error);
+        }
+    }
+    return Promise.resolve("loginWithGoogle user not in mongodb");
+};
 
 const getUsers = async() => {
     if (DB === "MONGODB") {
@@ -140,6 +192,7 @@ const deleteUser = async(userId) => {
 
 exports.registerUser = registerUser;
 exports.loginUser = loginUser;
+exports.loginWithGoogle = loginWithGoogle;
 exports.getUsers = getUsers;
 exports.getUser = getUser;
 exports.updateUser = updateUser;

@@ -23,10 +23,13 @@ const signupSchema = {
   country: Joi.string().label("ארץ").min(2).max(256).required(),
   city: Joi.string().label("עיר").min(2).max(256).required(),
   street: Joi.string().label("רחוב").min(2).max(256).required(),
-  houseNumber: Joi.number().label("מספר בית").required(),
+  houseNumber: Joi.number().label("מספר בית").allow(""),
   zip: Joi.number().label("מיקוד").allow(""),
   isBusiness: Joi.boolean().label("הרשמה כעסק").required(),
   rememberMe: Joi.boolean(),
+  termsAccepted: Joi.boolean().valid(true).required().messages({
+    "any.only": "יש לאשר את תנאי השימוש באתר",
+  }),
 };
 
 export default signupSchema;

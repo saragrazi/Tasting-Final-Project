@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTheme } from '../../providers/ThemeProvider';
 
-export default function DeleteModal({ isOpen, onClose, onConfirm, title, message }) {
+export default function DeleteModal({ isOpen, onClose, onConfirm, title, message, confirmLabel }) {
   const { isDark } = useTheme();
   if (!isOpen) return null;
 
@@ -29,7 +29,7 @@ export default function DeleteModal({ isOpen, onClose, onConfirm, title, message
             ביטול
           </button>
           <button onClick={onConfirm} style={{ padding: '8px 16px', borderRadius: '4px', backgroundColor: '#e53e3e', color: '#fff', border: 'none', cursor: 'pointer' }}>
-            מחיקה
+            {confirmLabel || "מחיקה"}
           </button>
         </div>
       </div>

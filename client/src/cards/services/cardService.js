@@ -129,6 +129,24 @@ export const deleteComment = async (cardId, commentId) => {
   }
 };
 
+export const reportCard = async (cardId, reason) => {
+  try {
+    const { data } = await axios.post(`${apiUrl}/cards/${cardId}/report`, { reason });
+    return data;
+  } catch (error) {
+    return Promise.reject(error.response?.data || error.message);
+  }
+};
+
+export const deleteReport = async (cardId, reportId) => {
+  try {
+    const { data } = await axios.delete(`${apiUrl}/cards/${cardId}/report/${reportId}`);
+    return data;
+  } catch (error) {
+    return Promise.reject(error.response?.data || error.message);
+  }
+};
+
 export const deleteCard = async cardId => {
   try {
     const { data } = await axios.delete(`${apiUrl}/cards/${cardId}`);
