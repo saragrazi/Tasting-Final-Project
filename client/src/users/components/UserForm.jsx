@@ -3,6 +3,8 @@ import { func, object, string, bool } from "prop-types";
 import { Link as RouterLink } from "react-router-dom";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -36,6 +38,9 @@ const UserForm = ({
       pending={pending}
       to={ROUTES.CARDS}
     >
+      <Grid item xs={12}>
+        <GoogleAuthButton onLogin={onGoogleLogin} />
+      </Grid>
       <Input
         name="first"
         label="שם פרטי"
@@ -175,6 +180,8 @@ const UserForm = ({
                   setData({ ...data, termsAccepted: e.target.checked })
                 }
                 color="primary"
+                icon={<RadioButtonUncheckedIcon />}
+                checkedIcon={<CheckCircleIcon />}
               />
             }
             label={
@@ -202,9 +209,6 @@ const UserForm = ({
             להתחברות
           </Link>
         </Typography>
-      </Grid>
-      <Grid item xs={12}>
-        <GoogleAuthButton onLogin={onGoogleLogin} />
       </Grid>
     </Form>
   );

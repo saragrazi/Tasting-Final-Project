@@ -11,11 +11,6 @@ const GoogleAuthButton = ({ onLogin }) => {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Divider sx={{ my: 2 }}>
-        <Typography variant="body2" color="text.secondary">
-          או
-        </Typography>
-      </Divider>
       <Box sx={{ display: "flex", justifyContent: "center" }}>
         <GoogleLogin
           onSuccess={(credentialResponse) => onLogin(credentialResponse.credential)}
@@ -25,6 +20,11 @@ const GoogleAuthButton = ({ onLogin }) => {
           locale="he"
         />
       </Box>
+      <Divider sx={{ my: 2 }}>
+        <Typography variant="body2" color="text.secondary">
+          או
+        </Typography>
+      </Divider>
     </Box>
   );
 };

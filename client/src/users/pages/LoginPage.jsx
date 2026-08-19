@@ -46,6 +46,9 @@ const LoginPage = () => {
         pending={rest.pending}
         styles={{ maxWidth: "450px", direction: "rtl", textAlign: "right" }}
         to={ROUTES.CARDS}>
+        <Grid item xs={12}>
+          <GoogleAuthButton onLogin={handleGoogleLogin} />
+        </Grid>
         <Input
           label="אימייל"
           name="email"
@@ -87,9 +90,6 @@ const LoginPage = () => {
               להרשמה
             </Link>
           </Typography>
-        </Grid>
-        <Grid item xs={12}>
-          <GoogleAuthButton onLogin={handleGoogleLogin} />
         </Grid>
       </Form>
     </Container>
