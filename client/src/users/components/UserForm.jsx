@@ -5,6 +5,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -187,8 +188,15 @@ const UserForm = ({
             label={
               <Typography variant="body2" sx={{ fontWeight: 600 }}>
                 אני מאשר/ת את{" "}
-                <Link component={RouterLink} to={ROUTES.TERMS} target="_blank" rel="noreferrer">
+                <Link
+                  component={RouterLink}
+                  to={ROUTES.TERMS}
+                  target="_blank"
+                  rel="noreferrer"
+                  sx={{ display: "inline-flex", alignItems: "center", gap: 0.3 }}
+                >
                   תנאי השימוש באתר
+                  <OpenInNewIcon sx={{ fontSize: 14 }} />
                 </Link>
                 {" "}
                 <Typography component="span" color="error">*</Typography>
