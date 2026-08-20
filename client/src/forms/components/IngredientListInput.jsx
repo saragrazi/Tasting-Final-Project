@@ -114,7 +114,7 @@ const IngredientListInput = ({ name, label, value, onChange, error }) => {
         </Box>
       ))}
       {error && (
-        <Typography color="error" variant="caption" sx={{ display: "block", mb: 0.5 }}>
+        <Typography color="error" variant="caption" dir="rtl" sx={{ display: "block", mb: 0.5, textAlign: "right" }}>
           {error}
         </Typography>
       )}

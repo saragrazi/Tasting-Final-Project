@@ -50,6 +50,13 @@ export const ThemeProvider = ({ children }) => {
                     },
                 },
             },
+            MuiFormHelperText: {
+                styleOverrides: {
+                    root: {
+                        textAlign: 'right',
+                    },
+                },
+            },
             MuiSelect: {
                 styleOverrides: {
                     icon: {

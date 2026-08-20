@@ -28,7 +28,10 @@ const signupSchema = {
   isBusiness: Joi.boolean().label("הרשמה כעסק").required(),
   rememberMe: Joi.boolean(),
   termsAccepted: Joi.boolean().valid(true).required().messages({
-    "any.only": "יש לאשר את תנאי השימוש באתר",
+    he: {
+      "any.only": "יש לאשר את תנאי השימוש באתר",
+      "any.required": "יש לאשר את תנאי השימוש באתר",
+    },
   }),
 };
 

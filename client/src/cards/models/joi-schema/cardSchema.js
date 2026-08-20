@@ -31,7 +31,10 @@ export const cardSchema = {
   user_id: Joi.string().min(2).max(256),
   isPrivate: Joi.boolean(),
   contentPolicyAccepted: Joi.boolean().valid(true).required().messages({
-    "any.only": "יש לאשר שהתמונה וההסבר מקוריים לפני שליחת המתכון",
+    he: {
+      "any.only": "יש לאשר",
+      "any.required": "יש לאשר",
+    },
   }),
 };
 export const EditcardSchema = {
@@ -61,7 +64,10 @@ export const EditcardSchema = {
   user_id: Joi.string().min(2).max(256),
   isPrivate: Joi.boolean(),
   contentPolicyAccepted: Joi.boolean().valid(true).required().messages({
-    "any.only": "יש לאשר שהתמונה וההסבר מקוריים לפני שליחת המתכון",
+    he: {
+      "any.only": "יש לאשר",
+      "any.required": "יש לאשר",
+    },
   }),
 };
 

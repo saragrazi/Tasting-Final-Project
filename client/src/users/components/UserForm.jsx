@@ -204,7 +204,7 @@ const UserForm = ({
             }
           />
           {errors.termsAccepted && (
-            <Typography variant="caption" color="error" display="block">
+            <Typography variant="caption" color="error" dir="rtl" sx={{ display: "block", textAlign: "right" }}>
               {errors.termsAccepted}
             </Typography>
           )}
