@@ -20,6 +20,7 @@ const useUsers = () => {
     const [error, setError] = useState(null);
     const [businessPending, setBusinessPending] = useState(false);
     const [blockingUserId, setBlockingUserId] = useState(null);
+    const [googlePending, setGooglePending] = useState(false);
 
 
     const navigate = useNavigate();
@@ -60,6 +61,7 @@ const useUsers = () => {
 
     const handleGoogleLogin = useCallback(
         async credential => {
+            setGooglePending(true);
             try {
                 const token = await googleLogin(credential);
                 setToken(token);
@@ -76,6 +78,8 @@ const useUsers = () => {
             } catch (error) {
                 requestStatus(false, error, null);
                 setSnack('error', error?.message || error || 'ההתחברות עם גוגל נכשלה');
+            } finally {
+                setGooglePending(false);
             }
         }, [navigate, requestStatus, setToken, setWelcomeUser, setSnack]
     );
@@ -175,6 +179,7 @@ const useUsers = () => {
         handleBecomeBusiness,
         businessPending,
         blockingUserId,
+        googlePending,
     };
 };
 

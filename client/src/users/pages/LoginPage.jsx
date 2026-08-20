@@ -18,7 +18,7 @@ import GoogleAuthButton from "../components/GoogleAuthButton";
 
 const LoginPage = () => {
   const { user } = useUser();
-  const { handleLogin, handleGoogleLogin } = useUsers();
+  const { handleLogin, handleGoogleLogin, googlePending } = useUsers();
 
   const { value, ...rest } = useForm(
     initialLoginForm,
@@ -47,7 +47,7 @@ const LoginPage = () => {
         styles={{ maxWidth: "450px", direction: "rtl", textAlign: "right" }}
         to={ROUTES.CARDS}>
         <Grid item xs={12}>
-          <GoogleAuthButton onLogin={handleGoogleLogin} />
+          <GoogleAuthButton onLogin={handleGoogleLogin} pending={googlePending} />
         </Grid>
         <Input
           label="אימייל"

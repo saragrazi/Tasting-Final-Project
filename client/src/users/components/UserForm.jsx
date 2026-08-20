@@ -27,6 +27,7 @@ const UserForm = ({
   setData,
   pending,
   onGoogleLogin,
+  googlePending,
 }) => {
   return (
     <Form
@@ -40,7 +41,7 @@ const UserForm = ({
       to={ROUTES.CARDS}
     >
       <Grid item xs={12}>
-        <GoogleAuthButton onLogin={onGoogleLogin} />
+        <GoogleAuthButton onLogin={onGoogleLogin} pending={googlePending} />
       </Grid>
       <Input
         name="first"
@@ -234,10 +235,12 @@ UserForm.propTypes = {
   setData: func.isRequired,
   pending: bool,
   onGoogleLogin: func.isRequired,
+  googlePending: bool,
 };
 
 UserForm.defaultProps = {
   pending: false,
+  googlePending: false,
 };
 
 export default React.memo(UserForm);

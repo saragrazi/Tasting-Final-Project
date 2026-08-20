@@ -10,7 +10,7 @@ import UserForm from "../components/UserForm";
 import initialSignUpForm from "../helpers/initial-forms/initialSignUpForm";
 
 const SignUpPage = () => {
-  const { handleSignup, handleGoogleLogin } = useUsers();
+  const { handleSignup, handleGoogleLogin, googlePending } = useUsers();
 
   const { value, ...rest } = useForm(
     initialSignUpForm,
@@ -46,6 +46,7 @@ const SignUpPage = () => {
         setData={rest.setData}
         pending={rest.pending}
         onGoogleLogin={handleGoogleLogin}
+        googlePending={googlePending}
       />
     </Container>
   );
