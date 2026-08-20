@@ -3,24 +3,15 @@ const auth = require("../../auth/authService");
 const { verifyToken } = require("../../auth/Providers/jwt");
 const { handleError } = require("../../utils/handleErrors");
 const normalizeCard = require("../helpers/normalizeCard");
+const { uploadImageBuffer } = require("../../utils/cloudinary");
 const multer  = require('multer')
-
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, './public/images')
-  },
-  filename: function (req, file, cb) {
-    const uniqueSuffix = `${Date.now()}.${file.filename}`
-    cb(null, `${req.user._id}-${file.originalname}`)
-  }
-})
 
 function fileFilter (req, file, cb) {
   const isImage = String(file.mimetype).startsWith('image/');
   cb(null, isImage);
 }
 
-const upload = multer({ dest: 'uploads/',preservePath: true,storage:storage, fileFilter: fileFilter})
+const upload = multer({ storage: multer.memoryStorage(), fileFilter: fileFilter})
 
 
 const {
@@ -131,15 +122,15 @@ router.post("/", auth, upload.single('image'), async (req, res) => {
     }
 
 
-    card.image = file
-      ? {
-          url: `${req.protocol}://${req.get("host")}/images/${user._id}-${file.originalname}`,
-          alt: "",
-        }
-      : {
-          url: `${req.protocol}://${req.get("host")}/images/default-recipe.jpg`,
-          alt: "תמונת ברירת מחדל למתכון",
-        };
+    if (file) {
+      const uploadResult = await uploadImageBuffer(file.buffer, "tasting/recipes");
+      card.image = { url: uploadResult.secure_url, alt: "" };
+    } else {
+      card.image = {
+        url: `${req.protocol}://${req.get("host")}/images/default-recipe.jpg`,
+        alt: "תמונת ברירת מחדל למתכון",
+      };
+    }
 
     // Only business accounts may publish a recipe publicly - anyone else's
     // recipes always stay private, regardless of what the client sends.
@@ -172,10 +163,8 @@ router.put("/:id", auth, upload.single('image'), async (req, res) => {
     }
 
     if (file) {
-      card.image = {
-        url: `${req.protocol}://${req.get("host")}/images/${userId}-${file.originalname}`,
-        alt: "",
-      };
+      const uploadResult = await uploadImageBuffer(file.buffer, "tasting/recipes");
+      card.image = { url: uploadResult.secure_url, alt: "" };
     } else {
       delete card.image;
     }

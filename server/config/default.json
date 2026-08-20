@@ -1,4 +1,7 @@
 {
   "JWT_KEY": "local_development_only_do_not_use_in_production",
-  "GOOGLE_CLIENT_ID": "209983866869-4l16eend2h5el3qqckkld12lj0e07tiu.apps.googleusercontent.com"
+  "GOOGLE_CLIENT_ID": "209983866869-4l16eend2h5el3qqckkld12lj0e07tiu.apps.googleusercontent.com",
+  "CLOUDINARY_CLOUD_NAME": "REPLACE_WITH_YOUR_CLOUDINARY_CLOUD_NAME",
+  "CLOUDINARY_API_KEY": "REPLACE_WITH_YOUR_CLOUDINARY_API_KEY",
+  "CLOUDINARY_API_SECRET": "REPLACE_WITH_YOUR_CLOUDINARY_API_SECRET_SET_IN_config_local_json_INSTEAD"
 }

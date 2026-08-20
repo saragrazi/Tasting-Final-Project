@@ -11,6 +11,10 @@
 # production
 /build
 
+# local secrets - never commit
+config/local.json
+config/local-*.json
+
 # misc
 .DS_Store
 .env.local

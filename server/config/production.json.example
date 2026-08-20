@@ -6,5 +6,8 @@
   "DB_PASSWORD": "<userPassword>",
   "LOGGER": "morgan",
   "DB": "MONGODB",
-  "GOOGLE_CLIENT_ID": "<googleClientId>"
+  "GOOGLE_CLIENT_ID": "<googleClientId>",
+  "CLOUDINARY_CLOUD_NAME": "<cloudinaryCloudName>",
+  "CLOUDINARY_API_KEY": "<cloudinaryApiKey>",
+  "CLOUDINARY_API_SECRET": "<cloudinaryApiSecret>"
 }
