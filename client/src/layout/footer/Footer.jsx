@@ -32,7 +32,7 @@ const Footer = () => {
         />
         <BottomNavigationAction
           onClick={() => navigateTo(ROUTES.FAV_CARDS)}
-          label="מועדפים"
+          label="המועדפים שלי"
           icon={<FavoriteIcon />}
         />
         <BottomNavigationAction
