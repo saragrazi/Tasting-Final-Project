@@ -26,7 +26,7 @@ const editSchema = {
     country: Joi.string().label("ארץ").min(2).max(256).required(),
     city: Joi.string().label("עיר").min(2).max(256).required(),
     street: Joi.string().label("רחוב").min(2).max(256).required(),
-    houseNumber: Joi.number().label("מספר בית").required(),
+    houseNumber: Joi.number().label("מספר בית").allow(""),
     userId: Joi.string(),
     zip: Joi.number().label("מיקוד"),
     isBusiness: Joi.boolean().label("הרשמה כעסק").required(),

@@ -107,6 +107,7 @@ const EditUserForm = ({
         onBlur={onInputBlur}
         data={data}
         sm={6}
+        required={false}
       />
       <Input
         name="zip"
