@@ -161,8 +161,6 @@ cardSchema.virtual("averageRating").get(function () {
 cardSchema.set("toJSON", { virtuals: true });
 cardSchema.set("toObject", { virtuals: true });
 
-cardSchema.index({ title: 1 }, { unique: true });
-
 const Card = mongoose.model("card", cardSchema);
 
 module.exports = Card;

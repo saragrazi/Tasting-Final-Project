@@ -30,7 +30,6 @@ const {
   deleteReport,
   deleteCard,
   deleteComment,
-  getCardByTitle,
 } = require("../models/cardsAccessDataService");
 const { getUser } = require("../../users/models/usersAccessDataService");
 const validateCard = require("../validations/cardValidationService");
@@ -115,12 +114,6 @@ router.post("/", auth, upload.single('image'), async (req, res) => {
     let card = JSON.parse(req.body.form);
     let file = req.file;
     const user = req.user;
-  
-    const existingCard = await getCardByTitle(card.title);
-    if (existingCard) {
-      return handleError(res, 409, "Card with this title already exists");
-    }
-
 
     if (file) {
       const uploadResult = await uploadImageBuffer(file.buffer, "tasting/recipes");
