@@ -32,7 +32,7 @@ const CardComponent = ({ cards, card, onLike, onDelete, onEdit, setCards, remove
         sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}
         onClick={() => navigate(getCardPath(card))}
       >
-        <CardHead image={card.image} />
+        <CardHead images={card.images?.length ? card.images : (card.image ? [card.image] : [])} />
         <CardBody card={card} />
       </CardActionArea>
       <CardActionBar

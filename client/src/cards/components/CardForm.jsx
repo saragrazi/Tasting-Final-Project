@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { func, object, string, bool } from "prop-types";
+import { func, object, string, bool, array, number } from "prop-types";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
 import DynamicListInput from "../../forms/components/DynamicListInput";
 import IngredientListInput from "../../forms/components/IngredientListInput";
 import { FormControl, FormControlLabel, Checkbox, FormLabel, InputLabel, MenuItem, Select, Typography, Box, Button } from "@mui/material";
-import FileInput from "../../forms/components/FileInput";
+import RecipeImagesInput from "./RecipeImagesInput";
 import MEASURING_CUP_OPTIONS from "../models/measuringCupOptions";
 import { useUser } from "../../users/providers/UserProvider";
 import useUsers from "../../users/hooks/useUsers";
@@ -19,10 +19,14 @@ const CardForm = ({
   onFormChange,
   onInputChange,
   onInputBlur,
-  handleFileUpload,
   data,
   title,
   pending,
+  currentImages,
+  onCurrentImagesChange,
+  newImages,
+  onNewImagesChange,
+  uploadProgress,
 }) => {
   const { user } = useUser();
   const { handleBecomeBusiness, businessPending } = useUsers();
@@ -41,7 +45,7 @@ const CardForm = ({
       onReset={onReset}
       errors={errors}
       onChange={onFormChange}
-      styles={{ maxWidth: "400px", display: "flex", flexDirection: "column", direction: "rtl", textAlign: "right" }}
+      styles={{ maxWidth: "480px", display: "flex", flexDirection: "column", direction: "rtl", textAlign: "right" }}
       title={title}
       pending={pending}
     >
@@ -179,25 +183,16 @@ const CardForm = ({
         data={data}
         multiline={true}
       />
-      <FormControl sx={{ marginLeft: "8px", marginTop: "5px", width: "100%" }}>
-        <FormLabel>
-          {title === "ערוך מתכון" ? "החלפת תמונת מנה (רשות)" : "העלאת תמונת מנה (רשות)"}
-        </FormLabel>
-        <FileInput
-          name="dishImage"
-          label=""
-          onChange={handleFileUpload}
-          type="file"
-          accept="image/*"
-          error={errors.dishImage}
-          data={data}
-          required={false}
+      <FormControl sx={{ marginLeft: "8px", marginTop: "15px", width: "100%" }}>
+        <FormLabel sx={{ mb: 1 }}>תמונות המנה (רשות)</FormLabel>
+        <RecipeImagesInput
+          currentImages={currentImages}
+          onCurrentImagesChange={onCurrentImagesChange}
+          newImages={newImages}
+          onNewImagesChange={onNewImagesChange}
+          pending={pending}
+          uploadProgress={uploadProgress}
         />
-        <Typography variant="caption" color="text.secondary" sx={{ mt: 0.5 }}>
-          {title === "ערוך מתכון"
-            ? "ניתן להעלות קובץ תמונה בלבד. אם לא תעלו תמונה חדשה, התמונה הקיימת תישאר."
-            : "ניתן להעלות קובץ תמונה בלבד. אם לא תעלו תמונה, תוצג תמונת ברירת מחדל."}
-        </Typography>
       </FormControl>
       <Input
         name="videoLink"
@@ -242,14 +237,23 @@ CardForm.propTypes = {
   onFormChange: func.isRequired,
   onInputChange: func.isRequired,
   onInputBlur: func,
-  onFileChange: func,
   data: object.isRequired,
   title: string.isRequired,
   pending: bool,
+  currentImages: array,
+  onCurrentImagesChange: func,
+  newImages: array,
+  onNewImagesChange: func,
+  uploadProgress: number,
 };
 
 CardForm.defaultProps = {
   pending: false,
+  currentImages: [],
+  onCurrentImagesChange: () => {},
+  newImages: [],
+  onNewImagesChange: () => {},
+  uploadProgress: 0,
 };
 
 export default React.memo(CardForm);

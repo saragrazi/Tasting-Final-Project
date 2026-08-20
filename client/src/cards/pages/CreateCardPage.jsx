@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import useCards from "../hooks/useCards";
 import { useUser } from "../../users/providers/UserProvider";
 import useForm from "../../forms/hooks/useForm";
@@ -10,12 +10,19 @@ import CardForm from "../components/CardForm";
 import { cardSchema } from "../models/joi-schema/cardSchema";
 
 const CreateCardPage = () => {
-  const { handleCreateCard } = useCards();
+  const { handleCreateCard, uploadProgress } = useCards();
   const { user } = useUser();
+  const [newImages, setNewImages] = useState([]);
+
+  const handleSubmitCard = useCallback(
+    (cardData) => handleCreateCard(cardData, newImages),
+    [handleCreateCard, newImages]
+  );
+
   const { value, ...rest } = useForm(
     initialCardForm,
     cardSchema,
-    handleCreateCard
+    handleSubmitCard
   );
 
   if (!user) return <Navigate replace to={ROUTES.CARDS} />;
@@ -38,9 +45,11 @@ const CreateCardPage = () => {
         onFormChange={rest.validateForm}
         onInputChange={rest.handleChange}
         onInputBlur={rest.handleBlur}
-        handleFileUpload={rest.handleFileUpload}
         data={value.data}
         pending={rest.pending}
+        newImages={newImages}
+        onNewImagesChange={setNewImages}
+        uploadProgress={uploadProgress}
       />
     </Container>
   );

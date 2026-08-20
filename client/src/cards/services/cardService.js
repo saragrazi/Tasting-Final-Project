@@ -72,18 +72,28 @@ export const getMyFavoriteCardsBrowse = async ({ page, limit, search, category }
   }
 };
 
-export const createCard = async (card) => {
+const toUploadProgressConfig = (onUploadProgress) =>
+  onUploadProgress
+    ? {
+        onUploadProgress: (event) => {
+          const total = event.total || event.loaded || 1;
+          onUploadProgress(Math.round((event.loaded * 100) / total));
+        },
+      }
+    : undefined;
+
+export const createCard = async (card, onUploadProgress) => {
   try {
-    const { data } = await axios.post(`${apiUrl}/cards`, card);
+    const { data } = await axios.post(`${apiUrl}/cards`, card, toUploadProgressConfig(onUploadProgress));
     return data;
   } catch (error) {
     return Promise.reject(error.message);
   }
 };
 
-export const editCard = async (card, cardId) => {
+export const editCard = async (card, cardId, onUploadProgress) => {
   try {
-    const { data } = await axios.put(`${apiUrl}/cards/${cardId}`, card);
+    const { data } = await axios.put(`${apiUrl}/cards/${cardId}`, card, toUploadProgressConfig(onUploadProgress));
     return data;
   } catch (error) {
     return Promise.reject(error.response?.data || error.message);

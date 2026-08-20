@@ -1,20 +1,25 @@
-import { CardMedia } from "@mui/material";
 import React from "react";
-import imageType from "../../models/types/imageType";
+import { array } from "prop-types";
+import { useMediaQuery, useTheme } from "@mui/material";
+import RecipeImageStory from "../RecipeImageStory";
 
-const CardHead = ({ image }) => {
+const CardHead = ({ images }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
-    <CardMedia
-      component="img"
-      alt={image?.alt}
-      image={image?.url}
-      sx={{ height: 220, width: "100%", objectFit: "cover", display: "block" }}
+    <RecipeImageStory
+      images={images}
+      height={220}
+      playOnHover
+      interactive={!isMobile}
+      imgSx={{ objectFit: "cover", display: "block" }}
     />
   );
 };
 
 CardHead.propTypes = {
-  image: imageType.isRequired,
+  images: array.isRequired,
 }
 
 export default CardHead;

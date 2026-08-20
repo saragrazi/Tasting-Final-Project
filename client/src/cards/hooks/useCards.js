@@ -23,6 +23,7 @@ const useCards = () => {
   const [error, setError] = useState(null);
   const [pending, setPending] = useState(false);
   const [cardId, setCardId] = useState(null);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const { setSnack } = useSnack();
   const navigate = useNavigate();
 
@@ -45,35 +46,41 @@ const useCards = () => {
     }
   };
 
-  const handleCreateCard = useCallback(async (cardFromClient,image) => {
+  const handleCreateCard = useCallback(async (cardFromClient, images = []) => {
     const formData = new FormData();
     const normalCard = normalizeCard(cardFromClient);
-    if (image) formData.append("image", image);
+    images.forEach((file) => formData.append("images", file));
     formData.append("form", JSON.stringify(normalCard))
     try {
       setPending(true);
-      const card = await createCard(formData)
+      setUploadProgress(0);
+      const card = await createCard(formData, setUploadProgress)
       requestStatus(false, null, null, card);
       setSnack('success', 'המתכון שלך נוצר בהצלחה!');
       navigate(ROUTES.MY_CARDS);
     } catch (error) {
       requestStatus(false, error, null, null);
+    } finally {
+      setUploadProgress(0);
     }
   }, [setSnack, navigate]);
 
-  const handleUpdateCard = useCallback(async (card, image) => {
+  const handleUpdateCard = useCallback(async (card, images = []) => {
     const formData = new FormData();
     const normalCard = normalizeCard(card);
-    if (image) formData.append("image", image);
+    images.forEach((file) => formData.append("images", file));
     formData.append("form", JSON.stringify(normalCard))
     try {
       setPending(true);
-      const data = await editCard(formData, cardId);
+      setUploadProgress(0);
+      const data = await editCard(formData, cardId, setUploadProgress);
       requestStatus(false, null, null, data);
       setSnack('success', 'המתכון שלך עודכן בהצלחה!');
       navigate(ROUTES.MY_CARDS)
     } catch (error) {
       requestStatus(false, error, null, null);
+    } finally {
+      setUploadProgress(0);
     }
   },[cardId,navigate,setSnack]);
 
@@ -152,6 +159,7 @@ const useCards = () => {
     card,
     cards,
     pending,
+    uploadProgress,
     error,
     like,
     setCards,

@@ -73,7 +73,7 @@ const useTableCreator = (cards) => {
       title: card.title,
       subtitle: card.subtitle,
       category: card.category,
-      image: card.image?.url,
+      image: card.images?.[0]?.url || card.image?.url,
       rating: card.averageRating || 0,
       prepTime: card.prepTime,
       authorName: card.authorName,

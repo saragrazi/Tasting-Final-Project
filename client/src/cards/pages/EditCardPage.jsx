@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useCards from "../hooks/useCards";
 import { useUser } from "../../users/providers/UserProvider";
 import useForm from "../../forms/hooks/useForm";
@@ -12,20 +12,29 @@ import { getCard } from "../services/cardService";
 
 // eslint-disable-next-line
 const EditCardPage = () => {
-  const { handleUpdateCard, setCardId } = useCards();
+  const { handleUpdateCard, setCardId, uploadProgress } = useCards();
   const params = useParams()
   // eslint-disable-next-line
   const { user } = useUser();
+  const [existingImages, setExistingImages] = useState([]);
+  const [newImages, setNewImages] = useState([]);
+
+  const handleSubmitCard = useCallback(
+    (cardData) => handleUpdateCard({ ...cardData, existingImages }, newImages),
+    [handleUpdateCard, existingImages, newImages]
+  );
+
   const { value, ...rest } = useForm(
     initialCardForm,
     EditcardSchema,
-    handleUpdateCard,
+    handleSubmitCard,
   );
 
   useEffect(() => {
     const cardData = async () => {
       const card = await getCard(params.id)
       setCardId(card._id)
+      setExistingImages(card.images?.length ? card.images : (card.image ? [card.image] : []))
       const ingredients = Array.isArray(card.ingredients)
         ? card.ingredients.map((ingredient) => ({
             name: ingredient.name,
@@ -76,9 +85,13 @@ const EditCardPage = () => {
         onFormChange={rest.validateForm}
         onInputChange={rest.handleChange}
         onInputBlur={rest.handleBlur}
-        handleFileUpload={rest.handleFileUpload}
         data={value.data}
         pending={rest.pending}
+        currentImages={existingImages}
+        onCurrentImagesChange={setExistingImages}
+        newImages={newImages}
+        onNewImagesChange={setNewImages}
+        uploadProgress={uploadProgress}
       />
     </Container>
   );

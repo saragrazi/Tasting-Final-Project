@@ -1,4 +1,4 @@
-import { Box, CardMedia, Chip, Container, Divider, Typography, TextField, Button, Rating, Grid, Modal, Backdrop, IconButton } from '@mui/material';
+import { Box, Chip, Container, Divider, Typography, TextField, Button, Rating, Grid, Modal, Backdrop, IconButton } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import LocalCafeIcon from '@mui/icons-material/LocalCafe';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -9,7 +9,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
 import CircularProgress from '@mui/material/CircularProgress';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import Joi from 'joi';
 
@@ -20,9 +20,12 @@ import formatPrepTime from '../helpers/formatPrepTime';
 import CommentThread from '../components/CommentThread';
 import Spinner from '../../components/Spinner';
 import DeleteModal from '../components/DeleteModal';
+import RecipeImageCarousel from '../components/RecipeImageCarousel';
 import { commentSchema } from '../models/joi-schema/commentSchema';
 import { validateOptions } from '../../forms/utils/joiValidationOptions';
 import ROUTES from '../../routes/routesModel';
+
+const CONTENT_MAX_WIDTH = 480;
 
 const commentTextSchema = Joi.object({ text: commentSchema.text });
 
@@ -39,7 +42,7 @@ const CardDetailsPage = () => {
   const { setSnack } = useSnack();
   const [rating, setRating] = useState(0);
   const [commentText, setCommentText] = useState('');
-  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [viewingIndex, setViewingIndex] = useState(null);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
   const [isSubmittingRating, setIsSubmittingRating] = useState(false);
   const [initializing, setInitializing] = useState(true);
@@ -109,6 +112,11 @@ const CardDetailsPage = () => {
     await handleReportCard(id, 'דיווח על תוכן מועתק (מתכון/תמונה) ללא רשות');
   };
 
+  const displayImages = useMemo(
+    () => (card?.images?.length ? card.images : (card?.image ? [card.image] : [])),
+    [card]
+  );
+
   const topLevelComments = card?.comments?.filter((c) => !c.parentCommentId) || [];
   const repliesFor = (commentId) =>
     card?.comments?.filter((c) => String(c.parentCommentId) === String(commentId)) || [];
@@ -158,8 +166,9 @@ const CardDetailsPage = () => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ direction: 'rtl', textAlign: 'right' }}>
+    <Container maxWidth="md" sx={{ direction: 'rtl', textAlign: 'right' }}>
       <Container
+        maxWidth={false}
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -174,23 +183,18 @@ const CardDetailsPage = () => {
           {card?.isPrivate && (
             <Chip label="פרטי - לא לפרסום" size="small" sx={{ mb: 1, backgroundColor: '#d06b6b', color: '#fff' }} />
           )}
-          <Box position="relative" display="flex" width={{ xs: '100%', sm: '50%' }} alignItems="center" justifyContent="center">
-            <CardMedia
+          <Box position="relative" display="flex" width="100%" maxWidth={CONTENT_MAX_WIDTH} alignItems="center" justifyContent="center">
+            <Box
               sx={{
+                width: '100%',
+                height: { xs: 220, sm: 280 },
                 boxShadow: '1px 1px 15px 1px black',
                 borderRadius: '8px',
-                opacity: '1',
-                minHeight: '250px',
-                maxHeight: '600px',
-                cursor: 'pointer',
-                transition: 'transform 0.25s ease',
-                '&:hover': { transform: 'scale(1.02)' },
+                overflow: 'hidden',
               }}
-              component="img"
-              image={card?.image?.url}
-              alt={card?.image?.alt}
-              onClick={() => setLightboxOpen(true)}
-            />
+            >
+              <RecipeImageCarousel images={displayImages} onImageClick={(index) => setViewingIndex(index)} height="100%" />
+            </Box>
           </Box>
 
           {/* כותרת */}
@@ -199,8 +203,8 @@ const CardDetailsPage = () => {
           </Typography>
 
           <Modal
-            open={lightboxOpen}
-            onClose={() => setLightboxOpen(false)}
+            open={viewingIndex !== null}
+            onClose={() => setViewingIndex(null)}
             closeAfterTransition
             BackdropComponent={Backdrop}
             BackdropProps={{
@@ -213,15 +217,22 @@ const CardDetailsPage = () => {
             sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', p: 2 }}
           >
             <Box
-              sx={{ position: 'relative', maxWidth: '90vw', maxHeight: '90vh', outline: 'none' }}
-              onClick={() => setLightboxOpen(false)}
+              sx={{
+                position: 'relative',
+                width: '85vw',
+                height: '80vh',
+                maxWidth: 900,
+                outline: 'none',
+              }}
+              onClick={() => setViewingIndex(null)}
             >
               <IconButton
-                onClick={() => setLightboxOpen(false)}
+                onClick={() => setViewingIndex(null)}
                 sx={{
                   position: 'absolute',
                   top: -18,
                   right: -18,
+                  zIndex: 3,
                   backgroundColor: '#fff',
                   boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
                   '&:hover': { backgroundColor: '#f0f0f0' },
@@ -229,25 +240,23 @@ const CardDetailsPage = () => {
               >
                 <CloseIcon />
               </IconButton>
-              <Box
-                component="img"
-                src={card?.image?.url}
-                alt={card?.image?.alt}
-                onClick={(event) => event.stopPropagation()}
-                sx={{
-                  maxWidth: '90vw',
-                  maxHeight: '90vh',
-                  borderRadius: '12px',
-                  boxShadow: '0 0 40px rgba(0,0,0,0.6)',
-                  display: 'block',
-                }}
-              />
+              {viewingIndex !== null && (
+                <RecipeImageCarousel
+                  images={displayImages}
+                  initialIndex={viewingIndex}
+                  onImageClick={(index, event) => event.stopPropagation()}
+                  height="100%"
+                  objectFit="contain"
+                  imgSx={{ borderRadius: '12px', boxShadow: '0 0 40px rgba(0,0,0,0.6)' }}
+                />
+              )}
             </Box>
           </Modal>
 
           <Box
             flexDirection="column"
-            width={{ xs: '100%', sm: '50%' }}
+            width="100%"
+            maxWidth={CONTENT_MAX_WIDTH}
             mt={{ xs: 1, sm: 1 }}
             mb={{ xs: 3, sm: 5 }}
             mr={{ xs: 3, sm: 5 }}
@@ -329,9 +338,11 @@ const CardDetailsPage = () => {
             <Grid container spacing={1.5} mb={2}>
               {metaFields.map((field, index) => (
                 <Grid item xs={field.fullWidth ? 12 : 6} key={index}>
-                  <Box display="flex" alignItems="center" gap={0.5}>
-                    {field.icon}
-                    <Typography variant="body2" sx={{ whiteSpace: 'nowrap' }}>
+                  <Box display="flex" alignItems="center" gap={0.5} sx={{ minWidth: 0 }}>
+                    <Box display="flex" sx={{ flexShrink: 0 }}>
+                      {field.icon}
+                    </Box>
+                    <Typography variant="body2" sx={{ overflowWrap: 'break-word', minWidth: 0 }}>
                       {field.text}
                     </Typography>
                   </Box>
