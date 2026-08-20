@@ -57,7 +57,11 @@ const loginUser = async({ email, password }) => {
 const loginWithGoogle = async(googlePayload) => {
     if (DB === "MONGODB") {
         try {
-            const { sub, email, given_name, family_name } = googlePayload;
+            const { sub, email, email_verified, given_name, family_name } = googlePayload;
+
+            if (!email_verified) {
+                throw new Error("Authentication Error: כתובת האימייל בחשבון Google שלך אינה מאומתת");
+            }
 
             let user = await User.findOne({ googleId: sub });
 

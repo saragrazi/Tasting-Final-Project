@@ -273,7 +273,12 @@ router.post("/:id/report", auth, async (req, res) => {
     const { reason } = req.body;
 
     const existingCard = await getCard(cardId);
-    if (String(existingCard.user_id) === String(req.user._id)) {
+    const isOwner = String(existingCard.user_id) === String(req.user._id);
+
+    if (existingCard.isPrivate && !isOwner) {
+      return handleError(res, 404, "המתכון לא נמצא");
+    }
+    if (isOwner) {
       return handleError(res, 403, "לא ניתן לדווח על המתכון שלך");
     }
 
@@ -285,13 +290,13 @@ router.post("/:id/report", auth, async (req, res) => {
     }
 
     const reporter = await getUser(req.user._id);
-    const card = await reportCard(cardId, {
+    await reportCard(cardId, {
       user_id: req.user._id,
       reporterName: `${reporter.name.first} ${reporter.name.last}`,
       reporterEmail: reporter.email,
       reason: (reason || "").trim(),
     });
-    return res.send(card);
+    return res.send({ reported: true });
   } catch (error) {
     return handleError(res, error.status || 500, error.message);
   }
