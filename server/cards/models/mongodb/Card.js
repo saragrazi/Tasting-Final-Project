@@ -65,6 +65,18 @@ const cardSchema = new mongoose.Schema({
     url: String,
     alt: String,
   },
+  images: {
+    type: [
+      {
+        url: String,
+        alt: String,
+      },
+    ],
+    validate: {
+      validator: (value) => !value || value.length <= 3,
+      message: "ניתן להעלות עד 3 תמונות למתכון",
+    },
+  },
   isPrivate: {
     type: Boolean,
     default: false,

@@ -33,6 +33,14 @@ const validateCardWithJoi = card => {
         alt: Joi.string().min(2).max(256).allow(""),
       })
       ,
+    images: Joi.array()
+      .items(
+        Joi.object({
+          url: Joi.string().allow(""),
+          alt: Joi.string().min(2).max(256).allow(""),
+        })
+      )
+      .max(3),
     user_id: Joi.string().allow(""),
     authorName: Joi.string().allow(""),
     isPrivate: Joi.boolean(),

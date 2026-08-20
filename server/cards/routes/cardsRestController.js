@@ -108,21 +108,25 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", auth, upload.single('image'), async (req, res) => {
-  
+router.post("/", auth, upload.array('images', 3), async (req, res) => {
+
   try {
     let card = JSON.parse(req.body.form);
-    let file = req.file;
+    let files = req.files || [];
     const user = req.user;
 
-    if (file) {
-      const uploadResult = await uploadImageBuffer(file.buffer, "tasting/recipes");
-      card.image = { url: uploadResult.secure_url, alt: "" };
+    if (files.length > 0) {
+      const uploadResults = await Promise.all(
+        files.map((file) => uploadImageBuffer(file.buffer, "tasting/recipes"))
+      );
+      card.images = uploadResults.map((result) => ({ url: result.secure_url, alt: "" }));
     } else {
-      card.image = {
-        url: `${req.protocol}://${req.get("host")}/images/default-recipe.jpg`,
-        alt: "תמונת ברירת מחדל למתכון",
-      };
+      card.images = [
+        {
+          url: `${req.protocol}://${req.get("host")}/images/default-recipe.jpg`,
+          alt: "תמונת ברירת מחדל למתכון",
+        },
+      ];
     }
 
     // Only business accounts may publish a recipe publicly - anyone else's
@@ -142,10 +146,10 @@ router.post("/", auth, upload.single('image'), async (req, res) => {
   }
 });
 
-router.put("/:id", auth, upload.single('image'), async (req, res) => {
+router.put("/:id", auth, upload.array('images', 3), async (req, res) => {
   try {
     let card = JSON.parse(req.body.form);
-    let file = req.file;
+    let files = req.files || [];
     const cardId = req.params.id;
     const userId = req.user._id;
 
@@ -155,12 +159,28 @@ router.put("/:id", auth, upload.single('image'), async (req, res) => {
       return handleError(res, 403, message);
     }
 
-    if (file) {
-      const uploadResult = await uploadImageBuffer(file.buffer, "tasting/recipes");
-      card.image = { url: uploadResult.secure_url, alt: "" };
-    } else {
-      delete card.image;
+    const existingImages = (Array.isArray(card.existingImages) ? card.existingImages : []).map(
+      ({ url, alt }) => ({ url, alt })
+    );
+    delete card.existingImages;
+
+    let newImages = [];
+    if (files.length > 0) {
+      const uploadResults = await Promise.all(
+        files.map((file) => uploadImageBuffer(file.buffer, "tasting/recipes"))
+      );
+      newImages = uploadResults.map((result) => ({ url: result.secure_url, alt: "" }));
     }
+
+    const images = [...existingImages, ...newImages].slice(0, 3);
+    card.images = images.length > 0
+      ? images
+      : [
+          {
+            url: `${req.protocol}://${req.get("host")}/images/default-recipe.jpg`,
+            alt: "תמונת ברירת מחדל למתכון",
+          },
+        ];
 
     card.isPrivate = req.user.isBusiness ? Boolean(card.isPrivate) : true;
 
