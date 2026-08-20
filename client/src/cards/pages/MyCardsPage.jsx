@@ -106,14 +106,18 @@ const MyCardsPage = () => {
         )}
       </Box>
       <Fab
-        variant="extended"
+        variant={isMobile ? "circular" : "extended"}
         onClick={() => navigate(ROUTES.CREATE_CARD)}
         color="primary"
         aria-label="הוסף מתכון"
-        sx={{ position: "absolute", bottom: 75, left: 15 }}
+        sx={
+          isMobile
+            ? { position: "fixed", bottom: 95, left: "50%", transform: "translateX(-50%)" }
+            : { position: "fixed", bottom: 95, left: 15 }
+        }
       >
-        <AddIcon sx={{ ml: 1 }} />
-        הוסף מתכון
+        <AddIcon sx={{ ml: isMobile ? 0 : 1 }} />
+        {!isMobile && "הוסף מתכון"}
       </Fab>
       {viewType === 'table' && (
         <Suspense fallback={<Spinner height="20vh" />}>
