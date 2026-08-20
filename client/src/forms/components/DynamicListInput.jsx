@@ -45,7 +45,7 @@ const DynamicListInput = ({ name, label, addLabel, value, onChange, error }) => 
   };
 
   return (
-    <Box sx={{ width: "100%", mt: 1 }}>
+    <Box sx={{ width: "100%" }}>
       <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
         {label}
       </Typography>
