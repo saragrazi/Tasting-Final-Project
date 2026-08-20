@@ -14,7 +14,7 @@ const UserProfilePage = () => {
   const { getUserProfile, handleEditUser, userData, setUserId, open, setOpen } =
     useUserProfile();
   const { user } = useUser();
-  const { handleBecomeBusiness } = useUsers();
+  const { handleBecomeBusiness, businessPending } = useUsers();
   const navigate = useNavigate();
   const [userFormData, setUserFormData] = useState({});
 
@@ -125,6 +125,8 @@ const UserProfilePage = () => {
               setData={rest.setData}
               isBusiness={user?.isBusiness}
               onBecomeBusiness={handleBecomeBusiness}
+              businessPending={businessPending}
+              pending={rest.pending}
             />
           )}
         </Grid>

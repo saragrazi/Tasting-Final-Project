@@ -26,7 +26,7 @@ import ReportsAdminPanel from "../../cards/components/ReportsAdminPanel";
 const UsersManagementPage = () => {
   const { user } = useUser();
   const { isDark } = useTheme();
-  const { users, pending, handleGetUsers, handleBlockUser, handleDeleteUser } = useUsers();
+  const { users, pending, handleGetUsers, handleBlockUser, handleDeleteUser, blockingUserId } = useUsers();
   const [cards, setCards] = useState([]);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
@@ -104,6 +104,7 @@ const UsersManagementPage = () => {
                     size="small"
                     variant="contained"
                     onClick={() => handleBlockUser(u._id, !u.isBlocked)}
+                    disabled={blockingUserId === u._id}
                     sx={{
                       backgroundColor: u.isBlocked ? "#457127" : "#e53e3e",
                       "&:hover": { backgroundColor: u.isBlocked ? "#365a1e" : "#c53030" },

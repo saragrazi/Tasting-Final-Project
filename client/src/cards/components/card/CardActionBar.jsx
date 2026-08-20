@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, CardActions, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -24,6 +24,7 @@ const CardActionBar = ({ cardId, userId, card, cards, setCards, removeCard }) =>
     onCancelDelete,
     onConfirmDelete,
   } = useCardActionBar(handleDeleteCard, handleLikeCard, setCards, cards, removeCard);
+  const [isLiking, setIsLiking] = useState(false);
   useEffect(() => {
     const isLiked = async () => {
       const hasUser = await card.likes.filter((like) => like === user?._id);
@@ -70,11 +71,17 @@ const CardActionBar = ({ cardId, userId, card, cards, setCards, removeCard }) =>
               color: localLike ? "#d56c7c" : "inherit",
             }}
             aria-label="אהבתי"
+            disabled={isLiking}
             onClick={async () => {
               const isCurrentlyLiked = Boolean(localLike);
-              await onLike(cardId);
-              if (location.pathname.includes("favorites") && isCurrentlyLiked && typeof removeCard === "function") {
-                removeCard(cardId);
+              setIsLiking(true);
+              try {
+                await onLike(cardId);
+                if (location.pathname.includes("favorites") && isCurrentlyLiked && typeof removeCard === "function") {
+                  removeCard(cardId);
+                }
+              } finally {
+                setIsLiking(false);
               }
             }}
           >

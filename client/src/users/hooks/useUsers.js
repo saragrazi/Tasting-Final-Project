@@ -18,6 +18,8 @@ const useUsers = () => {
     const [users, setUsers] = useState(null);
     const [pending, setPending] = useState(false);
     const [error, setError] = useState(null);
+    const [businessPending, setBusinessPending] = useState(false);
+    const [blockingUserId, setBlockingUserId] = useState(null);
 
 
     const navigate = useNavigate();
@@ -99,6 +101,7 @@ const useUsers = () => {
 
     const handleBlockUser = useCallback(
         async (userId, isBlocked) => {
+            setBlockingUserId(userId);
             try {
                 await setUserBlockedStatus(userId, isBlocked);
                 setUsers((prev) =>
@@ -106,12 +109,15 @@ const useUsers = () => {
                 );
             } catch (error) {
                 setError(error);
+            } finally {
+                setBlockingUserId(null);
             }
         }, []
     );
 
     const handleBecomeBusiness = useCallback(
         async () => {
+            setBusinessPending(true);
             try {
                 const { token } = await editBusinessStatus(user._id, true);
                 updateStoredToken(token);
@@ -120,6 +126,8 @@ const useUsers = () => {
                 setSnack('success', 'החשבון שלך הפך לעסקי בהצלחה! עכשיו אפשר להוסיף מתכונים.');
             } catch (error) {
                 setSnack('error', error || 'לא ניתן היה לשדרג את החשבון כרגע');
+            } finally {
+                setBusinessPending(false);
             }
         }, [user, setToken, setUser, setSnack]
     );
@@ -165,6 +173,8 @@ const useUsers = () => {
         handleBlockUser,
         handleDeleteUser,
         handleBecomeBusiness,
+        businessPending,
+        blockingUserId,
     };
 };
 

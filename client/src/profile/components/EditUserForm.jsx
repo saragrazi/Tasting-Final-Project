@@ -18,6 +18,8 @@ const EditUserForm = ({
   setData,
   isBusiness,
   onBecomeBusiness,
+  businessPending,
+  pending,
 }) => {
   return (
     <Form
@@ -27,6 +29,7 @@ const EditUserForm = ({
       styles={{ maxWidth: "800px", direction: "rtl", textAlign: "right" }}
       title={title}
       to={ROUTES.CARDS}
+      pending={pending}
     >
       <Input
         name="first"
@@ -122,6 +125,7 @@ const EditUserForm = ({
             variant="contained"
             color="primary"
             onClick={onBecomeBusiness}
+            disabled={businessPending}
           >
             הפוך למשתמש עסקי
           </Button>
@@ -143,6 +147,8 @@ EditUserForm.propTypes = {
   setData: func.isRequired,
   isBusiness: bool,
   onBecomeBusiness: func,
+  businessPending: bool,
+  pending: bool,
 };
 
 export default React.memo(EditUserForm);

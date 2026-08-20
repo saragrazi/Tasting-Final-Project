@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { array, func } from "prop-types";
 import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
@@ -14,12 +14,14 @@ const ReportsAdminPanel = ({ cards, setCards }) => {
   const { isDark } = useTheme();
   const { setSnack } = useSnack();
   const navigate = useNavigate();
+  const [resolvingReportId, setResolvingReportId] = useState(null);
 
   const reports = (cards || [])
     .flatMap((card) => (card.reports || []).map((report) => ({ ...report, card })))
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   const handleResolve = async (report) => {
+    setResolvingReportId(report._id);
     try {
       await deleteReport(report.card._id, report._id);
       setCards((prev) =>
@@ -31,6 +33,8 @@ const ReportsAdminPanel = ({ cards, setCards }) => {
       );
     } catch (error) {
       setSnack("error", error || "לא ניתן היה לסמן את הדיווח כמטופל כרגע");
+    } finally {
+      setResolvingReportId(null);
     }
   };
 
@@ -81,6 +85,7 @@ const ReportsAdminPanel = ({ cards, setCards }) => {
                 size="small"
                 variant="contained"
                 onClick={() => handleResolve(report)}
+                disabled={resolvingReportId === report._id}
                 sx={{
                   backgroundColor: "#457127",
                   "&:hover": { backgroundColor: "#365a1e" },

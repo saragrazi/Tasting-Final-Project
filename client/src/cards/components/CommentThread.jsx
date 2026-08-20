@@ -31,12 +31,22 @@ const CommentThread = ({ comment, replies, card, user, onReply, onDelete }) => {
   const [replyOpen, setReplyOpen] = useState(false);
   const [replyText, setReplyText] = useState("");
   const [isSubmittingReply, setIsSubmittingReply] = useState(false);
+  const [deletingCommentId, setDeletingCommentId] = useState(null);
   const { isDark } = useTheme();
 
   const recipeOwnerId = String(card.user_id);
   const commentAuthorId = String(comment.user_id);
   const canReply = Boolean(user);
   const isAdmin = Boolean(user?.isAdmin);
+
+  const handleDeleteComment = async (commentId) => {
+    setDeletingCommentId(commentId);
+    try {
+      await onDelete(commentId);
+    } finally {
+      setDeletingCommentId(null);
+    }
+  };
 
   const handleSubmitReply = async (event) => {
     event.preventDefault();
@@ -59,7 +69,8 @@ const CommentThread = ({ comment, replies, card, user, onReply, onDelete }) => {
           <IconButton
             size="small"
             title="מחק תגובה"
-            onClick={() => onDelete(comment._id)}
+            onClick={() => handleDeleteComment(comment._id)}
+            disabled={deletingCommentId === comment._id}
             sx={{ color: "#d06b6b" }}
           >
             <DeleteOutlineIcon fontSize="small" />
@@ -112,7 +123,8 @@ const CommentThread = ({ comment, replies, card, user, onReply, onDelete }) => {
                   <IconButton
                     size="small"
                     title="מחק תגובה"
-                    onClick={() => onDelete(reply._id)}
+                    onClick={() => handleDeleteComment(reply._id)}
+                    disabled={deletingCommentId === reply._id}
                     sx={{ color: "#d06b6b" }}
                   >
                     <DeleteOutlineIcon fontSize="small" />

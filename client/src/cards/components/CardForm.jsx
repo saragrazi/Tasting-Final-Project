@@ -25,7 +25,7 @@ const CardForm = ({
   pending,
 }) => {
   const { user } = useUser();
-  const { handleBecomeBusiness } = useUsers();
+  const { handleBecomeBusiness, businessPending } = useUsers();
   const isBusiness = Boolean(user?.isBusiness);
 
   useEffect(() => {
@@ -74,6 +74,7 @@ const CardForm = ({
               color="primary"
               sx={{ mt: 1 }}
               onClick={handleBecomeBusiness}
+              disabled={businessPending}
             >
               הפוך לעסקי - ללא עלות
             </Button>
@@ -218,10 +219,14 @@ const CardForm = ({
               }}
             />
           }
-          label={<Typography variant="body2">אני מאשר/ת כי התוכן והתמונות שהעליתי הם שלי, או שיש לי רשות להשתמש בהם, וכי העלאת התוכן אינה מפרה זכויות של צד שלישי.</Typography>}
+          label={
+            <Typography variant="caption" sx={{ fontSize: "0.65rem", lineHeight: 1.3 }}>
+              אני מאשר/ת כי התוכן והתמונות שהעליתי הם שלי או שיש לי רשות להשתמש בהם, וכי פרסומם אינו מפר זכויות של אחרים. ניתן להיעזר במתכונים קיימים כהשראה, אך אין להעתיק תוכן או תמונות.
+            </Typography>
+          }
         />
         {errors.contentPolicyAccepted && (
-          <Typography variant="caption" color="error" display="block">
+          <Typography variant="caption" color="error" dir="rtl" sx={{ display: "block", textAlign: "right" }}>
             {errors.contentPolicyAccepted}
           </Typography>
         )}

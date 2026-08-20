@@ -41,6 +41,7 @@ const CardDetailsPage = () => {
   const [commentText, setCommentText] = useState('');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+  const [isSubmittingRating, setIsSubmittingRating] = useState(false);
   const [initializing, setInitializing] = useState(true);
   const [reportConfirmOpen, setReportConfirmOpen] = useState(false);
 
@@ -65,8 +66,13 @@ const CardDetailsPage = () => {
   const handleSubmitRating = async (event) => {
     event.preventDefault();
     if (!user || isOwner || !rating) return;
-    await handleAddRating(id, rating);
-    setRating(0);
+    setIsSubmittingRating(true);
+    try {
+      await handleAddRating(id, rating);
+      setRating(0);
+    } finally {
+      setIsSubmittingRating(false);
+    }
   };
 
   const handleSubmitComment = async (event) => {
@@ -438,10 +444,10 @@ const CardDetailsPage = () => {
                       type="submit"
                       size="small"
                       variant="contained"
-                      disabled={!rating}
+                      disabled={!rating || isSubmittingRating}
                       sx={{ backgroundColor: '#d06b6b', '&:hover': { backgroundColor: '#b5585a' } }}
                     >
-                      שלח דירוג
+                      {isSubmittingRating ? <CircularProgress size={18} color="inherit" /> : 'שלח דירוג'}
                     </Button>
                   </Box>
                 )

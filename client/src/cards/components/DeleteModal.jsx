@@ -1,9 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTheme } from '../../providers/ThemeProvider';
 
 export default function DeleteModal({ isOpen, onClose, onConfirm, title, message, confirmLabel }) {
   const { isDark } = useTheme();
+  const [isConfirming, setIsConfirming] = useState(false);
   if (!isOpen) return null;
+
+  const handleConfirm = async () => {
+    setIsConfirming(true);
+    try {
+      await onConfirm();
+    } finally {
+      setIsConfirming(false);
+    }
+  };
 
   return (
     <div style={{
@@ -21,15 +31,24 @@ export default function DeleteModal({ isOpen, onClose, onConfirm, title, message
         <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', marginTop: '20px' }}>
           <button
             onClick={onClose}
+            disabled={isConfirming}
             style={{
-              padding: '8px 16px', borderRadius: '4px', cursor: 'pointer',
+              padding: '8px 16px', borderRadius: '4px', cursor: isConfirming ? 'default' : 'pointer',
               backgroundColor: isDark ? '#444' : '#eee', color: isDark ? '#f0f0f0' : '#000', border: 'none',
+              opacity: isConfirming ? 0.6 : 1,
             }}
           >
             ביטול
           </button>
-          <button onClick={onConfirm} style={{ padding: '8px 16px', borderRadius: '4px', backgroundColor: '#e53e3e', color: '#fff', border: 'none', cursor: 'pointer' }}>
-            {confirmLabel || "מחיקה"}
+          <button
+            onClick={handleConfirm}
+            disabled={isConfirming}
+            style={{
+              padding: '8px 16px', borderRadius: '4px', backgroundColor: '#e53e3e', color: '#fff', border: 'none',
+              cursor: isConfirming ? 'default' : 'pointer', opacity: isConfirming ? 0.7 : 1,
+            }}
+          >
+            {isConfirming ? "מבצע..." : (confirmLabel || "מחיקה")}
           </button>
         </div>
       </div>
