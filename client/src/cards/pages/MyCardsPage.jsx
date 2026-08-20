@@ -106,12 +106,14 @@ const MyCardsPage = () => {
         )}
       </Box>
       <Fab
+        variant="extended"
         onClick={() => navigate(ROUTES.CREATE_CARD)}
         color="primary"
         aria-label="הוסף מתכון"
         sx={{ position: "absolute", bottom: 75, left: 15 }}
       >
-        <AddIcon />
+        <AddIcon sx={{ ml: 1 }} />
+        הוסף מתכון
       </Fab>
       {viewType === 'table' && (
         <Suspense fallback={<Spinner height="20vh" />}>
