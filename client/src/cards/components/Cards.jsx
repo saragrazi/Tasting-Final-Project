@@ -3,7 +3,6 @@ import React from "react";
 import CardComponent from "./card/Card";
 import { arrayOf } from "prop-types";
 import cardType from "../models/types/cardType";
-import DeleteModal from "./DeleteModal";
 
 
 const Cards = ({ cards,setCards,removeCard }) => {

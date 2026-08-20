@@ -56,8 +56,7 @@ const UserProfilePage = () => {
       }
     };
     getAdnSetUserData();
-        // eslint-disable-next-line
-
+    // eslint-disable-next-line
   }, []);
 
   return (
