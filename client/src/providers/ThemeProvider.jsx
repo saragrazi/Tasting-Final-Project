@@ -5,6 +5,7 @@ React, {
     createContext,
     useCallback,
     useContext,
+    useEffect,
     useMemo,
     useState
 } from 'react'
@@ -18,6 +19,10 @@ export const ThemeProvider = ({ children }) => {
         () => setIsDark(prev => !prev),
         [setIsDark]
     );
+
+    useEffect(() => {
+        document.body.style.backgroundColor = isDark ? '#333333' : '#fafafa';
+    }, [isDark]);
 
     const theme = createTheme({
         direction: 'rtl',
