@@ -69,7 +69,7 @@ const MenuComponent = ({ isOpen, anchorEl, onClose }) => {
             ></MenuLink>
             {user.isAdmin && (
               <MenuLink
-                text="ניהול משתמשים"
+                text="ניהול"
                 navigateTo={ROUTES.USERS_MANAGEMENT}
                 onClick={onClose}
                 styles={{ display: { xs: "block", md: "none" } }}

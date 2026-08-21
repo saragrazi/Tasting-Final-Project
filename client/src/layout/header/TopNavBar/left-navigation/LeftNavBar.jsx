@@ -16,7 +16,7 @@ const LeftNavBar = () => {
         <NavItem label="המתכונים שלי" to={ROUTES.MY_CARDS} />
         <NavItem label="המועדפים שלי" to={ROUTES.FAV_CARDS} />
         {user && user.isAdmin && (
-          <NavItem label="ניהול משתמשים" to={ROUTES.USERS_MANAGEMENT} />
+          <NavItem label="ניהול" to={ROUTES.USERS_MANAGEMENT} />
         )}
       </Box>
     </Box>

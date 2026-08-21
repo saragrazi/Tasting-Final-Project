@@ -10,7 +10,7 @@ const ROUTES = {
     USER_PROFILE: "/user-profile",
     CREATE_CARD: "/create-card",
     EDIT_CARD: "/edit-card",
-    USERS_MANAGEMENT: "/users-management",
+    USERS_MANAGEMENT: "/management",
     TERMS: "/terms",
 };
 

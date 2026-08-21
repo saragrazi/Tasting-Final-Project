@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Container,
   Box,
@@ -11,43 +11,47 @@ import {
   Tabs,
   Tab,
 } from "@mui/material";
-import PageHeader from "../../components/PageHeader";
 import Spinner from "../../components/Spinner";
 import { useUser } from "../providers/UserProvider";
 import { useTheme } from "../../providers/ThemeProvider";
 import useUsers from "../hooks/useUsers";
 import { getCards } from "../../cards/services/cardService";
-import ROUTES from "../../routes/routesModel";
+import { getContactMessages } from "../../contact/services/contactService";
 import DeleteModal from "../../cards/components/DeleteModal";
 import { getCardPath } from "../../cards/helpers/cardUrl";
 import ContactMessagesAdminPanel from "../../contact/components/ContactMessagesAdminPanel";
 import ReportsAdminPanel from "../../cards/components/ReportsAdminPanel";
+import ErrorPage from "../../pages/ErrorPage";
 
 const UsersManagementPage = () => {
   const { user } = useUser();
   const { isDark } = useTheme();
+  const isAdmin = Boolean(user?.isAdmin);
   const { users, pending, handleGetUsers, handleBlockUser, handleDeleteUser, blockingUserId } = useUsers();
   const [cards, setCards] = useState([]);
+  const [contactCount, setContactCount] = useState(null);
   const [userIdToDelete, setUserIdToDelete] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isAdmin) return;
     handleGetUsers();
     getCards().then(setCards).catch(() => setCards([]));
+    getContactMessages().then((messages) => setContactCount(messages.length)).catch(() => setContactCount(0));
     // eslint-disable-next-line
-  }, []);
+  }, [isAdmin]);
 
-  if (!user || !user.isAdmin) return <Navigate replace to={ROUTES.CARDS} />;
+  if (!user || !isAdmin) return <ErrorPage />;
 
   const cardsByUser = (userId) => cards.filter((card) => String(card.user_id) === String(userId));
+  const reportsCount = cards.reduce((count, card) => count + (card.reports?.length || 0), 0);
 
   return (
     <Container sx={{ direction: "rtl", textAlign: "right", minHeight: "80vh" }}>
-      <PageHeader
-        title="ניהול משתמשים"
-        subtitle={`צפייה בכל המשתמשים, המתכונים שלהם, וחסימת משתמשים${users ? ` (סה"כ ${users.length} משתמשים)` : ""}`}
-      />
+      <Typography variant="h4" sx={{ fontWeight: 700, textAlign: "center", my: 3 }}>
+        ניהול
+      </Typography>
 
       <Tabs
         value={activeTab}
@@ -56,9 +60,9 @@ const UsersManagementPage = () => {
         textColor="inherit"
         TabIndicatorProps={{ style: { backgroundColor: "#d06b6b" } }}
       >
-        <Tab label="משתמשים" />
-        <Tab label="פניות" />
-        <Tab label="דיווחים" />
+        <Tab label={`משתמשים${users ? ` (${users.length})` : ""}`} />
+        <Tab label={`פניות${contactCount !== null ? ` (${contactCount})` : ""}`} />
+        <Tab label={`דיווחים (${reportsCount})`} />
       </Tabs>
 
       {activeTab === 1 && <ContactMessagesAdminPanel />}
