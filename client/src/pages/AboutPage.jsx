@@ -9,6 +9,7 @@ import StarRateIcon from "@mui/icons-material/StarRate";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import ROUTES from "../routes/routesModel";
+import { useUser } from "../users/providers/UserProvider";
 
 const SectionTitle = ({ icon, children }) => (
   <Box sx={{ mt: 3, mb: 1, display: "flex", alignItems: "center", gap: 1, fontWeight: "bold" }}>
@@ -19,6 +20,7 @@ const SectionTitle = ({ icon, children }) => (
 
 const AboutPage = () => {
   const navigate = useNavigate();
+  const { user } = useUser();
   return (
     <Container maxWidth="lg" sx={{ direction: "rtl", textAlign: "right" }}>
       <PageHeader
@@ -85,35 +87,37 @@ const AboutPage = () => {
             והסכים להם.
           </Typography>
 
-          <Box
-            sx={{
-              mt: 3,
-              p: 2,
-              borderRadius: 1,
-              backgroundColor: "rgba(208,107,107,0.08)",
-              textAlign: "center",
-            }}
-          >
-            <Typography sx={{ mb: 2 }}>
-              עדיין לא איתנו? מחכים לכם!
-            </Typography>
-            <Box display="flex" justifyContent="center" gap={2}>
-              <Button
-                variant="contained"
-                sx={{ backgroundColor: "#d06b6b", "&:hover": { backgroundColor: "#b5585a" } }}
-                onClick={() => navigate(ROUTES.LOGIN)}
-              >
-                התחברות
-              </Button>
-              <Button
-                variant="outlined"
-                sx={{ color: "#d06b6b", borderColor: "#d06b6b" }}
-                onClick={() => navigate(ROUTES.SIGNUP)}
-              >
-                הרשמה
-              </Button>
+          {!user && (
+            <Box
+              sx={{
+                mt: 3,
+                p: 2,
+                borderRadius: 1,
+                backgroundColor: "rgba(208,107,107,0.08)",
+                textAlign: "center",
+              }}
+            >
+              <Typography sx={{ mb: 2 }}>
+                עדיין לא איתנו? מחכים לכם!
+              </Typography>
+              <Box display="flex" justifyContent="center" gap={2}>
+                <Button
+                  variant="contained"
+                  sx={{ backgroundColor: "#d06b6b", "&:hover": { backgroundColor: "#b5585a" } }}
+                  onClick={() => navigate(ROUTES.LOGIN)}
+                >
+                  התחברות
+                </Button>
+                <Button
+                  variant="outlined"
+                  sx={{ color: "#d06b6b", borderColor: "#d06b6b" }}
+                  onClick={() => navigate(ROUTES.SIGNUP)}
+                >
+                  הרשמה
+                </Button>
+              </Box>
             </Box>
-          </Box>
+          )}
         </Grid>
         <Grid
           item
