@@ -115,8 +115,8 @@ const MyCardsPage = () => {
             ? { position: "fixed", bottom: 95, left: "50%", transform: "translateX(-50%)" }
             : {
                 position: "fixed",
-                bottom: 130,
-                left: 25,
+                bottom: 150,
+                left: 60,
                 minHeight: 64,
                 padding: "0 28px",
                 fontSize: "1.05rem",
