@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import formatPrepTime from "../../cards/helpers/formatPrepTime";
 import { getCardPath } from "../../cards/helpers/cardUrl";
+import { getCategoryLabel } from "../../cards/models/categoryOptions";
 
 const columnAlign = { headerAlign: "center", align: "right" };
 
@@ -72,7 +73,7 @@ const useTableCreator = (cards) => {
       id: card._id,
       title: card.title,
       subtitle: card.subtitle,
-      category: card.category,
+      category: getCategoryLabel(card.category),
       image: card.images?.[0]?.url || card.image?.url,
       rating: card.averageRating || 0,
       prepTime: card.prepTime,

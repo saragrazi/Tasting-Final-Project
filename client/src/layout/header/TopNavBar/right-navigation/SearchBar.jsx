@@ -11,6 +11,7 @@ import { useTheme } from "../../../../providers/ThemeProvider";
 import { searchContext } from "../../../../providers/SearchProvider";
 import { useUser } from "../../../../users/providers/UserProvider";
 import { useLocation } from "react-router-dom";
+import { getCategoryLabel } from "../../../../cards/models/categoryOptions";
 
 const SearchBar = () => {
   const location = useLocation();
@@ -41,7 +42,7 @@ const SearchBar = () => {
 
   const getPlaceholder = (pathname) => {
     if (isMobile) return "חפש";
-    if (category) return `חפש בקטגוריית "${category}"`;
+    if (category) return `חפש בקטגוריית "${getCategoryLabel(category)}"`;
     if (pathname === "/my-cards") return "חפש במתכונים שלי";
     if (pathname === "/favorites") return "חפש במועדפים שלי";
     return "חפש מתכונים";

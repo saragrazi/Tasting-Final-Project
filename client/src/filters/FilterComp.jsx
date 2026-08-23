@@ -1,5 +1,6 @@
 import { FormControl, InputLabel, MenuItem,Select } from "@mui/material"
 import CategoryIcon from '@mui/icons-material/Category';
+import CATEGORY_OPTIONS from "../cards/models/categoryOptions";
 
 import { memo } from "react"
 
@@ -19,14 +20,11 @@ const FilterComp = ({handleOnChange, sortBy}) => {
                 onChange={handleOnChange}
             >
                 <MenuItem value={""}>כל המתכונים</MenuItem>
-                <MenuItem value={"ארוחות בשר"}>ארוחות בשר</MenuItem>
-                <MenuItem value={"ארוחות חלביות"}>ארוחות חלביות</MenuItem>
-                <MenuItem value={"דגים"}>דגים</MenuItem>
-                <MenuItem value={"סלטים"}>סלטים</MenuItem>
-                <MenuItem value={"קינוחים"}>קינוחים</MenuItem>
-                <MenuItem value={"עוגות ועוגיות"}>עוגות ועוגיות</MenuItem>
-                <MenuItem value={"פשטידות"}>פשטידות</MenuItem>
-                <MenuItem value={"לחמים"}>לחמים</MenuItem>
+                {CATEGORY_OPTIONS.map((option) => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
 
             </Select>
         </FormControl>

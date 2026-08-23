@@ -12,16 +12,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PersonIcon from "@mui/icons-material/Person";
 import cardType from "../../models/types/cardType";
 import formatPrepTime from "../../helpers/formatPrepTime";
-
-const categoryLabels = {
-  "ארוחות בשר": "ארוחות בשר",
-  "ארוחות חלביות": "ארוחות חלביות",
-  "דגים": "דגים",
-  "סלטים": "סלטים",
-  "קינוחים": "קינוחים",
-  "עוגות ועוגיות": "עוגות ועוגיות",
-  "פשטידות": "פשטידות",
-};
+import { getCategoryLabel } from "../../models/categoryOptions";
 
 const clampSx = {
   display: "-webkit-box",
@@ -56,7 +47,7 @@ const CardBody = ({ card }) => {
         {ratingCount > 0 ? `דורג על ידי ${ratingCount} ${ratingCount === 1 ? "משתמש" : "משתמשים"}` : "עדיין לא דורג"}
       </Typography>
       <Typography color="text.secondary" variant="caption" sx={{ display: "block", textAlign: "right", mb: 1 }}>
-        קטגוריה: {categoryLabels[card.category] || card.category}
+        קטגוריה: {getCategoryLabel(card.category)}
       </Typography>
       {Boolean(card.prepTime) && (
         <Box display="flex" justifyContent="flex-start" alignItems="center" gap={0.5} mb={1}>

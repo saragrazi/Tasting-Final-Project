@@ -8,6 +8,7 @@ import usePaginatedCards from '../hooks/usePaginatedCards';
 import { getCardsBrowse } from '../services/cardService';
 import { searchContext } from '../../providers/SearchProvider';
 import FilterComp from '../../filters/FilterComp';
+import { getCategoryLabel } from '../models/categoryOptions';
 import { Box, Button, IconButton, Tooltip, useMediaQuery, useTheme } from '@mui/material';
 import DataTable, { preloadCardsTable } from '../../table/components/LazyCardsTable';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -52,10 +53,10 @@ const CardsPage = () => {
   const getEmptyMessage = () => {
     if (searchQuery) {
       return sortBy
-        ? `לא נמצאו מתכונים בקטגוריית "${sortBy}" התואמים לחיפוש "${searchQuery}".`
+        ? `לא נמצאו מתכונים בקטגוריית "${getCategoryLabel(sortBy)}" התואמים לחיפוש "${searchQuery}".`
         : `לא נמצאו מתכונים התואמים לחיפוש "${searchQuery}".`;
     }
-    if (sortBy) return `אין עדיין מתכונים בקטגוריית "${sortBy}".`;
+    if (sortBy) return `אין עדיין מתכונים בקטגוריית "${getCategoryLabel(sortBy)}".`;
     return "עדיין אין מתכונים באתר.";
   };
 

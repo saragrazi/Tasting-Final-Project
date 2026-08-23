@@ -11,6 +11,7 @@ import CardsFeedback from "../components/CardsFeedback";
 import Spinner from "../../components/Spinner";
 import { searchContext } from "../../providers/SearchProvider";
 import FilterComp from "../../filters/FilterComp";
+import { getCategoryLabel } from "../models/categoryOptions";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableRowsIcon from '@mui/icons-material/TableRows';
 import CardsTable, { preloadCardsTable } from "../../table/components/LazyCardsTable";
@@ -51,10 +52,10 @@ const MyCardsPage = () => {
   const getEmptyMessage = () => {
     if (searchQuery) {
       return sortBy
-        ? `לא נמצאו מתכונים שלך בקטגוריית "${sortBy}" התואמים לחיפוש "${searchQuery}".`
+        ? `לא נמצאו מתכונים שלך בקטגוריית "${getCategoryLabel(sortBy)}" התואמים לחיפוש "${searchQuery}".`
         : `לא נמצאו מתכונים שלך התואמים לחיפוש "${searchQuery}".`;
     }
-    if (sortBy) return `אין לך עדיין מתכונים בקטגוריית "${sortBy}".`;
+    if (sortBy) return `אין לך עדיין מתכונים בקטגוריית "${getCategoryLabel(sortBy)}".`;
     return "עדיין לא הוספת מתכונים. לחצו על + כדי להוסיף את המתכון הראשון שלכם!";
   };
 

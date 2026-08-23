@@ -10,6 +10,7 @@ import CardsFeedback from "../components/CardsFeedback";
 import Spinner from "../../components/Spinner";
 import { searchContext } from "../../providers/SearchProvider";
 import FilterComp from "../../filters/FilterComp";
+import { getCategoryLabel } from "../models/categoryOptions";
 import CardsTable, { preloadCardsTable } from "../../table/components/LazyCardsTable";
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import TableRowsIcon from '@mui/icons-material/TableRows';
@@ -50,10 +51,10 @@ const MyFavoriteCards = () => {
   const getEmptyMessage = () => {
     if (searchQuery) {
       return sortBy
-        ? `לא נמצאו מועדפים בקטגוריית "${sortBy}" התואמים לחיפוש "${searchQuery}".`
+        ? `לא נמצאו מועדפים בקטגוריית "${getCategoryLabel(sortBy)}" התואמים לחיפוש "${searchQuery}".`
         : `לא נמצאו מועדפים התואמים לחיפוש "${searchQuery}".`;
     }
-    if (sortBy) return `אין לך מועדפים בקטגוריית "${sortBy}".`;
+    if (sortBy) return `אין לך מועדפים בקטגוריית "${getCategoryLabel(sortBy)}".`;
     return "עדיין אין לך מתכונים מועדפים. סמנו מתכונים שאהבתם כדי לראות אותם כאן.";
   };
 
