@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { array, bool, func, number } from "prop-types";
-import { Box, IconButton, LinearProgress, Modal, Backdrop, Typography } from "@mui/material";
+import { array, func } from "prop-types";
+import { Box, IconButton, Modal, Backdrop, Typography } from "@mui/material";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -50,7 +50,7 @@ const Tile = ({ src, onRemove, onView }) => (
   </Box>
 );
 
-const RecipeImagesInput = ({ currentImages, onCurrentImagesChange, newImages, onNewImagesChange, pending, uploadProgress }) => {
+const RecipeImagesInput = ({ currentImages, onCurrentImagesChange, newImages, onNewImagesChange }) => {
   const inputRef = useRef(null);
   const [viewingSrc, setViewingSrc] = useState(null);
 
@@ -142,24 +142,6 @@ const RecipeImagesInput = ({ currentImages, onCurrentImagesChange, newImages, on
         אם לא תעלו תמונה, תוצג תמונת ברירת מחדל.
       </Typography>
 
-      {pending && (
-        <Box sx={{ mt: 1.5, width: "100%" }}>
-          <LinearProgress
-            variant="determinate"
-            value={uploadProgress}
-            sx={{
-              height: 8,
-              borderRadius: 4,
-              backgroundColor: "rgba(208,107,107,0.15)",
-              "& .MuiLinearProgress-bar": { backgroundColor: THEME_COLOR, borderRadius: 4 },
-            }}
-          />
-          <Typography variant="caption" color="text.secondary" sx={{ display: "block", mt: 0.5, textAlign: "center" }}>
-            {uploadProgress < 100 ? `מעלה תמונות... ${uploadProgress}%` : "שומר את המתכון..."}
-          </Typography>
-        </Box>
-      )}
-
       <Modal
         open={Boolean(viewingSrc)}
         onClose={() => setViewingSrc(null)}
@@ -215,16 +197,12 @@ RecipeImagesInput.propTypes = {
   onCurrentImagesChange: func,
   newImages: array,
   onNewImagesChange: func.isRequired,
-  pending: bool,
-  uploadProgress: number,
 };
 
 RecipeImagesInput.defaultProps = {
   currentImages: [],
   onCurrentImagesChange: () => {},
   newImages: [],
-  pending: false,
-  uploadProgress: 0,
 };
 
 export default RecipeImagesInput;

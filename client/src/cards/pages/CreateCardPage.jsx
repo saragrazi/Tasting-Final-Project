@@ -10,7 +10,7 @@ import CardForm from "../components/CardForm";
 import { cardSchema } from "../models/joi-schema/cardSchema";
 
 const CreateCardPage = () => {
-  const { handleCreateCard, uploadProgress } = useCards();
+  const { handleCreateCard } = useCards();
   const { user } = useUser();
   const [newImages, setNewImages] = useState([]);
 
@@ -49,7 +49,6 @@ const CreateCardPage = () => {
         pending={rest.pending}
         newImages={newImages}
         onNewImagesChange={setNewImages}
-        uploadProgress={uploadProgress}
       />
     </Container>
   );

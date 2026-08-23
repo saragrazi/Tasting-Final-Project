@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { func, object, string, bool, array, number } from "prop-types";
+import { func, object, string, bool, array } from "prop-types";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
 import DynamicListInput from "../../forms/components/DynamicListInput";
@@ -7,6 +7,7 @@ import IngredientListInput from "../../forms/components/IngredientListInput";
 import { FormControl, FormControlLabel, Checkbox, FormLabel, Grid, InputLabel, MenuItem, Select, Typography, Box, Button } from "@mui/material";
 import RecipeImagesInput from "./RecipeImagesInput";
 import MEASURING_CUP_OPTIONS from "../models/measuringCupOptions";
+import CATEGORY_OPTIONS from "../models/categoryOptions";
 import { useUser } from "../../users/providers/UserProvider";
 import useUsers from "../../users/hooks/useUsers";
 
@@ -26,7 +27,6 @@ const CardForm = ({
   onCurrentImagesChange,
   newImages,
   onNewImagesChange,
-  uploadProgress,
 }) => {
   const { user } = useUser();
   const { handleBecomeBusiness, businessPending } = useUsers();
@@ -164,14 +164,11 @@ const CardForm = ({
             value={data?.category ? data?.category : ""}
             name="category"
           >
-            <MenuItem value={"ארוחות בשר"}>ארוחות בשר</MenuItem>
-            <MenuItem value={"ארוחות חלביות"}>ארוחות חלביות</MenuItem>
-            <MenuItem value={"דגים"}>דגים</MenuItem>
-            <MenuItem value={"סלטים"}>סלטים</MenuItem>
-            <MenuItem value={"קינוחים"}>קינוחים</MenuItem>
-            <MenuItem value={"עוגות ועוגיות"}>עוגות ועוגיות</MenuItem>
-            <MenuItem value={"פשטידות"}>פשטידות</MenuItem>
-            <MenuItem value={"לחמים"}>לחמים</MenuItem>
+            {CATEGORY_OPTIONS.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -211,8 +208,6 @@ const CardForm = ({
             onCurrentImagesChange={onCurrentImagesChange}
             newImages={newImages}
             onNewImagesChange={onNewImagesChange}
-            pending={pending}
-            uploadProgress={uploadProgress}
           />
         </FormControl>
       </Grid>
@@ -268,7 +263,6 @@ CardForm.propTypes = {
   onCurrentImagesChange: func,
   newImages: array,
   onNewImagesChange: func,
-  uploadProgress: number,
 };
 
 CardForm.defaultProps = {
@@ -277,7 +271,6 @@ CardForm.defaultProps = {
   onCurrentImagesChange: () => {},
   newImages: [],
   onNewImagesChange: () => {},
-  uploadProgress: 0,
 };
 
 export default React.memo(CardForm);

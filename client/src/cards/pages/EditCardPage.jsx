@@ -12,7 +12,7 @@ import { getCard } from "../services/cardService";
 
 // eslint-disable-next-line
 const EditCardPage = () => {
-  const { handleUpdateCard, setCardId, uploadProgress } = useCards();
+  const { handleUpdateCard, setCardId } = useCards();
   const params = useParams()
   // eslint-disable-next-line
   const { user } = useUser();
@@ -91,7 +91,6 @@ const EditCardPage = () => {
         onCurrentImagesChange={setExistingImages}
         newImages={newImages}
         onNewImagesChange={setNewImages}
-        uploadProgress={uploadProgress}
       />
     </Container>
   );
