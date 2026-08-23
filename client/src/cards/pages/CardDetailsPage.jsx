@@ -25,7 +25,7 @@ import { commentSchema } from '../models/joi-schema/commentSchema';
 import { validateOptions } from '../../forms/utils/joiValidationOptions';
 import ROUTES from '../../routes/routesModel';
 
-const CONTENT_MAX_WIDTH = 480;
+const CONTENT_MAX_WIDTH = 900;
 
 const commentTextSchema = Joi.object({ text: commentSchema.text });
 
@@ -166,7 +166,15 @@ const CardDetailsPage = () => {
   }
 
   return (
-    <Container maxWidth="md" sx={{ direction: 'rtl', textAlign: 'right' }}>
+    <Container
+      maxWidth="lg"
+      sx={{
+        direction: 'rtl',
+        textAlign: 'right',
+        '& .MuiTypography-body1, & .MuiTypography-body2': { fontSize: '1.05rem' },
+        '& .MuiTypography-caption': { fontSize: '0.85rem' },
+      }}
+    >
       <Container
         maxWidth={false}
         sx={{

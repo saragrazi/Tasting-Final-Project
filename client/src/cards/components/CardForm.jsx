@@ -45,7 +45,16 @@ const CardForm = ({
       onReset={onReset}
       errors={errors}
       onChange={onFormChange}
-      styles={{ maxWidth: "480px", display: "flex", flexDirection: "column", direction: "rtl", textAlign: "right" }}
+      styles={{
+        maxWidth: "900px",
+        display: "flex",
+        flexDirection: "column",
+        direction: "rtl",
+        textAlign: "right",
+        "& .MuiInputBase-input, & .MuiInputLabel-root, & .MuiTypography-body1, & .MuiTypography-body2": {
+          fontSize: "1.05rem",
+        },
+      }}
       title={title}
       pending={pending}
       spacing={3}
