@@ -274,7 +274,7 @@ const CardDetailsPage = () => {
             alignItems="flex-start"
           >
             {/* תאור קצר */}
-            <Typography sx={{ textShadow: '1px 1px 1px black' }} mb={1} variant="h5">
+            <Typography sx={{ textShadow: '1px 1px 1px black', textAlign: 'center', width: '100%' }} mb={1} variant="h5">
               {card?.subtitle}
             </Typography>
 
