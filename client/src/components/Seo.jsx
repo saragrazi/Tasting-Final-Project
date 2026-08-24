@@ -3,13 +3,15 @@ import { Helmet } from "react-helmet-async";
 import { string, object, oneOfType, arrayOf, bool } from "prop-types";
 import {
   SITE_NAME,
+  BRAND_SUFFIX,
+  DEFAULT_TITLE,
   DEFAULT_DESCRIPTION,
   DEFAULT_IMAGE,
   absoluteUrl,
 } from "../config/seoConfig";
 
 const Seo = ({ title, description, path, image, jsonLd, noindex }) => {
-  const fullTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME;
+  const fullTitle = title ? `${title} | ${BRAND_SUFFIX}` : DEFAULT_TITLE;
   const metaDescription = description || DEFAULT_DESCRIPTION;
   const canonicalUrl = absoluteUrl(path || "");
   const ogImage = image || DEFAULT_IMAGE;
