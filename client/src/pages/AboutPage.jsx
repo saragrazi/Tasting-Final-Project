@@ -31,14 +31,14 @@ const AboutPage = () => {
       />
       <PageHeader
         title="אודות"
-        subtitle="כל מה שרציתם לדעת על Tasting - טייסטינג"
+        subtitle="כל מה שרציתם לדעת על Tasting - טעימה"
       />
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} alignItems="center" sx={{ direction: "rtl", textAlign: "right" }}>
           <Typography className="welcome" align="right" paragraph>
-            ברוכים הבאים לטייסטינג (Tasting) - מקום קטן וחמים לכל מי שאוהב אוכל וטעימה. בין אם אתם
-            מבשלים, סתם מסתכלים, או מחפשים רעיון לארוחה הערב - תרגישו בבית. אין כאן מילים מסובכות, רק
+            ברוכים הבאים ל-Tasting - טעימה - מקום קטן וחמים לכל מי שאוהב אוכל. בין אם אתם מבשלים,
+            סתם מסתכלים, או מחפשים רעיון לארוחה הערב - תרגישו בבית. אין כאן מילים מסובכות, רק
             מתכונים טובים ואנשים שאוהבים לבשל.
           </Typography>
 
