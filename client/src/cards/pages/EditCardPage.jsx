@@ -9,6 +9,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { Container } from "@mui/material";
 import CardForm from "../components/CardForm";
 import { getCard } from "../services/cardService";
+import Seo from "../../components/Seo";
 
 // eslint-disable-next-line
 const EditCardPage = () => {
@@ -76,6 +77,7 @@ const EditCardPage = () => {
         direction: "rtl",
       }}
     >
+      <Seo title="עריכת מתכון" path={`${ROUTES.EDIT_CARD}/${params.id}`} noindex />
       <CardForm
         multiline={false}
         title="ערוך מתכון"

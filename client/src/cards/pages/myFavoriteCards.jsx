@@ -2,6 +2,7 @@ import React, { Suspense, useCallback, useContext, useEffect, useState } from "r
 import { useUser } from "../../users/providers/UserProvider";
 import usePaginatedCards from "../hooks/usePaginatedCards";
 import { getMyFavoriteCardsBrowse } from "../services/cardService";
+import Seo from "../../components/Seo";
 import PageHeader from "../../components/PageHeader";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/routesModel";
@@ -61,6 +62,7 @@ const MyFavoriteCards = () => {
   if (!user) {
     return (
       <Container sx={{ minHeight: "90vh", direction: "rtl" }}>
+        <Seo title="המועדפים שלי" path={ROUTES.FAV_CARDS} noindex />
         <PageHeader title="המועדפים שלי" textAlign={"center"} />
         <Box display="flex" flexDirection="column" alignItems="center" mt={4} gap={2}>
           <Typography>יש להירשם או להתחבר כדי לראות את המועדפים שלך.</Typography>
@@ -79,6 +81,7 @@ const MyFavoriteCards = () => {
 
   return (
     <Container sx={{ position: "relative", minHeight: "90vh", direction: "rtl" }}>
+      <Seo title="המועדפים שלי" path={ROUTES.FAV_CARDS} noindex />
       <PageHeader
         title="המועדפים שלי"
         textAlign={"center"}

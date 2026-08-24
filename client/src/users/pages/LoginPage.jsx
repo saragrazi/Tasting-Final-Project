@@ -15,6 +15,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import GoogleAuthButton from "../components/GoogleAuthButton";
+import Seo from "../../components/Seo";
 
 const LoginPage = () => {
   const { user } = useUser();
@@ -37,6 +38,7 @@ const LoginPage = () => {
         alignItems: "center",
         direction: "rtl",
       }}>
+      <Seo title="התחברות" path={ROUTES.LOGIN} />
       <Form
         onSubmit={rest.onSubmit}
         onReset={rest.handleReset}

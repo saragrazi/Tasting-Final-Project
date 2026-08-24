@@ -3,6 +3,8 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import PageHeader from "../components/PageHeader";
+import Seo from "../components/Seo";
+import ROUTES from "../routes/routesModel";
 import { useContactModal } from "../contact/providers/ContactModalProvider";
 
 const SectionTitle = ({ children }) => (
@@ -22,6 +24,7 @@ const TermsPage = () => {
 
   return (
     <Container maxWidth="md" sx={{ direction: "rtl", textAlign: "right", pb: 4 }}>
+      <Seo title="תנאי שימוש" path={ROUTES.TERMS} />
       <PageHeader title="תנאי שימוש – Tasting" subtitle="עדכון אחרון: אוגוסט 2026" />
 
       <Typography paragraph>

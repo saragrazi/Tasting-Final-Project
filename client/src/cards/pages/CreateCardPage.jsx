@@ -8,6 +8,7 @@ import { Navigate } from "react-router-dom";
 import { Container } from "@mui/material";
 import CardForm from "../components/CardForm";
 import { cardSchema } from "../models/joi-schema/cardSchema";
+import Seo from "../../components/Seo";
 
 const CreateCardPage = () => {
   const { handleCreateCard } = useCards();
@@ -37,6 +38,7 @@ const CreateCardPage = () => {
         direction: "rtl",
       }}
     >
+      <Seo title="יצירת מתכון חדש" path={ROUTES.CREATE_CARD} noindex />
       <CardForm
         title="צור מתכון"
         onSubmit={rest.onSubmit}

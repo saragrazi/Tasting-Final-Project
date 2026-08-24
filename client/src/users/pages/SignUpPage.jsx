@@ -8,6 +8,7 @@ import useUsers from "./../hooks/useUsers";
 import signUpSchema from "../models/joi-schema/signUpSchema";
 import UserForm from "../components/UserForm";
 import initialSignUpForm from "../helpers/initial-forms/initialSignUpForm";
+import Seo from "../../components/Seo";
 
 const SignUpPage = () => {
   const { handleSignup, handleGoogleLogin, googlePending } = useUsers();
@@ -34,6 +35,7 @@ const SignUpPage = () => {
         direction: "rtl",
       }}
     >
+      <Seo title="הרשמה" path={ROUTES.SIGNUP} />
       <UserForm
         title="הרשמה"
         onSubmit={rest.onSubmit}

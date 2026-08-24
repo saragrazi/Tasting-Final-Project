@@ -1,5 +1,7 @@
 import { Box, Button, Container, Grid, Typography } from "@mui/material";
 import PageHeader from "../../components/PageHeader";
+import Seo from "../../components/Seo";
+import ROUTES from "../../routes/routesModel";
 import { useUserProfile } from "../hooks/useUserProfile";
 import { useEffect, useState } from "react";
 import { useUser } from "../../users/providers/UserProvider";
@@ -62,6 +64,7 @@ const UserProfilePage = () => {
   return (
     <>
       <Container maxWidth="lg" sx={{ direction: "rtl", textAlign: "right" }}>
+        <Seo title="פרופיל משתמש" path={ROUTES.USER_PROFILE} noindex />
         <PageHeader
           textAlign={"center"}
           title="פרופיל משתמש"

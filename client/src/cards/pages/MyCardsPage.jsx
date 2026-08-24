@@ -2,6 +2,7 @@ import React, { Suspense, useCallback, useContext, useEffect, useState } from "r
 import { useUser } from "../../users/providers/UserProvider";
 import usePaginatedCards from "../hooks/usePaginatedCards";
 import { getMyCardsBrowse } from "../services/cardService";
+import Seo from "../../components/Seo";
 import PageHeader from "../../components/PageHeader";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../routes/routesModel";
@@ -62,6 +63,7 @@ const MyCardsPage = () => {
   if (!user) {
     return (
       <Container sx={{ minHeight: "90vh", direction: "rtl" }}>
+        <Seo title="המתכונים שלי" path={ROUTES.MY_CARDS} noindex />
         <PageHeader title="המתכונים שלי" textAlign={"center"} />
         <Box display="flex" flexDirection="column" alignItems="center" mt={4} gap={2}>
           <Typography>יש להירשם או להתחבר כדי לראות את המתכונים שלך.</Typography>
@@ -80,6 +82,7 @@ const MyCardsPage = () => {
 
   return (
     <Container sx={{ position: "relative", minHeight: "90vh", direction: "rtl" }}>
+      <Seo title="המתכונים שלי" path={ROUTES.MY_CARDS} noindex />
       <PageHeader
         title="המתכונים שלי"
         textAlign={"center"}
