@@ -1,5 +1,7 @@
 import { Container } from '@mui/system';
 import React, { Suspense, useCallback, useContext, useEffect, useState } from 'react'
+import Seo from '../../components/Seo';
+import ROUTES from '../../routes/routesModel';
 import PageHeader from '../../components/PageHeader';
 import CardsFeedback from '../components/CardsFeedback';
 import Spinner from '../../components/Spinner';
@@ -62,6 +64,11 @@ const CardsPage = () => {
 
   return (
     <Container sx={{ direction: "rtl" }}>
+      <Seo
+        title="מתכונים"
+        description="עיינו בכל המתכונים באתר Tasting - מתכונים לבישול ואפייה עם מרכיבים, שלבי הכנה ברורים ודירוגים מהקהילה."
+        path={ROUTES.CARDS}
+      />
       <PageHeader title="מתכונים" textAlign={"center"} />
       <Box display={"flex"} flexDirection={{ xs: "column", sm: "row" }} gap={2} mb={3} alignItems="center">
         <FilterComp handleOnChange={handleOnChange} sortBy={sortBy} cards={cards} />

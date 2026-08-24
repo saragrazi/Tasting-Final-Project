@@ -1,5 +1,6 @@
 import React from "react";
 import Container from "@mui/material/Container";
+import Seo from "../components/Seo";
 import PageHeader from "./../components/PageHeader";
 import Grid from "@mui/material/Grid";
 import { Typography, Box, Button, Link } from "@mui/material";
@@ -23,6 +24,11 @@ const AboutPage = () => {
   const { user } = useUser();
   return (
     <Container maxWidth="lg" sx={{ direction: "rtl", textAlign: "right" }}>
+      <Seo
+        title="אודות"
+        description="Tasting היא קהילת מתכונים לבישול ואפייה - מתכונים ברורים, דירוגים, תגובות, ואפשרות ליצור ולשתף מתכונים משלכם."
+        path={ROUTES.ABOUT}
+      />
       <PageHeader
         title="אודות"
         subtitle="כל מה שרציתם לדעת על Tasting"

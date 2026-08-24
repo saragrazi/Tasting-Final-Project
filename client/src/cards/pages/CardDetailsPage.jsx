@@ -21,6 +21,9 @@ import CommentThread from '../components/CommentThread';
 import Spinner from '../../components/Spinner';
 import DeleteModal from '../components/DeleteModal';
 import RecipeImageCarousel from '../components/RecipeImageCarousel';
+import Seo from '../../components/Seo';
+import { getCardPath } from '../helpers/cardUrl';
+import buildRecipeJsonLd from '../helpers/buildRecipeJsonLd';
 import { commentSchema } from '../models/joi-schema/commentSchema';
 import { validateOptions } from '../../forms/utils/joiValidationOptions';
 import ROUTES from '../../routes/routesModel';
@@ -118,6 +121,8 @@ const CardDetailsPage = () => {
     [card]
   );
 
+  const recipeJsonLd = useMemo(() => buildRecipeJsonLd(card), [card]);
+
   const topLevelComments = card?.comments?.filter((c) => !c.parentCommentId) || [];
   const repliesFor = (commentId) =>
     card?.comments?.filter((c) => String(c.parentCommentId) === String(commentId)) || [];
@@ -149,6 +154,7 @@ const CardDetailsPage = () => {
   if (!card) {
     return (
       <Container maxWidth="sm" sx={{ direction: 'rtl', textAlign: 'center', mt: 6 }}>
+        <Seo title="מתכון לא נמצא" noindex />
         <Typography variant="h5" sx={{ color: '#d06b6b', mb: 2 }}>
           המתכון הזה פרטי
         </Typography>
@@ -176,6 +182,14 @@ const CardDetailsPage = () => {
         '& .MuiTypography-caption': { fontSize: '0.85rem' },
       }}
     >
+      <Seo
+        title={card.title}
+        description={card.subtitle || `מתכון ל${card.title} - מרכיבים ואופן הכנה מפורט`}
+        path={getCardPath(card)}
+        image={displayImages?.[0]?.url}
+        jsonLd={recipeJsonLd}
+        noindex={card.isPrivate}
+      />
       <Container
         maxWidth={false}
         sx={{
