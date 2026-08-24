@@ -200,14 +200,13 @@ const CardDetailsPage = () => {
                 boxShadow: '1px 1px 15px 1px black',
                 borderRadius: '8px',
                 overflow: 'hidden',
-                backgroundColor: 'rgba(208,107,107,0.06)',
               }}
             >
               <RecipeImageCarousel
                 images={displayImages}
                 onImageClick={(index) => setViewingIndex(index)}
                 height="100%"
-                objectFit="contain"
+                objectFit="cover"
               />
             </Box>
           </Box>
