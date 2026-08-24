@@ -10,8 +10,9 @@ import {
   absoluteUrl,
 } from "../config/seoConfig";
 
-const Seo = ({ title, description, path, image, jsonLd, noindex }) => {
-  const fullTitle = title ? `${title} | ${BRAND_SUFFIX}` : DEFAULT_TITLE;
+const Seo = ({ title, fullTitle: fullTitleOverride, description, path, image, jsonLd, noindex }) => {
+  const fullTitle =
+    fullTitleOverride || (title ? `${title} | ${BRAND_SUFFIX}` : DEFAULT_TITLE);
   const metaDescription = description || DEFAULT_DESCRIPTION;
   const canonicalUrl = absoluteUrl(path || "");
   const ogImage = image || DEFAULT_IMAGE;
@@ -47,6 +48,7 @@ const Seo = ({ title, description, path, image, jsonLd, noindex }) => {
 
 Seo.propTypes = {
   title: string,
+  fullTitle: string,
   description: string,
   path: string,
   image: string,

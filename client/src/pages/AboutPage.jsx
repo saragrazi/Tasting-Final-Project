@@ -25,14 +25,11 @@ const AboutPage = () => {
   return (
     <Container maxWidth="lg" sx={{ direction: "rtl", textAlign: "right" }}>
       <Seo
-        title="אודות"
+        fullTitle="מתכונים טסטינג טעימה"
         description="Tasting היא קהילת מתכונים לבישול ואפייה - מתכונים ברורים, דירוגים, תגובות, ואפשרות ליצור ולשתף מתכונים משלכם."
         path={ROUTES.ABOUT}
       />
-      <PageHeader
-        title="אודות"
-        subtitle="כל מה שרציתם לדעת על Tasting - טעימה"
-      />
+      <PageHeader title="Tasting - טעימה | קהילת מתכונים לבישול ולאפייה" />
 
       <Grid container spacing={2}>
         <Grid item xs={12} md={8} alignItems="center" sx={{ direction: "rtl", textAlign: "right" }}>
