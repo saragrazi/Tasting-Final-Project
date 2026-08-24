@@ -25,7 +25,7 @@ const AboutPage = () => {
   return (
     <Container maxWidth="lg" sx={{ direction: "rtl", textAlign: "right" }}>
       <Seo
-        fullTitle="מתכונים טסטינג טעימה"
+        fullTitle="Tasting - טעימה | קהילת מתכונים לבישול ולאפייה"
         description="Tasting היא קהילת מתכונים לבישול ואפייה - מתכונים ברורים, דירוגים, תגובות, ואפשרות ליצור ולשתף מתכונים משלכם."
         path={ROUTES.ABOUT}
       />
