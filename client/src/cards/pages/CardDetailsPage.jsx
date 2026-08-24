@@ -26,6 +26,7 @@ import { validateOptions } from '../../forms/utils/joiValidationOptions';
 import ROUTES from '../../routes/routesModel';
 
 const CONTENT_MAX_WIDTH = 900;
+const IMAGE_MAX_WIDTH = 580;
 
 const commentTextSchema = Joi.object({ text: commentSchema.text });
 
@@ -109,7 +110,7 @@ const CardDetailsPage = () => {
 
   const handleReportConfirm = async () => {
     setReportConfirmOpen(false);
-    await handleReportCard(id, 'דיווח על תוכן מועתק (מתכון/תמונה) ללא רשות');
+    await handleReportCard(id, 'דיווח על תוכן לא ראוי או תוכן המפר זכויות יוצרים');
   };
 
   const displayImages = useMemo(
@@ -191,17 +192,23 @@ const CardDetailsPage = () => {
           {card?.isPrivate && (
             <Chip label="פרטי - לא לפרסום" size="small" sx={{ mb: 1, backgroundColor: '#d06b6b', color: '#fff' }} />
           )}
-          <Box position="relative" display="flex" width="100%" maxWidth={CONTENT_MAX_WIDTH} alignItems="center" justifyContent="center">
+          <Box position="relative" display="flex" width="100%" maxWidth={IMAGE_MAX_WIDTH} alignItems="center" justifyContent="center">
             <Box
               sx={{
                 width: '100%',
-                height: { xs: 220, sm: 280 },
+                height: { xs: 270, sm: 360 },
                 boxShadow: '1px 1px 15px 1px black',
                 borderRadius: '8px',
                 overflow: 'hidden',
+                backgroundColor: 'rgba(208,107,107,0.06)',
               }}
             >
-              <RecipeImageCarousel images={displayImages} onImageClick={(index) => setViewingIndex(index)} height="100%" />
+              <RecipeImageCarousel
+                images={displayImages}
+                onImageClick={(index) => setViewingIndex(index)}
+                height="100%"
+                objectFit="contain"
+              />
             </Box>
           </Box>
 
@@ -326,7 +333,7 @@ const CardDetailsPage = () => {
               onClose={() => setReportConfirmOpen(false)}
               onConfirm={handleReportConfirm}
               title="דיווח על מתכון"
-              message="לדווח על המתכון הזה כתוכן מועתק ללא רשות? הצוות שלנו יבדוק את הדיווח."
+              message="האם לדווח על המתכון כתוכן לא ראוי או תוכן המפר זכויות יוצרים?"
               confirmLabel="דיווח"
             />
 
