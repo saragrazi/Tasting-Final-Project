@@ -131,9 +131,18 @@ const MyCardsPage = () => {
         הוסף מתכון
       </Fab>
       {viewType === 'table' && (
-        <Suspense fallback={<Spinner height="20vh" />}>
-          <CardsTable cards={cards} />
-        </Suspense>
+        <Box mt={3}>
+          <Suspense fallback={<Spinner height="20vh" />}>
+            <CardsTable cards={cards} />
+          </Suspense>
+          {hasMore && !pending && (
+            <Box display="flex" justifyContent="center" mt={3}>
+              <Button variant="contained" color="primary" onClick={loadMore}>
+                טען עוד
+              </Button>
+            </Box>
+          )}
+        </Box>
       )}
       {viewType === 'cards' && (
         <Box mt={3}>
