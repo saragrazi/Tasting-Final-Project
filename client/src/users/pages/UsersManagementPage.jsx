@@ -51,7 +51,7 @@ const UsersManagementPage = () => {
 
   return (
     <Container sx={{ direction: "rtl", textAlign: "right", minHeight: "80vh" }}>
-      <Seo title="ניהול משתמשים" path={ROUTES.USERS_MANAGEMENT} noindex />
+      <Seo title="ניהול" path={ROUTES.USERS_MANAGEMENT} noindex />
       <Typography variant="h4" sx={{ fontWeight: 700, textAlign: "center", my: 3 }}>
         ניהול
       </Typography>
