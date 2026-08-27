@@ -5,6 +5,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import OndemandVideoIcon from '@mui/icons-material/OndemandVideo';
 import PersonIcon from '@mui/icons-material/Person';
 import EventIcon from '@mui/icons-material/Event';
+import EmojiObjectsIcon from '@mui/icons-material/EmojiObjects';
 import CloseIcon from '@mui/icons-material/Close';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import FlagOutlinedIcon from '@mui/icons-material/FlagOutlined';
@@ -135,6 +136,11 @@ const CardDetailsPage = () => {
     card?.authorName && {
       icon: <PersonIcon fontSize="small" sx={{ color: '#d06b6b' }} />,
       text: `נכתב על ידי: ${card.authorName}`,
+    },
+    card?.inspiredBy && {
+      icon: <EmojiObjectsIcon fontSize="small" sx={{ color: '#d06b6b' }} />,
+      text: `בהשראת: ${card.inspiredBy}`,
+      fullWidth: true,
     },
     card?.createdAt && {
       icon: <EventIcon fontSize="small" sx={{ color: '#d06b6b' }} />,

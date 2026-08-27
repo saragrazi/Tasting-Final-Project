@@ -5,6 +5,7 @@ const cardType = shape({
   _id: string.isRequired,
   title: string.isRequired,
   subtitle: string.isRequired,
+  inspiredBy: string,
   ingredients: arrayOf(object).isRequired,
   cookingSteps: string.isRequired,
   category: string.isRequired,

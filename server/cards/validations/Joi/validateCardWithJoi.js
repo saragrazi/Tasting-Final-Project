@@ -8,6 +8,7 @@ const validateCardWithJoi = card => {
   const schema = Joi.object({
     title: Joi.string().min(2).max(256).required(),
     subtitle: Joi.string().max(256).allow(""),
+    inspiredBy: Joi.string().min(2).max(256).allow(""),
     ingredients: Joi.array()
       .items(
         Joi.object({

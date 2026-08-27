@@ -116,6 +116,15 @@ const CardForm = ({
         multiline={true}
       />
       <Input
+        name="inspiredBy"
+        label="בהשראת (רשות)"
+        error={errors.inspiredBy}
+        onChange={onInputChange}
+        onBlur={onInputBlur}
+        data={data}
+        required={false}
+      />
+      <Input
         name="prepTime"
         label="זמן הכנה (בדקות)"
         type="number"

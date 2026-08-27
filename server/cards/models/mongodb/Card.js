@@ -11,6 +11,16 @@ const cardSchema = new mongoose.Schema({
     maxLength: 256,
     default: "",
   },
+  inspiredBy: {
+    type: String,
+    trim: true,
+    maxLength: 256,
+    default: "",
+    validate: {
+      validator: (value) => !value || value.trim().length >= 2,
+      message: "בהשראת חייב להכיל לפחות 2 תווים",
+    },
+  },
   category: DEFAULT_VALIDATION,
   ingredients: [
     {

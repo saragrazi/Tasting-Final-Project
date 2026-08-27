@@ -1,6 +1,7 @@
 const initialCardForm = {
     title: '',
     subtitle: '',
+    inspiredBy: '',
     ingredients: [{ name: '', quantity: 1 }],
     cookingSteps: '',
     prepTime: '',

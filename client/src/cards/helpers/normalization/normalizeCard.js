@@ -2,6 +2,7 @@ const normalizeCard = card => {
     return {
         title: card.title,
     subtitle: card.subtitle,
+    inspiredBy: card.inspiredBy || "",
     ingredients: card.ingredients,
     cookingSteps: card.cookingSteps,
     category: card.category,

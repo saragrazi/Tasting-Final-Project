@@ -49,6 +49,7 @@ const EditCardPage = () => {
       rest.setData({
         title: card.title,
         subtitle: card.subtitle,
+        inspiredBy: card.inspiredBy || "",
         ingredients,
         cookingSteps: card.cookingSteps,
         category: card.category,
