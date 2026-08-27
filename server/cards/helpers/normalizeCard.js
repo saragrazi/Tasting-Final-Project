@@ -28,6 +28,7 @@ const normalizeCard = async (rawCard, userId) => {
     image: images[0],
     user_id: rawCard?.user_id || userId,
     authorName,
+    prepTime: rawCard?.prepTime === "" || rawCard?.prepTime === undefined ? null : rawCard.prepTime,
   };
 };
 

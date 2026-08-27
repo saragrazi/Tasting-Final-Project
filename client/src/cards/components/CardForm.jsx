@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { func, object, string, bool, array } from "prop-types";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
-import DynamicListInput from "../../forms/components/DynamicListInput";
 import IngredientListInput from "../../forms/components/IngredientListInput";
+import DynamicListInput from "../../forms/components/DynamicListInput";
 import { FormControl, FormControlLabel, Checkbox, FormLabel, Grid, InputLabel, MenuItem, Select, Typography, Box, Button } from "@mui/material";
 import RecipeImagesInput from "./RecipeImagesInput";
 import MEASURING_CUP_OPTIONS from "../models/measuringCupOptions";
@@ -126,14 +126,18 @@ const CardForm = ({
       />
       <Input
         name="prepTime"
-        label="זמן הכנה (בדקות)"
+        label="זמן הכנה בדקות (רשות)"
         type="number"
         error={errors.prepTime}
         onChange={onInputChange}
         onBlur={onInputBlur}
         data={data}
+        required={false}
       />
       <Grid item xs={12}>
+        <Typography variant="caption" dir="rtl" sx={{ display: "block", mb: 0.5, textAlign: "right", color: "#d32f2f" }}>
+          {errors.measuringCup || "שדה חובה"}
+        </Typography>
         <FormControl fullWidth disabled={data?.measuringCup === null}>
           <InputLabel sx={{ display: "flex" }}>כוס מדידה</InputLabel>
           <Select
@@ -165,6 +169,9 @@ const CardForm = ({
         />
       </Grid>
       <Grid item xs={12}>
+        <Typography variant="caption" dir="rtl" sx={{ display: "block", mb: 0.5, textAlign: "right", color: "#d32f2f" }}>
+          {errors.category || "שדה חובה"}
+        </Typography>
         <FormControl fullWidth>
           <InputLabel sx={{ display: "flex" }}>קטגוריה</InputLabel>
           <Select
@@ -172,6 +179,7 @@ const CardForm = ({
             onChange={onInputChange}
             value={data?.category ? data?.category : ""}
             name="category"
+            error={Boolean(errors.category)}
           >
             {CATEGORY_OPTIONS.map((option) => (
               <MenuItem key={option.value} value={option.value}>
@@ -188,6 +196,7 @@ const CardForm = ({
           value={data.ingredients}
           onChange={onInputChange}
           error={errors.ingredients}
+          required
         />
       </Grid>
       <Grid item xs={12}>
@@ -198,16 +207,18 @@ const CardForm = ({
           value={data.cookingSteps}
           onChange={onInputChange}
           error={errors.cookingSteps}
+          required
         />
       </Grid>
       <Input
         name="tips"
-        label="טיפים"
+        label="טיפים (רשות)"
         error={errors.tips}
         onChange={onInputChange}
         onBlur={onInputBlur}
         data={data}
         multiline={true}
+        required={false}
       />
       <Grid item xs={12}>
         <FormControl sx={{ width: "100%" }}>

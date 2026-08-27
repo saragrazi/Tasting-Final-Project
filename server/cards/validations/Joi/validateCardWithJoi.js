@@ -20,12 +20,12 @@ const validateCardWithJoi = card => {
       .required(),
     cookingSteps: Joi.string().min(2).max(1024).required(),
     category: Joi.string().min(2).max(1024).required(),
-    prepTime: Joi.number().integer().min(1).required(),
+    prepTime: Joi.number().integer().min(1).allow("", null),
     measuringCup: Joi.string()
       .valid(...MEASURING_CUP_OPTIONS)
       .allow(null)
       .required(),
-    tips: Joi.string().min(2).max(1500).required(),
+    tips: Joi.string().min(2).max(1500).allow(""),
     videoLink: Joi.string().ruleset.regex(urlRegex).rule({ message: "video link must be a valid url" }).allow(""),
     image: Joi.object()
       .keys({

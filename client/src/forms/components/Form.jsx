@@ -38,7 +38,12 @@ const Form = ({
       <Grid container spacing={1} my={2} direction="row" width="100">
         <Grid item xs={12} sm={12}>
           <FormButton
-            node={<LoopIcon />}
+            node={
+              <Box display="flex" alignItems="center" justifyContent="center" gap={0.5}>
+                <LoopIcon fontSize="small" />
+                <span>- איפוס שדות</span>
+              </Box>
+            }
             variant="outlined"
             component="div"
             onClick={onReset}

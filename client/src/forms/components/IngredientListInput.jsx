@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { func, string, array } from "prop-types";
+import { func, string, array, bool } from "prop-types";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
@@ -14,7 +14,7 @@ const THEME_COLOR = "#d06b6b";
 
 const emptyRow = () => ({ name: "", quantity: 1 });
 
-const IngredientListInput = ({ name, label, value, onChange, error }) => {
+const IngredientListInput = ({ name, label, value, onChange, error, required }) => {
   const [items, setItems] = useState(() => (value && value.length ? value : [emptyRow()]));
   const lastEmitted = useRef(value);
 
@@ -62,6 +62,11 @@ const IngredientListInput = ({ name, label, value, onChange, error }) => {
       <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
         {label}
       </Typography>
+      {required && !error && (
+        <Typography variant="caption" dir="rtl" sx={{ display: "block", mb: 0.5, textAlign: "right", color: "#d32f2f" }}>
+          שדה חובה
+        </Typography>
+      )}
       {items.map((item, index) => (
         <Box key={index} sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1, flexWrap: "wrap" }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
@@ -141,10 +146,12 @@ IngredientListInput.propTypes = {
   value: array,
   onChange: func.isRequired,
   error: string,
+  required: bool,
 };
 
 IngredientListInput.defaultProps = {
   value: [],
+  required: false,
 };
 
 export default IngredientListInput;

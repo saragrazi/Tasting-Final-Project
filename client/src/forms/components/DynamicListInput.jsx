@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { func, string } from "prop-types";
+import { func, string, bool } from "prop-types";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
@@ -12,7 +12,7 @@ const THEME_COLOR = "#d06b6b";
 
 const splitToItems = (value) => (value ? value.split("\n") : [""]);
 
-const DynamicListInput = ({ name, label, addLabel, value, onChange, error }) => {
+const DynamicListInput = ({ name, label, addLabel, value, onChange, error, required }) => {
   const [items, setItems] = useState(() => splitToItems(value));
   const lastEmitted = useRef(value);
 
@@ -49,6 +49,11 @@ const DynamicListInput = ({ name, label, addLabel, value, onChange, error }) => 
       <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
         {label}
       </Typography>
+      {required && !error && (
+        <Typography variant="caption" dir="rtl" sx={{ display: "block", mb: 0.5, textAlign: "right", color: "#d32f2f" }}>
+          שדה חובה
+        </Typography>
+      )}
       {items.map((item, index) => (
         <Box key={index} sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
           <TextField
@@ -61,7 +66,7 @@ const DynamicListInput = ({ name, label, addLabel, value, onChange, error }) => 
             autoComplete="off"
             dir="rtl"
             multiline
-            minRows={1}
+            minRows={2}
             inputProps={{ style: { textAlign: "right" } }}
           />
           <IconButton
@@ -98,11 +103,13 @@ DynamicListInput.propTypes = {
   value: string,
   onChange: func.isRequired,
   error: string,
+  required: bool,
 };
 
 DynamicListInput.defaultProps = {
   value: "",
   addLabel: "הוסף שורה",
+  required: false,
 };
 
 export default DynamicListInput;

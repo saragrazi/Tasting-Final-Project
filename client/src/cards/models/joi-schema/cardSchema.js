@@ -20,9 +20,9 @@ export const cardSchema = {
     .required(),
   cookingSteps: Joi.string().label("אופן ההכנה").min(2).max(1024).required(),
   category: Joi.string().label("קטגוריה").required(),
-  prepTime: Joi.number().label("זמן הכנה (בדקות)").integer().min(1).required(),
+  prepTime: Joi.number().label("זמן הכנה (בדקות)").integer().min(1).allow("", null),
   measuringCup: Joi.string().label("כוס מדידה").valid(...MEASURING_CUP_OPTIONS).allow(null).required(),
-  tips: Joi.string().label("טיפים").min(2).max(1500).required(),
+  tips: Joi.string().label("טיפים").min(2).max(1500).allow(""),
   videoLink: Joi.string()
     .label("קישור לוידאו")
     .ruleset.regex(urlRegex)
@@ -54,9 +54,9 @@ export const EditcardSchema = {
     .required(),
   cookingSteps: Joi.string().label("אופן ההכנה").min(2).max(1024).required(),
   category: Joi.string().label("קטגוריה").required(),
-  prepTime: Joi.number().label("זמן הכנה (בדקות)").integer().min(1).required(),
+  prepTime: Joi.number().label("זמן הכנה (בדקות)").integer().min(1).allow("", null),
   measuringCup: Joi.string().label("כוס מדידה").valid(...MEASURING_CUP_OPTIONS).allow(null).required(),
-  tips: Joi.string().label("טיפים").min(2).max(1500).required(),
+  tips: Joi.string().label("טיפים").min(2).max(1500).allow(""),
   videoLink: Joi.string()
     .label("קישור לוידאו")
     .ruleset.regex(urlRegex)

@@ -44,8 +44,8 @@ const cardSchema = new mongoose.Schema({
   },
   prepTime: {
     type: Number,
-    required: true,
     min: 1,
+    default: null,
   },
   measuringCup: {
     type: String,
@@ -54,10 +54,13 @@ const cardSchema = new mongoose.Schema({
   },
   tips: {
     type: String,
-    required: true,
     trim: true,
-    minLength: 2,
     maxLength: 1500,
+    default: "",
+    validate: {
+      validator: (value) => !value || value.trim().length >= 2,
+      message: "טיפים חייב להכיל לפחות 2 תווים",
+    },
   },
   videoLink: {
     type: String,

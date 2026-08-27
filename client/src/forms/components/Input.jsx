@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { string, bool, object, func } from "prop-types";
+import { string, bool, object, func, number } from "prop-types";
 import TextField from "@mui/material/TextField";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
+import Typography from "@mui/material/Typography";
 import Visibility from "@mui/icons-material/VisibilityOutlined";
 import VisibilityOff from "@mui/icons-material/VisibilityOffOutlined";
 import { makeFirstLetterCapital } from "../utils/algoMethods";
 import Grid from "@mui/material/Grid";
 
+const REQUIRED_HINT = "שדה חובה";
+
 const Input = ({
   multiline,
+  minRows,
   variant,
   type,
   name,
@@ -26,6 +30,11 @@ const Input = ({
 
   return (
     <Grid item xs={12} {...rest}>
+      {required && !error && (
+        <Typography variant="caption" dir="rtl" sx={{ display: "block", mb: 0.5, textAlign: "right", color: "#d32f2f" }}>
+          {REQUIRED_HINT}
+        </Typography>
+      )}
       <TextField
         variant={variant}
         label={makeFirstLetterCapital(label)}
@@ -33,13 +42,13 @@ const Input = ({
         id={name}
         name={name}
         value={data[name] ? data[name] : ""}
-        required={required}
         helperText={error}
         error={Boolean(error)}
         onChange={onChange}
         onBlur={onBlur}
         fullWidth
         multiline={multiline}
+        minRows={multiline ? minRows : undefined}
         autoComplete="off"
         dir="rtl"
         inputProps={{ style: { textAlign: "right" } }}
@@ -74,6 +83,7 @@ const Input = ({
 Input.propTypes = {
   name: string.isRequired,
   multiline: bool,
+  minRows: number,
   required: bool.isRequired,
   type: string.isRequired,
   error: string,
