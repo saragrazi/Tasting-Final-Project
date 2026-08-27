@@ -2,7 +2,7 @@ const initialCardForm = {
     title: '',
     subtitle: '',
     inspiredBy: '',
-    ingredients: [{ name: '', quantity: 1 }],
+    ingredients: [{ name: '', quantity: null }],
     cookingSteps: '',
     prepTime: '',
     measuringCup: '',

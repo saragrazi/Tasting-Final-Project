@@ -4,15 +4,13 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
 const THEME_COLOR = "#d06b6b";
 
-const emptyRow = () => ({ name: "", quantity: 1 });
+const emptyRow = () => ({ name: "", quantity: null });
 
 const IngredientListInput = ({ name, label, value, onChange, error, required }) => {
   const [items, setItems] = useState(() => (value && value.length ? value : [emptyRow()]));
@@ -34,19 +32,7 @@ const IngredientListInput = ({ name, label, value, onChange, error, required }) 
 
   const handleNameChange = (index, newName) => {
     const next = [...items];
-    next[index] = { ...next[index], name: newName };
-    emitChange(next);
-  };
-
-  const handleQuantityChange = (index, newQuantity) => {
-    const next = [...items];
-    next[index] = { ...next[index], quantity: newQuantity === "" ? 0 : Number(newQuantity) };
-    emitChange(next);
-  };
-
-  const handleNoQuantityToggle = (index, checked) => {
-    const next = [...items];
-    next[index] = { ...next[index], quantity: checked ? null : 1 };
+    next[index] = { ...next[index], name: newName, quantity: null };
     emitChange(next);
   };
 
@@ -68,59 +54,31 @@ const IngredientListInput = ({ name, label, value, onChange, error, required }) 
         </Typography>
       )}
       {items.map((item, index) => (
-        <Box key={index} sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1, flexWrap: "wrap" }}>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, flexWrap: "wrap" }}>
-            <FormControlLabel
-              sx={{ mr: 0, ml: 0 }}
-              control={
-                <Checkbox
-                  size="small"
-                  checked={item.quantity === null}
-                  onChange={(e) => handleNoQuantityToggle(index, e.target.checked)}
-                  sx={{ color: THEME_COLOR, "&.Mui-checked": { color: THEME_COLOR } }}
-                />
-              }
-              label={<Typography variant="caption">ללא כמות</Typography>}
-            />
-            <TextField
-              size="small"
-              variant="outlined"
-              type="number"
-              label="כמות"
-              value={item.quantity === null ? "" : item.quantity}
-              onChange={(e) => handleQuantityChange(index, e.target.value)}
-              disabled={item.quantity === null}
-              dir="rtl"
-              sx={{ width: 90 }}
-              inputProps={{ min: 0, style: { textAlign: "right" } }}
-            />
-          </Box>
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1, flex: 1, minWidth: 160 }}>
-            <TextField
-              fullWidth
-              size="small"
-              variant="outlined"
-              label="מרכיב"
-              value={item.name}
-              onChange={(e) => handleNameChange(index, e.target.value)}
-              onKeyDown={(e) => { if (e.key === "Enter") e.preventDefault(); }}
-              autoComplete="off"
-              dir="rtl"
-              multiline
-              minRows={1}
-              sx={{ flex: 1 }}
-              inputProps={{ style: { textAlign: "right" } }}
-            />
-            <IconButton
-              size="small"
-              onClick={() => handleRemove(index)}
-              disabled={items.length === 1}
-              aria-label="הסר מרכיב"
-              sx={{ flexShrink: 0 }}
-            >
-              <RemoveCircleOutlineIcon fontSize="small" sx={{ color: items.length === 1 ? undefined : THEME_COLOR }} />
-            </IconButton>
-          </Box>
+        <Box key={index} sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+          <TextField
+            fullWidth
+            size="small"
+            variant="outlined"
+            label="כמות + מרכיב"
+            placeholder="לדוגמה: 2 כוסות קמח"
+            value={item.name}
+            onChange={(e) => handleNameChange(index, e.target.value)}
+            onKeyDown={(e) => { if (e.key === "Enter") e.preventDefault(); }}
+            autoComplete="off"
+            dir="rtl"
+            multiline
+            minRows={1}
+            inputProps={{ style: { textAlign: "right" } }}
+          />
+          <IconButton
+            size="small"
+            onClick={() => handleRemove(index)}
+            disabled={items.length === 1}
+            aria-label="הסר מרכיב"
+            sx={{ flexShrink: 0 }}
+          >
+            <RemoveCircleOutlineIcon fontSize="small" sx={{ color: items.length === 1 ? undefined : THEME_COLOR }} />
+          </IconButton>
         </Box>
       ))}
       {error && (
