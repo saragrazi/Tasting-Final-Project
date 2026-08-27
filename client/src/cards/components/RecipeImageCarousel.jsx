@@ -51,12 +51,13 @@ const RecipeImageCarousel = ({ images, onImageClick, height, initialIndex, objec
             sx={{
               position: "absolute",
               top: "50%",
-              right: 4,
+              right: 8,
               transform: "translateY(-50%)",
-              backgroundColor: "transparent",
-              color: THEME_COLOR,
+              backgroundColor: "rgba(0,0,0,0.45)",
+              color: "#fff",
               padding: "4px",
-              "&:hover": { backgroundColor: THEME_COLOR, color: "#fff" },
+              boxShadow: "0 1px 4px rgba(0,0,0,0.5)",
+              "&:hover": { backgroundColor: THEME_COLOR },
             }}
           >
             <ChevronRightIcon fontSize="small" />
@@ -68,12 +69,13 @@ const RecipeImageCarousel = ({ images, onImageClick, height, initialIndex, objec
             sx={{
               position: "absolute",
               top: "50%",
-              left: 4,
+              left: 8,
               transform: "translateY(-50%)",
-              backgroundColor: "transparent",
-              color: THEME_COLOR,
+              backgroundColor: "rgba(0,0,0,0.45)",
+              color: "#fff",
               padding: "4px",
-              "&:hover": { backgroundColor: THEME_COLOR, color: "#fff" },
+              boxShadow: "0 1px 4px rgba(0,0,0,0.5)",
+              "&:hover": { backgroundColor: THEME_COLOR },
             }}
           >
             <ChevronLeftIcon fontSize="small" />

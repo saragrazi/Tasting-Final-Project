@@ -17,6 +17,15 @@ const RecipeImageStory = ({ images, onImageClick, height, width, imgSx, cursor, 
   }, [images]);
 
   useEffect(() => {
+    images.forEach((image) => {
+      if (image?.url) {
+        const preloadImg = new Image();
+        preloadImg.src = image.url;
+      }
+    });
+  }, [images]);
+
+  useEffect(() => {
     if (playOnHover && !hovered) {
       setActiveIndex(0);
       setCycleComplete(false);
