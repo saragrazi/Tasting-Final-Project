@@ -30,11 +30,19 @@ const Input = ({
 
   return (
     <Grid item xs={12} {...rest}>
-      {required && !error && (
-        <Typography variant="caption" dir="rtl" sx={{ display: "block", mb: 0.5, textAlign: "right", color: "#d32f2f" }}>
-          {REQUIRED_HINT}
-        </Typography>
-      )}
+      <Typography
+        variant="caption"
+        dir="rtl"
+        sx={{
+          display: "block",
+          mb: 0.5,
+          textAlign: "right",
+          color: "#d32f2f",
+          visibility: required && !error && !data[name] ? "visible" : "hidden",
+        }}
+      >
+        {REQUIRED_HINT}
+      </Typography>
       <TextField
         variant={variant}
         label={makeFirstLetterCapital(label)}

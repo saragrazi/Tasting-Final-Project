@@ -46,6 +46,8 @@ const IngredientListInput = ({ name, label, value, onChange, error, required }) 
     emitChange(next);
   };
 
+  const hasContent = items.some((item) => item?.name?.trim());
+
   const handleAdd = () => emitChange([...items, emptyRow()]);
 
   const handleRemove = (index) => {
@@ -58,7 +60,7 @@ const IngredientListInput = ({ name, label, value, onChange, error, required }) 
       <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
         {label}
       </Typography>
-      {required && !error && (
+      {required && !error && !hasContent && (
         <Typography variant="caption" dir="rtl" sx={{ display: "block", mb: 0.5, textAlign: "right", color: "#d32f2f" }}>
           שדה חובה
         </Typography>

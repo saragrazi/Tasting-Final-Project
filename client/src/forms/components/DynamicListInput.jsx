@@ -12,7 +12,7 @@ const THEME_COLOR = "#d06b6b";
 
 const splitToItems = (value) => (value ? value.split("\n") : [""]);
 
-const DynamicListInput = ({ name, label, addLabel, value, onChange, error, required }) => {
+const DynamicListInput = ({ name, label, addLabel, itemLabel, value, onChange, error, required }) => {
   const [items, setItems] = useState(() => splitToItems(value));
   const lastEmitted = useRef(value);
 
@@ -49,7 +49,7 @@ const DynamicListInput = ({ name, label, addLabel, value, onChange, error, requi
       <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
         {label}
       </Typography>
-      {required && !error && (
+      {required && !error && !value && (
         <Typography variant="caption" dir="rtl" sx={{ display: "block", mb: 0.5, textAlign: "right", color: "#d32f2f" }}>
           שדה חובה
         </Typography>
@@ -60,6 +60,7 @@ const DynamicListInput = ({ name, label, addLabel, value, onChange, error, requi
             fullWidth
             size="small"
             variant="outlined"
+            label={`${itemLabel} ${index + 1}`}
             value={item}
             onChange={(e) => handleItemChange(index, e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") e.preventDefault(); }}
@@ -100,6 +101,7 @@ DynamicListInput.propTypes = {
   name: string.isRequired,
   label: string.isRequired,
   addLabel: string,
+  itemLabel: string,
   value: string,
   onChange: func.isRequired,
   error: string,
@@ -109,6 +111,7 @@ DynamicListInput.propTypes = {
 DynamicListInput.defaultProps = {
   value: "",
   addLabel: "הוסף שורה",
+  itemLabel: "שורה",
   required: false,
 };
 
