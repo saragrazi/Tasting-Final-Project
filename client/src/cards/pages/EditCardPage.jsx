@@ -83,6 +83,7 @@ const EditCardPage = () => {
         multiline={false}
         title="ערוך מתכון"
         submitLabel="עדכן מתכון"
+        to={ROUTES.MY_CARDS}
         onSubmit={rest.onSubmit}
         onReset={rest.handleReset}
         errors={value.errors}

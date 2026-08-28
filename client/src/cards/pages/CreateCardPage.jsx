@@ -42,6 +42,7 @@ const CreateCardPage = () => {
       <CardForm
         title="צור מתכון"
         submitLabel="פרסם מתכון"
+        to={ROUTES.MY_CARDS}
         onSubmit={rest.onSubmit}
         onReset={rest.handleReset}
         errors={value.errors}

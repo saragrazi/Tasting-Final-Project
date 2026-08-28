@@ -24,6 +24,7 @@ const CardForm = ({
   data,
   title,
   submitLabel,
+  to,
   pending,
   currentImages,
   onCurrentImagesChange,
@@ -59,6 +60,7 @@ const CardForm = ({
       }}
       title={title}
       submitLabel={submitLabel}
+      to={to}
       pending={pending}
       spacing={1}
     >
@@ -303,6 +305,7 @@ CardForm.propTypes = {
   data: object.isRequired,
   title: string.isRequired,
   submitLabel: string,
+  to: string,
   pending: bool,
   currentImages: array,
   onCurrentImagesChange: func,

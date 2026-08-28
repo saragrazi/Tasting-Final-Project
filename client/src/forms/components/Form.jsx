@@ -1,7 +1,9 @@
 import React from "react";
 import { node, func, string, number, object, bool } from "prop-types";
+import { Link as RouterLink } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import MuiButton from "@mui/material/Button";
 import FormButton from "./FormButtom";
 import Typography from "@mui/material/Typography";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -18,7 +20,10 @@ const Form = ({
   children,
   submitLabel,
   pending,
+  to,
+  onCancel,
 }) => {
+  const showCancel = Boolean(to || onCancel);
   return (
     <Box
       component="form"
@@ -50,7 +55,21 @@ const Form = ({
             disabled={pending}
           />
         </Grid>
-        <Grid item xs={12}>
+        {showCancel && (
+          <Grid item xs={6}>
+            <MuiButton
+              {...(onCancel ? { onClick: onCancel } : { component: RouterLink, to })}
+              variant="outlined"
+              color="primary"
+              fullWidth
+              size="large"
+              disabled={pending}
+            >
+              ביטול
+            </MuiButton>
+          </Grid>
+        )}
+        <Grid item xs={showCancel ? 6 : 12}>
           <FormButton
             node={pending ? <CircularProgress size={22} color="inherit" /> : submitLabel}
             onClick={onSubmit}
@@ -74,11 +93,12 @@ Form.propTypes = {
   styles: object.isRequired,
   submitLabel: string,
   pending: bool,
+  to: string,
+  onCancel: func,
 };
 
 Form.defaultProps = {
   color: "inherit",
-  to: "/",
   spacing: 1,
   title: "",
   styles: {},

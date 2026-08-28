@@ -78,6 +78,7 @@ const ContactModal = ({ open, onClose }) => {
             onChange={rest.validateForm}
             title="יצירת קשר"
             submitLabel="שלח פנייה"
+            onCancel={handleClose}
             pending={rest.pending}
             styles={{ maxWidth: "100%", direction: "rtl", textAlign: "right" }}
           >
