@@ -12,13 +12,23 @@ const THEME_COLOR = "#d06b6b";
 
 const emptyRow = () => ({ name: "", quantity: null });
 
+// Older recipes still carry a separate numeric quantity. Fold it into the
+// free-text line so it stays visible instead of silently disappearing now
+// that the UI only edits a single combined field.
+const foldLegacyQuantity = (item) =>
+  item.quantity !== null && item.quantity !== undefined
+    ? { name: `${item.quantity} ${item.name}`.trim(), quantity: null }
+    : item;
+
 const IngredientListInput = ({ name, label, value, onChange, error, required }) => {
-  const [items, setItems] = useState(() => (value && value.length ? value : [emptyRow()]));
+  const [items, setItems] = useState(() =>
+    value && value.length ? value.map(foldLegacyQuantity) : [emptyRow()]
+  );
   const lastEmitted = useRef(value);
 
   if (value !== lastEmitted.current) {
     lastEmitted.current = value;
-    const nextItems = value && value.length ? value : [emptyRow()];
+    const nextItems = value && value.length ? value.map(foldLegacyQuantity) : [emptyRow()];
     if (JSON.stringify(nextItems) !== JSON.stringify(items)) {
       setItems(nextItems);
     }
