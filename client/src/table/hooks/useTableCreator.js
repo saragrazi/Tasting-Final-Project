@@ -5,7 +5,7 @@ import formatPrepTime from "../../cards/helpers/formatPrepTime";
 import { getCardPath } from "../../cards/helpers/cardUrl";
 import { getCategoryLabel } from "../../cards/models/categoryOptions";
 
-const columnAlign = { headerAlign: "center", align: "right" };
+const columnAlign = { headerAlign: "center", align: "center" };
 
 const useTableCreator = (cards) => {
   const navigate = useNavigate();
@@ -28,6 +28,7 @@ const useTableCreator = (cards) => {
             whiteSpace: "normal",
             fontSize: "0.85rem",
             lineHeight: 1.3,
+            textAlign: "center",
           }}
         >
           {params.value}
