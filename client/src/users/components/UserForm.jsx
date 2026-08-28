@@ -14,6 +14,7 @@ import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
 import GoogleAuthButton from "./GoogleAuthButton";
 import ROUTES from "../../routes/routesModel";
+import { FORM_MAX_WIDTH } from "../../forms/constants";
 
 const UserForm = ({
   onSubmit,
@@ -34,7 +35,7 @@ const UserForm = ({
       onSubmit={onSubmit}
       onReset={onReset}
       onChange={onFormChange}
-      styles={{ maxWidth: "800px", direction: "rtl", textAlign: "right" }}
+      styles={{ maxWidth: `${FORM_MAX_WIDTH}px`, direction: "rtl", textAlign: "right" }}
       title={title}
       submitLabel="הירשם"
       pending={pending}
@@ -197,7 +198,7 @@ const UserForm = ({
                   sx={{ display: "inline-flex", alignItems: "center", gap: 0.3 }}
                 >
                   תנאי השימוש באתר
-                  <OpenInNewIcon sx={{ fontSize: 14 }} />
+                  <OpenInNewIcon sx={{ fontSize: 14, transform: "scaleX(-1)" }} />
                 </Link>
                 {" "}
                 <Typography component="span" color="error">*</Typography>

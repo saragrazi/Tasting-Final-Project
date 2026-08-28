@@ -82,6 +82,7 @@ const EditCardPage = () => {
       <CardForm
         multiline={false}
         title="ערוך מתכון"
+        submitLabel="עדכן מתכון"
         onSubmit={rest.onSubmit}
         onReset={rest.handleReset}
         errors={value.errors}

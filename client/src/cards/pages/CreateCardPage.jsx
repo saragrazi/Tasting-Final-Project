@@ -41,6 +41,7 @@ const CreateCardPage = () => {
       <Seo title="יצירת מתכון חדש" path={ROUTES.CREATE_CARD} noindex />
       <CardForm
         title="צור מתכון"
+        submitLabel="פרסם מתכון"
         onSubmit={rest.onSubmit}
         onReset={rest.handleReset}
         errors={value.errors}

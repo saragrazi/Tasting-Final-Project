@@ -13,6 +13,7 @@ import initialContactForm from "../helpers/initialContactForm";
 import { contactSchema } from "../models/joi-schema/contactSchema";
 import { sendContactMessage } from "../services/contactService";
 import { getUser } from "../../users/services/usersApiService";
+import { FORM_MAX_WIDTH } from "../../forms/constants";
 
 const ContactModal = ({ open, onClose }) => {
   const { isDark } = useTheme();
@@ -64,7 +65,7 @@ const ContactModal = ({ open, onClose }) => {
             outline: "none",
             borderRadius: "20px",
             p: 4,
-            maxWidth: "450px",
+            maxWidth: `${FORM_MAX_WIDTH}px`,
             width: "100%",
             backgroundColor: isDark ? "#2b2b2b" : "#fff",
             color: isDark ? "#f0f0f0" : "#000",
@@ -76,7 +77,7 @@ const ContactModal = ({ open, onClose }) => {
             onReset={rest.handleReset}
             onChange={rest.validateForm}
             title="יצירת קשר"
-            submitLabel="שלח"
+            submitLabel="שלח פנייה"
             pending={rest.pending}
             styles={{ maxWidth: "100%", direction: "rtl", textAlign: "right" }}
           >

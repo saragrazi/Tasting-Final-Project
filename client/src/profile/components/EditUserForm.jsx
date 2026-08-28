@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import Form from "../../forms/components/Form";
 import Input from "../../forms/components/Input";
 import ROUTES from "../../routes/routesModel";
+import { FORM_MAX_WIDTH } from "../../forms/constants";
 
 const EditUserForm = ({
   onSubmit,
@@ -26,8 +27,9 @@ const EditUserForm = ({
       onSubmit={onSubmit}
       onReset={onReset}
       onChange={onFormChange}
-      styles={{ maxWidth: "800px", direction: "rtl", textAlign: "right" }}
+      styles={{ maxWidth: `${FORM_MAX_WIDTH}px`, direction: "rtl", textAlign: "right" }}
       title={title}
+      submitLabel="עדכן פרטים"
       to={ROUTES.CARDS}
       pending={pending}
     >

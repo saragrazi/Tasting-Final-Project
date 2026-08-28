@@ -10,6 +10,7 @@ import MEASURING_CUP_OPTIONS from "../models/measuringCupOptions";
 import CATEGORY_OPTIONS from "../models/categoryOptions";
 import { useUser } from "../../users/providers/UserProvider";
 import useUsers from "../../users/hooks/useUsers";
+import { FORM_MAX_WIDTH } from "../../forms/constants";
 
 
 
@@ -22,6 +23,7 @@ const CardForm = ({
   onInputBlur,
   data,
   title,
+  submitLabel,
   pending,
   currentImages,
   onCurrentImagesChange,
@@ -46,7 +48,7 @@ const CardForm = ({
       errors={errors}
       onChange={onFormChange}
       styles={{
-        maxWidth: "900px",
+        maxWidth: `${FORM_MAX_WIDTH}px`,
         display: "flex",
         flexDirection: "column",
         direction: "rtl",
@@ -56,8 +58,9 @@ const CardForm = ({
         },
       }}
       title={title}
+      submitLabel={submitLabel}
       pending={pending}
-      spacing={3}
+      spacing={1}
     >
       <Grid item xs={12}>
         <Box sx={{ width: "100%", p: 1.5, borderRadius: 1, backgroundColor: "rgba(208,107,107,0.08)" }}>
@@ -135,7 +138,17 @@ const CardForm = ({
         required={false}
       />
       <Grid item xs={12}>
-        <Typography variant="caption" dir="rtl" sx={{ display: "block", mb: 0.5, textAlign: "right", color: "#d32f2f" }}>
+        <Typography
+          variant="caption"
+          dir="rtl"
+          sx={{
+            display: "block",
+            mb: 0.5,
+            textAlign: "right",
+            color: "#d32f2f",
+            visibility: errors.measuringCup || (data?.measuringCup !== null && !data?.measuringCup) ? "visible" : "hidden",
+          }}
+        >
           {errors.measuringCup || "שדה חובה"}
         </Typography>
         <FormControl fullWidth disabled={data?.measuringCup === null}>
@@ -169,7 +182,17 @@ const CardForm = ({
         />
       </Grid>
       <Grid item xs={12}>
-        <Typography variant="caption" dir="rtl" sx={{ display: "block", mb: 0.5, textAlign: "right", color: "#d32f2f" }}>
+        <Typography
+          variant="caption"
+          dir="rtl"
+          sx={{
+            display: "block",
+            mb: 0.5,
+            textAlign: "right",
+            color: "#d32f2f",
+            visibility: errors.category || !data?.category ? "visible" : "hidden",
+          }}
+        >
           {errors.category || "שדה חובה"}
         </Typography>
         <FormControl fullWidth>
@@ -204,6 +227,7 @@ const CardForm = ({
           name="cookingSteps"
           label="אופן ההכנה"
           addLabel="הוסף שלב"
+          itemLabel="שלב הכנה"
           value={data.cookingSteps}
           onChange={onInputChange}
           error={errors.cookingSteps}
@@ -253,7 +277,7 @@ const CardForm = ({
               />
             }
             label={
-              <Typography variant="caption" sx={{ fontSize: "0.65rem", lineHeight: 1.3 }}>
+              <Typography variant="caption" sx={{ fontSize: "0.85rem", lineHeight: 1.4 }}>
                 אני מאשר/ת כי התוכן והתמונות שהעליתי הם שלי או שיש לי רשות להשתמש בהם, וכי פרסומם אינו מפר זכויות של אחרים. ניתן להיעזר במתכונים קיימים כהשראה, אך אין להעתיק תוכן או תמונות.
               </Typography>
             }
@@ -278,6 +302,7 @@ CardForm.propTypes = {
   onInputBlur: func,
   data: object.isRequired,
   title: string.isRequired,
+  submitLabel: string,
   pending: bool,
   currentImages: array,
   onCurrentImagesChange: func,
