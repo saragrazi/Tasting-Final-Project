@@ -106,7 +106,7 @@ const UserProfilePage = () => {
             </Box>
             <Box display={"flex"} justifyContent={"center"}>
               <Button
-                color={open ? "error" : "primary"}
+                color="primary"
                 variant={open ? "contained" : "outlined"}
                 onClick={handleFormOpen}
               >
