@@ -262,6 +262,7 @@ const CardDetailsPage = () => {
             >
               <IconButton
                 onClick={() => setViewingIndex(null)}
+                aria-label="סגירת תצוגת תמונה מוגדלת"
                 sx={{
                   position: 'absolute',
                   top: -18,

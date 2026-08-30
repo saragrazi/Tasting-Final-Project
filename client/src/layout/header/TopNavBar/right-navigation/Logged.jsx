@@ -19,6 +19,7 @@ const Logged = () => {
       <IconButton
         sx={{ p: 0, display: "inline-flex", marginLeft: 2 }}
         onClick={(e) => openMenu(e.currentTarget)}
+        aria-label="פתיחת תפריט משתמש"
       >
         <Avatar alt="אוואטר משתמש" src="/assets/images/avatar2.png" />
       </IconButton>

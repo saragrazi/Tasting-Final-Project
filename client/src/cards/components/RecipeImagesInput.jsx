@@ -101,7 +101,16 @@ const RecipeImagesInput = ({ currentImages, onCurrentImagesChange, newImages, on
         ))}
         {remainingSlots > 0 && (
           <Box
+            role="button"
+            tabIndex={0}
+            aria-label="הוספת תמונה"
             onClick={() => inputRef.current?.click()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                inputRef.current?.click();
+              }
+            }}
             sx={{
               width: TILE_SIZE,
               height: TILE_SIZE,
@@ -162,6 +171,7 @@ const RecipeImagesInput = ({ currentImages, onCurrentImagesChange, newImages, on
         >
           <IconButton
             onClick={() => setViewingSrc(null)}
+            aria-label="סגירת תצוגת תמונה מוגדלת"
             sx={{
               position: "absolute",
               top: -18,

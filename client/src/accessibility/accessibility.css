@@ -1,0 +1,48 @@
+/* Global effects toggled by the accessibility widget (AccessibilityWidget.jsx).
+   Selectors hang off data-attributes on <html> so they apply everywhere,
+   including inside MUI portals (menus, dialogs, drawers). */
+
+html[data-a11y-contrast="true"] {
+    filter: contrast(1.35) brightness(1.05);
+}
+
+html[data-a11y-grayscale="true"] {
+    filter: grayscale(1);
+}
+
+html[data-a11y-contrast="true"][data-a11y-grayscale="true"] {
+    filter: grayscale(1) contrast(1.35) brightness(1.05);
+}
+
+html[data-a11y-underline-links="true"] a {
+    text-decoration: underline !important;
+    text-underline-offset: 3px;
+}
+
+html[data-a11y-readable-font="true"] body,
+html[data-a11y-readable-font="true"] input,
+html[data-a11y-readable-font="true"] textarea,
+html[data-a11y-readable-font="true"] button {
+    font-family: Arial, "Segoe UI", sans-serif !important;
+    line-height: 1.6 !important;
+    letter-spacing: 0.02em !important;
+}
+
+html[data-a11y-stop-animations="true"] *,
+html[data-a11y-stop-animations="true"] *::before,
+html[data-a11y-stop-animations="true"] *::after {
+    animation-play-state: paused !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+}
+
+html[data-a11y-big-cursor="true"],
+html[data-a11y-big-cursor="true"] * {
+    cursor: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24'%3E%3Cpath d='M4 2l14 8-6 2 3 7-3 1-3-7-5 4z' fill='%23000000' stroke='%23ffffff' stroke-width='1'/%3E%3C/svg%3E") 4 4, auto !important;
+}
+
+html[data-a11y-focus-highlight="true"] :focus,
+html[data-a11y-focus-highlight="true"] :focus-visible {
+    outline: 3px solid #ff9800 !important;
+    outline-offset: 2px !important;
+}

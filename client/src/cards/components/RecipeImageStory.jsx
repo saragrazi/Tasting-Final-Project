@@ -76,9 +76,20 @@ const RecipeImageStory = ({ images, onImageClick, height, width, imgSx, cursor, 
           {images.map((_, index) => (
             <Box
               key={index}
+              role="button"
+              tabIndex={0}
+              aria-label={`מעבר לתמונה ${index + 1}`}
+              aria-current={index === activeIndex}
               onClick={(event) => {
                 event.stopPropagation();
                 setActiveIndex(index);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  setActiveIndex(index);
+                }
               }}
               sx={{
                 flex: 1,

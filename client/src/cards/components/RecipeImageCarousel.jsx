@@ -31,7 +31,7 @@ const RecipeImageCarousel = ({ images, onImageClick, height, initialIndex, objec
       <Box
         component="img"
         src={activeImage?.url}
-        alt={activeImage?.alt || ""}
+        alt={activeImage?.alt || "תמונת המתכון"}
         onClick={(event) => onImageClick(activeIndex, event)}
         sx={{
           width: "100%",
@@ -94,9 +94,20 @@ const RecipeImageCarousel = ({ images, onImageClick, height, initialIndex, objec
             {images.map((_, index) => (
               <Box
                 key={index}
+                role="button"
+                tabIndex={0}
+                aria-label={`מעבר לתמונה ${index + 1}`}
+                aria-current={index === activeIndex}
                 onClick={(event) => {
                   event.stopPropagation();
                   setActiveIndex(index);
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    setActiveIndex(index);
+                  }
                 }}
                 sx={{
                   width: 9,

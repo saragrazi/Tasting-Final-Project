@@ -10,6 +10,7 @@ import { UserProvider } from './users/providers/UserProvider';
 import { SearchProvider } from './providers/SearchProvider';
 import { ContactModalProvider } from './contact/providers/ContactModalProvider';
 import WelcomeModal from './users/components/WelcomeModal';
+import AccessibilityWidget from './accessibility/AccessibilityWidget';
 
 const googleClientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
 
@@ -28,6 +29,7 @@ function App() {
                         <Router />
                       </Layout>
                       <WelcomeModal />
+                      <AccessibilityWidget />
                     </div>
                   </ContactModalProvider>
                 </SearchProvider>

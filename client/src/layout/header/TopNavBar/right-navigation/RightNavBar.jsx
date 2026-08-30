@@ -42,7 +42,10 @@ const RightNavBar = () => {
 
         {user && <Logged setAnchorEl={setAnchorEl} />}
 
-        <IconButton onClick={toggleDarkMode}>
+        <IconButton
+          onClick={toggleDarkMode}
+          aria-label="החלפת מצב תצוגה בהיר/כהה"
+        >
           {isDark ? <LightModeIcon /> : <DarkModeIcon />}
         </IconButton>
 

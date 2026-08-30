@@ -69,7 +69,7 @@ const SearchBar = () => {
           value={SearchQuery}
           endAdornment={
             <InputAdornment position="end">
-              <IconButton edge="end">
+              <IconButton edge="end" aria-label="חיפוש">
                 <SearchIcon />
               </IconButton>
             </InputAdornment>

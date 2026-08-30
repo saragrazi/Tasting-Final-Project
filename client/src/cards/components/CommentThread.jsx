@@ -69,6 +69,7 @@ const CommentThread = ({ comment, replies, card, user, onReply, onDelete }) => {
           <IconButton
             size="small"
             title="מחק תגובה"
+            aria-label="מחק תגובה"
             onClick={() => handleDeleteComment(comment._id)}
             disabled={deletingCommentId === comment._id}
             sx={{ color: "#d06b6b" }}
@@ -122,7 +123,8 @@ const CommentThread = ({ comment, replies, card, user, onReply, onDelete }) => {
                 {isAdmin && (
                   <IconButton
                     size="small"
-                    title="מחק תגובה"
+                    title="מחק תגובת תשובה"
+                    aria-label="מחק תגובת תשובה"
                     onClick={() => handleDeleteComment(reply._id)}
                     disabled={deletingCommentId === reply._id}
                     sx={{ color: "#d06b6b" }}
